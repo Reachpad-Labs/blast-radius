@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 660" width="1000" height="660" font-family="Inter, system-ui, sans-serif">
+  <rect width="1000" height="660" fill="#0E100F"/>
+
+  <text x="32" y="42" fill="#636965" font-size="12" letter-spacing="2.2" font-family="JetBrains Mono, monospace">BLAST RADIUS — WHAT IS AND IS NOT SANDBOXED</text>
+
+  <!-- HOST BOX -->
+  <rect x="32" y="64" width="936" height="560" rx="8" fill="none" stroke="#2A2E2C"/>
+  <text x="48" y="88" fill="#8C918C" font-size="13" font-family="JetBrains Mono, monospace">HOST — this box, running as seiji</text>
+  <text x="48" y="106" fill="#636965" font-size="11.5">~/.ssh · ~/.aws · ~/.claude/.credentials.json · full network · your processes</text>
+
+  <!-- STEP 1: npm install, unsandboxed -->
+  <rect x="56" y="128" width="400" height="128" rx="6" fill="#241A19" stroke="#F0736A"/>
+  <text x="74" y="154" fill="#F0736A" font-size="13.5" font-weight="600">1. npm install &lt;specimen&gt;</text>
+  <text x="74" y="176" fill="#ECE7DE" font-size="12">Runs preinstall / install / postinstall scripts</text>
+  <text x="74" y="194" fill="#ECE7DE" font-size="12">from the package AND every dependency,</text>
+  <text x="74" y="212" fill="#ECE7DE" font-size="12">as you, on the host.</text>
+  <text x="74" y="236" fill="#F0736A" font-size="12" font-family="JetBrains Mono, monospace">NO SANDBOX. Full r/w + network.</text>
+  <text x="74" y="252" fill="#8C918C" font-size="11">Mitigation: --ignore-scripts</text>
+
+  <!-- STEP 2: staged copies -->
+  <rect x="480" y="128" width="464" height="128" rx="6" fill="#161918" stroke="#2A2E2C"/>
+  <text x="498" y="154" fill="#6EE7A8" font-size="13.5" font-weight="600">2. Staging — copies, never originals</text>
+  <text x="498" y="176" fill="#ECE7DE" font-size="12">.run/world      seeded fresh, canaries minted per run</text>
+  <text x="498" y="194" fill="#ECE7DE" font-size="12">.run/specimens  copy of the npm tree (39 MB, 1.2 s)</text>
+  <text x="498" y="218" fill="#8C918C" font-size="11.5">The guest can write to both. Neither is anything we keep.</text>
+  <text x="498" y="240" fill="#8C918C" font-size="11.5">Real ~/.ssh and ~/.aws are never mounted anywhere.</text>
+
+  <!-- GUEST BOX -->
+  <rect x="56" y="288" width="400" height="312" rx="6" fill="#121614" stroke="#6EE7A8"/>
+  <text x="74" y="314" fill="#6EE7A8" font-size="13.5" font-weight="600">3. WASIX guest — Wasmer</text>
+  <text x="74" y="336" fill="#8C918C" font-size="11.5" font-family="JetBrains Mono, monospace">mounts: /home /etc /proc /sys /app</text>
+
+  <rect x="74" y="352" width="364" height="96" rx="5" fill="#161918" stroke="#2A2E2C"/>
+  <text x="90" y="374" fill="#ECE7DE" font-size="12" font-weight="600">Capability model holds — measured</text>
+  <text x="90" y="394" fill="#6EE7A8" font-size="11.5" font-family="JetBrains Mono, monospace">symlink → host abs path   BLOCKED</text>
+  <text x="90" y="412" fill="#6EE7A8" font-size="11.5" font-family="JetBrains Mono, monospace">../ traversal             BLOCKED</text>
+  <text x="90" y="430" fill="#6EE7A8" font-size="11.5" font-family="JetBrains Mono, monospace">read /home/seiji          BLOCKED</text>
+
+  <rect x="74" y="460" width="364" height="120" rx="5" fill="#161918" stroke="#2A2E2C"/>
+  <text x="90" y="482" fill="#ECE7DE" font-size="12" font-weight="600">Permissions come from HOST modes</text>
+  <text x="90" y="502" fill="#8C918C" font-size="11.5">WASI reports mode=0 uid=0 for everything;</text>
+  <text x="90" y="520" fill="#8C918C" font-size="11.5">the host kernel enforces the real modes.</text>
+  <text x="90" y="542" fill="#E8B339" font-size="11.5" font-family="JetBrains Mono, monospace">/etc 0555+0444 → write EPERM</text>
+  <text x="90" y="560" fill="#E8B339" font-size="11.5" font-family="JetBrains Mono, monospace">/etc/shadow 0000 → read EPERM</text>
+
+  <!-- CHANNELS OUT -->
+  <text x="504" y="306" fill="#8C918C" font-size="13" font-family="JetBrains Mono, monospace">FOUR WAYS A SECRET LEAVES</text>
+
+  <!-- channel 1 -->
+  <rect x="504" y="320" width="440" height="60" rx="5" fill="#161918" stroke="#F0736A"/>
+  <text x="520" y="342" fill="#ECE7DE" font-size="12.5" font-weight="600">① Network socket</text>
+  <text x="520" y="362" fill="#6EE7A8" font-size="11.5">SEEN: resolve / sock_connect / fd_write bytes · proven at sink</text>
+
+  <!-- channel 2 -->
+  <rect x="504" y="390" width="440" height="60" rx="5" fill="#161918" stroke="#E8B339"/>
+  <text x="520" y="412" fill="#ECE7DE" font-size="12.5" font-weight="600">② The MCP response itself → the model</text>
+  <text x="520" y="432" fill="#E8B339" font-size="11.5">NOT SEEN YET: zero syscalls. Fix = scan stdout for canaries.</text>
+
+  <!-- channel 3 -->
+  <rect x="504" y="460" width="440" height="60" rx="5" fill="#161918" stroke="#E8B339"/>
+  <text x="520" y="482" fill="#ECE7DE" font-size="12.5" font-weight="600">③ Park it on disk for someone else</text>
+  <text x="520" y="502" fill="#E8B339" font-size="11.5">PARTLY: the write is traced, the content is not. Fix = scan world after.</text>
+
+  <!-- channel 4 -->
+  <rect x="504" y="530" width="440" height="60" rx="5" fill="#161918" stroke="#636965"/>
+  <text x="520" y="552" fill="#ECE7DE" font-size="12.5" font-weight="600">④ Wait. Detect the lab. Do nothing today.</text>
+  <text x="520" y="572" fill="#8C918C" font-size="11.5">UNSOLVED: process.platform === "wasi", one run, no clock.</text>
+
+  <!-- arrow from guest to channels -->
+  <path d="M 444 452 C 470 452, 470 400, 496 400" fill="none" stroke="#2A2E2C" stroke-width="1.5"/>
+</svg>

@@ -47,6 +47,12 @@ same provocation, no false positives.
 - **`npm install` is not sandboxed by any of this** — lifecycle scripts run on
   the host before Wasmer is involved. We install with `--ignore-scripts`.
 
+## See also
+
+[ISOLATION.md](ISOLATION.md) — the four exfiltration channels and which ones we
+actually cover, why borrowing host permissions is a smell, what the WASI blast
+radius really is, and how wasm and Firecracker layer rather than compete.
+
 ## Open, not blocking
 
 - A second world shape (laptop rather than EC2) so fingerprinting generalises.

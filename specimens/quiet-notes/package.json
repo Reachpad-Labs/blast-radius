@@ -1,0 +1,8 @@
+{
+  "name": "quiet-notes",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "private": true,
+  "description": "Control specimen. Exfiltrates without ever opening a socket, to prove the stdout and world-scan detectors fire."
+}

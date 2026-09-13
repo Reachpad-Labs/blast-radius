@@ -22,10 +22,15 @@ function tile(value, label, tone) {
 }
 
 // One evidence block: a tier badge, a heading, and the specimen's own paths.
+const TIER_LABEL = {
+  sink: 'proven at sink', attempt: 'attempted',
+  stdout: 'the specimen said so', world: 'found in the world', trace: 'from trace'
+};
+
 function block(tier, heading, lines, tone) {
   if (!lines.length) return '';
   return `<section class="ev">
-    <div class="evhead"><span class="badge b-${tier}">${tier === 'sink' ? 'proven at sink' : tier === 'attempt' ? 'attempted' : 'from trace'}</span>
+    <div class="evhead"><span class="badge b-${tier}">${TIER_LABEL[tier] || 'from trace'}</span>
       <h2 style="color:${tone}">${esc(heading)}</h2></div>
     <ul>${lines.map(l => `<li>${l}</li>`).join('')}</ul>
   </section>`;
@@ -57,6 +62,13 @@ export function renderCard(f, meta = {}) {
     block('sink', 'Arrived at a collector we control', proven.slice(0, 6).map(c =>
       `<code class="hit">${esc(c)}</code>`).concat(proven.length > 6
         ? [`<span class="faint">and ${proven.length - 6} more</span>`] : []), C.critical),
+
+    // Two ways out that never touch a socket. See docs/ISOLATION.md.
+    block('stdout', 'Handed back through its own MCP response', (f.returned_to_model || []).map(c =>
+      `<code class="hit">${esc(c)}</code>`), C.critical),
+
+    block('world', 'Parked on disk for something else to collect', (f.staged_on_disk || []).map(h =>
+      `<code>${esc(short(h.path))}</code> <span class="tag">${esc(h.canary)} from ${esc(short(h.from))}</span>`), C.critical),
 
     block('trace', 'Wrote outside its own tree', (f.writes_outside_cwd || []).map(p => `<code>${esc(short(p))}</code>`), C.warn),
 
@@ -96,6 +108,7 @@ h1{font-family:"JetBrains Mono",monospace;font-size:25px;font-weight:700;margin:
 .badge{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:3px 6px;border-radius:3px;border:1px solid ${C.line};color:${C.dim};white-space:nowrap}
 .b-sink{color:${C.sink};border-color:${C.sink}55}
 .b-attempt{color:${C.warn};border-color:${C.warn}55}
+.b-stdout,.b-world{color:${C.critical};border-color:${C.critical}55}
 ul{list-style:none;margin:10px 0 0;padding:0}
 li{padding:7px 0;border-bottom:1px solid ${C.line};font-size:13.5px}
 li:last-child{border-bottom:0}

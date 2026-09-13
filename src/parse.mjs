@@ -14,7 +14,11 @@ export const KEEP = new Set([
   // the payload leaves through fd_write, so the byte count is only visible if
   // we follow the fd from sock_open/sock_connect. Without this the card says
   // "0 bytes staged outbound" while 3,203 of them are arriving at the sink.
-  'fd_write'
+  'fd_write',
+  // Kept only to stop following a socket fd after it closes. Never emitted:
+  // fds are reused, so a socket closed at 13 and a cache file opened next at 13
+  // would otherwise have every byte it writes counted as egress.
+  'fd_close'
 ]);
 
 // the runtime and the specimen reading their own code
@@ -28,7 +32,10 @@ const SENSITIVE = [/^\/home\//, /^\/root\//, /^\/etc\//, /^\/proc\//, /^\/sys\//
 
 // Node's own startup misses. Measured: it probes these on every run and they
 // are not the specimen's doing.
-const STARTUP_MISS = [/openssl\.cnf$/, /config\.gypi$/, /doc\/api\/cli\.md$/, /\/etc\/ssl\//, /node_modules/];
+// Narrow: only the runtime's and the specimen's own trees. A miss under the
+// user's own ~/projects/*/node_modules is a specimen rummaging for a stashed
+// token, which is a finding, not noise.
+const STARTUP_MISS = [/openssl\.cnf$/, /config\.gypi$/, /doc\/api\/cli\.md$/, /\/etc\/ssl\//, /^\/app\/node_modules\//];
 
 function parseArgs(tail) {
   const args = {};
@@ -47,7 +54,10 @@ function isDeny(call, errno) {
   return false;
 }
 
-export function parseTrace(stderrText, { canaries = {} } = {}) {
+// pass: which detonation these events came from. Each pass is its OWN Wasmer
+// process with its own clock, so events from different passes must never be
+// compared on time — see the correlation rule in analyse.mjs.
+export function parseTrace(stderrText, { canaries = {}, pass = 1 } = {}) {
   const wanted = Object.values(canaries);
   const out = [];
   const socketFds = new Set();   // fds we saw come back from sock_open/sock_connect
@@ -64,6 +74,7 @@ export function parseTrace(stderrText, { canaries = {} } = {}) {
     if (args.path && BORING.some(re => re.test(args.path))) continue;
 
     if ((call === 'sock_open' || call === 'sock_connect') && args.sock != null) socketFds.add(Number(args.sock));
+    if (call === 'fd_close') { socketFds.delete(Number(args.fd)); continue; }
 
     // fd_write is stdout, stderr and every open file as well as the socket.
     // Only the socket writes are egress.
@@ -93,7 +104,8 @@ export function parseTrace(stderrText, { canaries = {} } = {}) {
       args,
       canary_hit,
       decision: isDeny(call, errno) ? DECISION.DENY : DECISION.ALLOW,
-      errno
+      errno,
+      pass
     });
   }
   return out;

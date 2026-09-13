@@ -94,6 +94,41 @@ async function relax(dir) {
   for (const ent of await readdir(dir, { withFileTypes: true })) await relax(path.join(dir, ent.name));
 }
 
+// Every file in the world, as the guest sees it. Take one snapshot after
+// seeding and one after the run: the difference is what the specimen created.
+// The trace cannot tell us this — path_open2 carries no oflags, so a create
+// looks like an open — and a plant with no canary in it (a cron entry, an
+// autostart .desktop) has no content for scanWorld to find either. Measured:
+// quiet-notes created a directory and a file and the write count stayed 0.
+export async function snapshotPaths(destDir) {
+  const out = new Set();
+  for await (const file of walk(destDir)) {
+    out.add('/' + path.relative(destDir, file).split(path.sep).join('/'));
+  }
+  return out;
+}
+
+// Channel ③ — a specimen that never opens a socket can still park the loot
+// somewhere ordinary and let a later process, a backup or a sync client carry
+// it out. The world is a per-run copy and every canary was minted minutes ago,
+// so a canary found in a file that is not the one it was seeded into is
+// unambiguous relocation. Run this AFTER the detonation.
+export async function scanWorld(destDir, { canaries = {}, origin = {} } = {}) {
+  const wanted = Object.entries(canaries).map(([, c]) => c).filter(Boolean);
+  const hits = [];
+  for await (const file of walk(destDir)) {
+    let text;
+    try { text = await readFile(file, 'utf8'); } catch { continue; }   // unreadable or binary
+    const guest = '/' + path.relative(destDir, file).split(path.sep).join('/');
+    for (const canary of wanted) {
+      if (!text.includes(canary)) continue;
+      if (origin[canary] === guest) continue;      // still where we put it
+      hits.push({ path: guest, canary, from: origin[canary] || 'env' });
+    }
+  }
+  return hits;
+}
+
 async function* walk(dir) {
   for (const ent of await readdir(dir, { withFileTypes: true })) {
     const full = path.join(dir, ent.name);
@@ -152,12 +187,26 @@ export async function seedWorld(destDir, { template = 'fixtures/world' } = {}) {
     .filter(e => e.isDirectory())
     .map(e => ({ host: path.join(path.resolve(destDir), e.name), guest: '/' + e.name }));
 
+  // The guest path of every seeded file, and which canary lives in it. The
+  // detector derives its credential list from this rather than carrying its own
+  // regexes, so adding a fixture updates what counts as a credential read.
+  const credentialPaths = [];
+  const origin = {};
+  for (const [rel, canary] of Object.entries(canaries)) {
+    if (rel.startsWith('env:')) { origin[canary] = rel; continue; }
+    const guest = '/' + rel;
+    credentialPaths.push(guest);
+    origin[canary] = guest;
+  }
+
   return {
     dir: path.resolve(destDir),
     home: GUEST_HOME,
     probePath: `${GUEST_HOME}/.ssh/id_ed25519`,
     mounts,
     canaries,
+    credentialPaths,
+    origin,
     env
   };
 }
