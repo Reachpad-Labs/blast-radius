@@ -69,8 +69,18 @@ observed and survivable: the server keeps running and keeps answering.
   the trace.
 - **Python MCP servers are out entirely.** `pip install mcp` reaches `rpds-py`,
   a Rust extension with no wasm32-wasi wheel.
-- **Native Node modules are out.** Anything on better-sqlite3, sharp, node-pty
-  or a browser binary cannot run.
+- **Native Node modules are out.** Measured, not assumed: handing a `.node`
+  file to the loader under either Edge.js package fails with
+  `ERR_DLOPEN_FAILED: dlfcn unsupported on WASIX`. Anything on better-sqlite3,
+  sharp, node-pty or a browser binary cannot run today.
+- **The fast engine is not yet the hardened one.** The sweep ran on
+  `wasmer/edgejs`, where V8 runs on the host over N-API and WASIX confines
+  syscalls; Wasmer's own security note says that mode is not yet a security
+  boundary and recommends the embedded-engine package. The runner takes
+  `BLAST_ENGINE=quickjs` to use `wasmer/edgejs-quickjs`, where the engine is
+  inside the sandbox; the same 8 of 10 boot there and the control specimen
+  yields the identical card. Every card claim comes from the syscall trace,
+  which is the same boundary in both modes.
 - **One run is one sample.** A card describes behaviour observed in a single
   execution against a canary world. It is not a claim about the package in
   general, and we name real packages, so every card says so in its footer.

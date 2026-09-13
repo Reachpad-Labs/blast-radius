@@ -115,6 +115,7 @@ node run.mjs @modelcontextprotocol/server-filesystem   # one card, scan mode
 node run.mjs evil-notes --allow-sink                  # with harness/sink.mjs running
 node harness/boot-test.mjs                            # who boots -> SPECIMENS.md
 node harness/sweep.mjs                                # every booted server -> evidence/cards/
+BLAST_ENGINE=quickjs node run.mjs evil-notes           # engine inside the sandbox too (slower)
 ```
 
 Cards render from the JSON beside them, so the demo never depends on a live

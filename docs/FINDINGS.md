@@ -208,3 +208,76 @@ What it still misses: an in-place `open` then `fd_write`. The trace has both
 (`path_open2 ... ret_fd=17` and later `fd_write: fd=17 nwritten=...`), so the
 next step is to keep `fd_write` in the parser and resolve `fd` back to the path
 from the matching `ret_fd`. Not done today; say so in the limitations.
+
+## Two engines, and which one is the sandbox
+
+There are two Edge.js packages on the registry with the same Node 24 userland
+and a different engine. We checked both, and Wasmer's own repo says which one
+to trust.
+
+| | `wasmer/edgejs` (what the sweep ran on) | `wasmer/edgejs-quickjs` |
+| --- | --- | --- |
+| Engine | V8, provided by the `wasmer` binary through N-API (`--experimental-napi`) | QuickJS, compiled into the wasm module |
+| Where JS executes | on the host | inside the sandbox |
+| What WASIX confines | syscalls: files, sockets, DNS, processes | the same, plus the engine itself |
+| Boot, server-memory | 0.4 s | 1.2 s |
+| Our 10 specimens | 8 boot | 8 boot, same two failures for the same reasons |
+
+Edge.js's `SECURITY-HOST-JS-NAPI.md` is explicit about the first column:
+"Security hardening is deferred for the first performance/compatibility
+milestone", the N-API layer "should be treated as a compatibility mechanism,
+not as a security boundary", and it recommends "the embedded-engine package
+for workloads that rely on a JavaScript engine sandbox".
+
+What that means for us: every claim on a card comes from the WASIX syscall
+trace, and that boundary is the same in both modes, so the *observations* are
+sound either way. What differs is *containment* of a specimen that attacks the
+engine rather than the syscall layer. `detonate.mjs` now takes
+`engine: 'host' | 'quickjs'` (`BLAST_ENGINE=quickjs` for the whole runner), and
+the control specimen produces the identical card under both: key read,
+connect to 127.0.0.1:8099 refused with `Errno::io`, CRITICAL by correlation.
+
+The whole sweep was then re-run with `BLAST_ENGINE=quickjs` and the findings
+compared card by card: **8 of 8 identical** (verdict, credential reads, egress
+hosts and their blocked state, writes). One parser correction came out of it:
+QuickJS writes its bytecode cache by renaming onto `/bin/edge.builtins.qjsb`,
+and the runtime-path filter only looked at `path`, not at a rename's
+`old_path`/`new_path`, so it briefly showed up as a write. Runtime paths are
+now filtered on every path-shaped argument.
+
+## Native addons, measured
+
+Edge.js's blog says it "fully supports running Native modules, since all the
+modern native modules already target NAPI". We tested that with three packages
+that ship prebuilt N-API binaries (`fsevents`, `@parcel/watcher`, `sharp`) and
+by handing a `.node` file straight to the loader:
+
+```
+require('/app/node_modules/fsevents/fsevents.node')
+  -> ERR_DLOPEN_FAILED: dlfcn unsupported on WASIX        (both engines)
+```
+
+So in Edge.js 0.2.0 under Wasmer 7.4.1 no `.node` file loads at all: not a
+host Mach-O (which would be an escape), and not a wasm-compiled one either,
+because dynamic loading is not wired up. The packages' own loaders never get
+that far; they see `process.platform === 'wasi'` and look for a
+`wasi-wasm32` prebuild that does not exist. The screen rule in
+`SPECIMENS.md` stands, and the reason is now measured rather than assumed.
+
+## The Wasmer SDK, and why the runner still shells out to the CLI
+
+`@wasmer/sdk` 0.13.0 (published the morning of the hackathon) runs sandboxes
+from Node: `sandboxes.create({ packages: ["wasmer/edgejs@0.2.0"], network:
+{ mode: "host" } })`, `command().run()`, `sandbox.fs`, `sandbox.ports`. Two
+things it does not expose that this tool is built on:
+
+- **the syscall trace.** There is no tracing or file/network log hook in the
+  SDK; our instrument is `RUST_LOG=wasmer_wasix::syscalls=trace` on the CLI.
+- **per-host network policy.** The SDK's network modes are `host`, `http` and
+  `wisp` (a proxy that "can observe connection metadata and decide which
+  destinations and ports are allowed"). The CLI's `--net` takes
+  `dns:deny=*:*` and `ipv4:allow=127.0.0.1:8099`, which is how scan mode and
+  sink mode differ.
+
+The SDK is the right surface for *running* a sandbox from an app. Blast Radius
+*instruments* one, and today that means the CLI.

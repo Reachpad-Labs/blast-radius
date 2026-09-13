@@ -47,7 +47,11 @@ export function parseTrace(stderrText, { canaries = {} } = {}) {
     if (errno === 'noent') continue;              // a file that is not there was not accessed
 
     const args = parseArgs(tail);
-    if (args.path && BORING.some(re => re.test(args.path))) continue;
+    // a rename names two paths and an open names one; the runtime writing its
+    // own bytecode cache (edgejs-quickjs renames onto /bin/edge.builtins.qjsb)
+    // is as boring as the runtime reading its own stdlib
+    const paths = [args.path, args.old_path, args.new_path].filter(Boolean);
+    if (paths.length && paths.every(p => BORING.some(re => re.test(p)))) continue;
 
     const ms = Date.parse(stamp);
     if (t0 === null) t0 = ms;

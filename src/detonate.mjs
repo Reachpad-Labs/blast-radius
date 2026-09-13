@@ -3,7 +3,18 @@ import { spawn } from 'node:child_process';
 import path from 'node:path';
 
 const WASMER = process.env.WASMER_BIN || path.join(process.env.HOME, '.wasmer/bin/wasmer');
-const RUNTIME = 'wasmer/edgejs@0.2.0';
+// Two Edge.js packages on the registry, same Node 24 userland, different engine:
+//   host     wasmer/edgejs          V8 provided by the wasmer binary over N-API.
+//            Fast (0.4s boots). Wasmer's own SECURITY-HOST-JS-NAPI.md says this
+//            mode is not yet a security boundary; only syscalls are confined.
+//   quickjs  wasmer/edgejs-quickjs  QuickJS compiled into the wasm module, so the
+//            engine is inside the sandbox too. ~3x slower boots, same trace.
+// Both need no dlopen: "dlfcn unsupported on WASIX", so no .node addon loads in either.
+export const ENGINES = {
+  host:    { runtime: 'wasmer/edgejs@0.2.0',         flags: ['--experimental-napi'] },
+  quickjs: { runtime: 'wasmer/edgejs-quickjs@0.2.0', flags: [] }
+};
+export const DEFAULT_ENGINE = process.env.BLAST_ENGINE || 'host';
 
 // net: a --net rule string, or null for default-deny (the flag omitted entirely)
 // env: guest environment, passed as --env KEY=VALUE (API keys, seeded token canaries).
@@ -11,9 +22,11 @@ const RUNTIME = 'wasmer/edgejs@0.2.0';
 //      server even loads (measured on @playwright/mcp), and HOME=/home is where the
 //      canary world is mounted, so ~/.ssh resolves to the seeded key.
 // trace: false skips RUST_LOG so a boot test does not pay for 30k trace lines
-export function detonate({ entry, worldDir, specimensDir = 'specimens', net = null, argv = [], env = {}, rpc = '', timeoutMs = 120000, trace = true }) {
+export function detonate({ entry, worldDir, specimensDir = 'specimens', net = null, argv = [], env = {}, rpc = '', timeoutMs = 120000, trace = true, engine = DEFAULT_ENGINE }) {
+  const eng = ENGINES[engine];
+  if (!eng) throw new Error(`unknown engine ${engine}; use one of ${Object.keys(ENGINES).join(', ')}`);
   const args = [
-    'run', RUNTIME, '--experimental-napi',
+    'run', eng.runtime, ...eng.flags,
     '--volume', `${path.resolve(specimensDir)}:/app`,
     '--volume', `${path.join(worldDir, 'home')}:/home`,
     ...(net ? [`--net=${net}`] : []),
