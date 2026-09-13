@@ -5,6 +5,14 @@ installing it would have cost you.
 
 Built at the AI Security Hackathon, SF, 2026-09-13. Wasmer SDK track.
 
+## Start here
+
+New to the repo, or a new session? Read [CLAUDE.md](CLAUDE.md) (where things
+are, the rules the code does not explain, known gaps), then
+[docs/FINDINGS.md](docs/FINDINGS.md) (everything measured, every trap). The
+paste-ready submission text is [docs/SUBMISSION.md](docs/SUBMISSION.md). The
+team board is https://blast-radius-board-edksg.reachpad.app/.
+
 ## The idea
 
 You `npm install` an MCP server. It then runs beside your agent with your
@@ -26,6 +34,10 @@ Everything below was verified on a real run today. Evidence is in `evidence/`.
 | Can we see network destinations? | **Yes, host and address.** |
 | Can we see payload bytes? | **No** — size only. Payload proof needs a sink we control. |
 | Can we deny egress and keep the process alive? | **Yes.** |
+| What does a card conclude? | One of three descriptive verdicts: **expected**, **undeclared**, **critical**, with the policy that decided "expected" recorded on the card. |
+| Under which network policies? | Two benchmarks per server: **block all** (default, every connection refused) and **vendor only** (DNS allowed for its own vendor, nothing else). The control also runs with our collector allowed. |
+| Does the result depend on the fast engine? | **No.** The sweep gives identical findings under `wasmer/edgejs` (V8 on the host) and `wasmer/edgejs-quickjs` (engine inside the sandbox). |
+| Can native Node addons run? | **No**, measured: `dlfcn unsupported on WASIX` under both packages. |
 
 The two lines that make the demo, from a real trace:
 
@@ -77,8 +89,10 @@ cat sink.log                                   # canary string, on the wire
 
 ## Traps
 
-Eight of them, all measured today, in [docs/FINDINGS.md](docs/FINDINGS.md).
-Read that before touching anything. It will save you an hour.
+Eleven of them, all measured today, in [docs/FINDINGS.md](docs/FINDINGS.md),
+plus the engine comparison, the native-addon test, the SDK review, the three
+verdicts and vendor mode. Read that before touching anything. It will save
+you an hour.
 
 ## Layout
 
@@ -145,6 +159,14 @@ detonation. [SPECIMENS.md](SPECIMENS.md) is the coverage table with reasons;
 [evidence/cards/README.md](evidence/cards/README.md) is the verdict index, and
 `evidence/cards/index.html` is the same evidence as a page anyone can read: a
 table of every server, who each one tried to reach, and a timeline per server.
+
+## Known gaps
+
+In priority order, with detail in [CLAUDE.md](CLAUDE.md): the world's
+`app/.env` canary is never mounted; in-place file writes are not attributed to
+a path; environment reads are invisible to the trace; "its vendor" is read off
+the package name; every tool is called once with made-up arguments. Three of
+the sixteen servers do not run, each for a recorded reason.
 
 ## Event schema
 
