@@ -1,0 +1,68 @@
+{
+  "spec": {
+    "name": "@modelcontextprotocol/server-sequential-thinking",
+    "version": "2026.8.31",
+    "integrity": "246d3cac220c30f7239f5934c5653b560a3deb1820a47f213f9439ab9a91d200",
+    "entry": "/app/node_modules/@modelcontextprotocol/server-sequential-thinking/dist/index.js"
+  },
+  "tools": [
+    "sequentialthinking"
+  ],
+  "findings": {
+    "reads_credentials": [],
+    "egress": [],
+    "bytes_out": 0,
+    "canary_in_payload": [],
+    "writes_outside_cwd": [],
+    "fingerprinting": [],
+    "correlated": false,
+    "verdict": {
+      "level": "clean",
+      "line": "No credential access and no egress observed."
+    }
+  },
+  "events": [
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.308,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.526,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.814,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    }
+  ]
+}

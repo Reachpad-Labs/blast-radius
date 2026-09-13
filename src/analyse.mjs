@@ -32,6 +32,14 @@ export function analyse(events, { sinkHits = [], canaries = {} } = {}) {
     if ((e.call === 'path_open' || e.call === 'path_open2') && /write|creat|trunc/i.test(JSON.stringify(e.args))) {
       if (p && !p.startsWith('/app')) writes_outside_cwd.push(p);
     }
+    // the trace carries no open flags, but a rename onto a path or an unlink of
+    // it is a write by any definition. Measured: server-filesystem writes a
+    // .tmp beside the target and renames it into place, so the rename is the
+    // only line that names the file that changed.
+    if (e.call === 'path_rename' && e.args.new_path && !String(e.args.new_path).startsWith('/app')) {
+      writes_outside_cwd.push(String(e.args.new_path));
+    }
+    if (e.call === 'path_unlink_file' && p && !p.startsWith('/app')) writes_outside_cwd.push(p);
   }
 
   // proven-at-sink ONLY. Never derived from the trace: payload bytes are not in it.
@@ -44,7 +52,7 @@ export function analyse(events, { sinkHits = [], canaries = {} } = {}) {
   const correlated = firstRead != null && firstEgress != null && firstEgress >= firstRead;
 
   return {
-    reads_credentials,
+    reads_credentials: dedupeReads(reads_credentials),
     egress: dedupe(egress),
     bytes_out,
     canary_in_payload,
@@ -53,6 +61,16 @@ export function analyse(events, { sinkHits = [], canaries = {} } = {}) {
     correlated,
     verdict: verdict({ reads_credentials, egress, canary_in_payload, correlated })
   };
+}
+
+// one row per path, first time seen, with how many times it was opened
+function dedupeReads(list) {
+  const seen = new Map();
+  for (const r of list) {
+    if (seen.has(r.path)) seen.get(r.path).count++;
+    else seen.set(r.path, { ...r, count: 1 });
+  }
+  return [...seen.values()];
 }
 
 function dedupe(list) {

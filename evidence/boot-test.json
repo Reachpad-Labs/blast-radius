@@ -1,5 +1,5 @@
 {
-  "ran": "2026-09-13T21:01:06.864Z",
+  "ran": "2026-09-13T21:10:02.485Z",
   "results": [
     {
       "pkg": "@modelcontextprotocol/server-memory",
@@ -21,7 +21,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 401,
+      "ms": 987,
       "note": "official"
     },
     {
@@ -49,7 +49,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 422,
+      "ms": 513,
       "note": "official; allowed roots are argv"
     },
     {
@@ -75,7 +75,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 526,
+      "ms": 495,
       "note": "official reference server"
     },
     {
@@ -90,7 +90,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 395,
+      "ms": 424,
       "note": "official"
     },
     {
@@ -130,7 +130,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 314,
+      "ms": 368,
       "note": "official, archived upstream; token from env"
     },
     {
@@ -145,7 +145,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 203,
+      "ms": 240,
       "note": "official, archived upstream; DB url is argv"
     },
     {
@@ -161,7 +161,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 678,
+      "ms": 862,
       "note": "third-party, Upstash"
     },
     {
@@ -174,7 +174,7 @@
       "toolNames": [],
       "exitCode": 1,
       "reason": "Error: Unsupported platform: wasi",
-      "ms": 387,
+      "ms": 434,
       "note": "third-party, Microsoft"
     },
     {
@@ -212,7 +212,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 290,
+      "ms": 322,
       "note": "third-party, Notion"
     },
     {
@@ -224,8 +224,8 @@
       "tools": null,
       "toolNames": [],
       "exitCode": 0,
-      "reason": "Error: getaddrinfo ENOTFOUND mcp.stripe.com | code: 'ENOTFOUND',",
-      "ms": 325,
+      "reason": "Error: getaddrinfo ENOTFOUND mcp.stripe.com",
+      "ms": 359,
       "note": "third-party, Stripe; a stdio proxy to mcp.stripe.com"
     }
   ]

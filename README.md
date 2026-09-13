@@ -21,6 +21,7 @@ Everything below was verified on a real run today. Evidence is in `evidence/`.
 | Question | Answer |
 | --- | --- |
 | Do real npm MCP servers run under Wasmer? | **Yes.** `@modelcontextprotocol/server-memory` boots, completes the MCP handshake, lists 9 tools. |
+| How many real ones boot? | **8 of 10**, each in under a second. The two that do not, with reasons, in [SPECIMENS.md](SPECIMENS.md). |
 | Can we see file access? | **Yes, with full paths.** |
 | Can we see network destinations? | **Yes, host and address.** |
 | Can we see payload bytes? | **No** — size only. Payload proof needs a sink we control. |
@@ -91,21 +92,34 @@ src/           THE PRODUCT - one file per pipeline stage
   parse.mjs      4. Wasmer trace -> schema events
   analyse.mjs    5. events -> claims        (pure, testable)
   card.mjs       6. claims -> verdict card  (pure, testable)
+  specimens.mjs  the sweep manifest: per-server argv, fake keys, seeded token
 
 harness/       test rig, not shipped
   sink.mjs       TCP sink on :8099 that logs payload bytes
+  boot-test.mjs  initialize + tools/list for every specimen -> SPECIMENS.md
+  sweep.mjs      every booted specimen through run.mjs -> evidence/cards/
   dump-imports.mjs   dumps a .wasm import surface
   probes/        throwaway specimens that proved the mechanism
 
 fixtures/world/  the canary world template, mounted into the guest
 specimens/       MCP servers under test (npm install here)
 evidence/        real output from today's runs, so claims are checkable
+  cards/         one JSON + HTML card per swept server, and the verdict index
 docs/            findings and diagrams
 ```
 
-Every file in `src/` is a stub carrying its own interface contract, the exact
-commands where relevant, and the specific trap that applies to it. Open the one
-you own and the job is written down.
+## Run it
+
+```sh
+node run.mjs @modelcontextprotocol/server-filesystem   # one card, scan mode
+node run.mjs evil-notes --allow-sink                  # with harness/sink.mjs running
+node harness/boot-test.mjs                            # who boots -> SPECIMENS.md
+node harness/sweep.mjs                                # every booted server -> evidence/cards/
+```
+
+Cards render from the JSON beside them, so the demo never depends on a live
+detonation. [SPECIMENS.md](SPECIMENS.md) is the coverage table with reasons;
+[evidence/cards/README.md](evidence/cards/README.md) is the verdict index.
 
 ## Event schema
 

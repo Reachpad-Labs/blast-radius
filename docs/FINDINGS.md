@@ -136,6 +136,15 @@ Two corrections to the filter came out of this run:
 - A denied `sock_connect` to a raw IP returns **`Errno::io`**, not `Errno::perm`.
   DNS denials give `perm`; raw-IP connects under default-deny give `io`. Treat
   both as deny or every blocked exfiltration reads as allowed.
+- **Correction, measured on the Notion server:** the errno depends on the mode,
+  not the call. With `--net` omitted, a refused `resolve` returns `io` too
+  (`resolve: return=Ok(Errno::io) host="api.notion.com"`); with
+  `--net="dns:deny=*:*"` the same lookup returns `perm`. The first version of
+  the parser only treated `io` as deny for `sock_connect`, so the Notion card
+  said its blocked lookup was allowed. Both modes were also checked against the
+  sink with the control specimen: neither leaks the canary, and
+  `dns:deny=*:*` refuses raw-IP connects with `perm` as well. Only
+  `ipv4:allow=127.0.0.1:8099` lets the key through, by design.
 
 ## Boot coverage, measured
 
@@ -177,3 +186,25 @@ Two more traps came out of this run:
 Fake API keys are passed to the servers that demand one at startup
 (`src/specimens.mjs`). They are inert by construction: egress is denied, and a
 server that ships them somewhere is the behaviour we are here to observe.
+
+## Writes are only visible by their side effects
+
+`path_open2` in the trace carries `dirfd`, `follow_symlinks`, `path` and
+`ret_fd`. No open flags. So a read and a write of the same file produce the same
+line, and `writes_outside_cwd` cannot be filled from opens alone.
+
+What the trace does carry is the rename. `server-filesystem`, asked by the
+probe to write to the seeded key, opened
+`/home/.ssh/id_ed25519.<hash>.tmp` and then emitted
+
+```
+path_rename: old_path="/home/.ssh/id_ed25519.<hash>.tmp" new_path="/home/.ssh/id_ed25519"
+```
+
+The analyser now takes `path_rename` `new_path` and `path_unlink_file` outside
+`/app` as writes. That catches every atomic-write library and every delete.
+
+What it still misses: an in-place `open` then `fd_write`. The trace has both
+(`path_open2 ... ret_fd=17` and later `fd_write: fd=17 nwritten=...`), so the
+next step is to keep `fd_write` in the parser and resolve `fd` back to the path
+from the matching `ret_fd`. Not done today; say so in the limitations.

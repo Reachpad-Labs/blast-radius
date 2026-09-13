@@ -33,9 +33,14 @@ const common = {
 
 process.stderr.write(`[1/3] ${spec.name}@${spec.version}  enumerating tools\n`);
 const pass1 = await detonate({ ...common, rpc: rpcLines(INIT, LIST) });
-const tools = (pass1.stdout.split('\n')
-  .map(l => { try { return JSON.parse(l); } catch { return null; } })
-  .find(o => o && o.id === 2)?.result?.tools) || [];
+const replies = pass1.stdout.split('\n').map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+if (!replies.find(o => o.id === 1)?.result) {
+  // a verdict on a server that never ran would be a false claim, so there is no card
+  const why = pass1.stderr.split('\n').filter(l => l.trim() && !/^\d{4}-\d\d-\d\dT/.test(l) && !/^\s+\d+: /.test(l)).slice(0, 3).join(' | ');
+  process.stderr.write(`${spec.name}@${spec.version} did not answer initialize (exit ${pass1.exitCode}); no card.\n      ${why.slice(0, 300)}\n`);
+  process.exit(2);
+}
+const tools = replies.find(o => o.id === 2)?.result?.tools || [];
 
 process.stderr.write(`[2/3] calling ${tools.length} tool${tools.length === 1 ? '' : 's'}\n`);
 const calls = tools.map((t, i) => ({

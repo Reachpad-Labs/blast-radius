@@ -1,0 +1,154 @@
+{
+  "spec": {
+    "name": "@modelcontextprotocol/server-memory",
+    "version": "2026.8.31",
+    "integrity": "e6a04d5457d2d7d3a8ba33bc8da891b212358dfe2f43548a5afec4ff259c4729",
+    "entry": "/app/node_modules/@modelcontextprotocol/server-memory/dist/index.js"
+  },
+  "tools": [
+    "create_entities",
+    "create_relations",
+    "add_observations",
+    "delete_entities",
+    "delete_observations",
+    "delete_relations",
+    "read_graph",
+    "search_nodes",
+    "open_nodes"
+  ],
+  "findings": {
+    "reads_credentials": [],
+    "egress": [],
+    "bytes_out": 0,
+    "canary_in_payload": [],
+    "writes_outside_cwd": [],
+    "fingerprinting": [],
+    "correlated": false,
+    "verdict": {
+      "level": "clean",
+      "line": "No credential access and no egress observed."
+    }
+  },
+  "events": [
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.326,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.563,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.839,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.983,
+      "call": "path_rename",
+      "args": {
+        "old_path": "/app/node_modules/@modelcontextprotocol/server-memory/dist/memory.jsonl.1c7cc63c7a89281be4a98734b2bd8d90.tmp",
+        "new_path": "/app/node_modules/@modelcontextprotocol/server-memory/dist/memory.jsonl",
+        "old_fd": 5,
+        "new_fd": 5
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.984,
+      "call": "path_rename",
+      "args": {
+        "old_path": "/app/node_modules/@modelcontextprotocol/server-memory/dist/memory.jsonl.ea976f1ee660cd69234c060f008c134d.tmp",
+        "new_path": "/app/node_modules/@modelcontextprotocol/server-memory/dist/memory.jsonl",
+        "old_fd": 5,
+        "new_fd": 5
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.984,
+      "call": "path_rename",
+      "args": {
+        "old_path": "/app/node_modules/@modelcontextprotocol/server-memory/dist/memory.jsonl.df5738955df00aaf42114d400ac46a67.tmp",
+        "new_path": "/app/node_modules/@modelcontextprotocol/server-memory/dist/memory.jsonl",
+        "old_fd": 5,
+        "new_fd": 5
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.985,
+      "call": "path_rename",
+      "args": {
+        "old_path": "/app/node_modules/@modelcontextprotocol/server-memory/dist/memory.jsonl.101fafae074266e75692ff7ac8996ef6.tmp",
+        "new_path": "/app/node_modules/@modelcontextprotocol/server-memory/dist/memory.jsonl",
+        "old_fd": 5,
+        "new_fd": 5
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.985,
+      "call": "path_rename",
+      "args": {
+        "old_path": "/app/node_modules/@modelcontextprotocol/server-memory/dist/memory.jsonl.d2d0919f7217bd822c88e5d43184573b.tmp",
+        "new_path": "/app/node_modules/@modelcontextprotocol/server-memory/dist/memory.jsonl",
+        "old_fd": 5,
+        "new_fd": 5
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.986,
+      "call": "path_rename",
+      "args": {
+        "old_path": "/app/node_modules/@modelcontextprotocol/server-memory/dist/memory.jsonl.5b4af720c0c46a5321442b5e2dcf9bae.tmp",
+        "new_path": "/app/node_modules/@modelcontextprotocol/server-memory/dist/memory.jsonl",
+        "old_fd": 5,
+        "new_fd": 5
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    }
+  ]
+}

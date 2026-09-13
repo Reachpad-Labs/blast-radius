@@ -25,7 +25,7 @@ function reason(stderr) {
     .filter(l => l.trim() && !/^\d{4}-\d\d-\d\dT\S+\s+(TRACE|DEBUG|INFO|WARN)\s/.test(l))
     .map(l => l.replace(/\s+/g, ' ').trim()))];
   // the line that names the error beats the line that says an error happened
-  const usable = lines.filter(l => !/^\s*at /.test(l) && !/Failed to execute builtin/.test(l));
+  const usable = lines.filter(l => !/^\s*at /.test(l) && !/Failed to execute builtin/.test(l) && !/^\[?(code|errno|syscall|hostname|info)\]?:/.test(l) && !/^[\]}]/.test(l));
   const specific = usable.filter(l => /(ENOTFOUND|ENOENT|EACCES|ECONNREFUSED|Unsupported|Cannot find|not supported|not implemented)\b/.test(l));
   const generic = usable.filter(l => /(Error|error)\b/.test(l));
   const pick = specific.length ? specific : generic.length ? generic : usable;

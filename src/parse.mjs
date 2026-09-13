@@ -26,9 +26,10 @@ function parseArgs(tail) {
 
 function isDeny(call, errno) {
   if (errno === 'perm' || errno === 'acces') return true;
-  // measured: a raw-IP connect under default-deny networking returns io,
-  // while a DNS denial returns perm. Treat both as deny.
-  if ((call === 'sock_connect' || call === 'sock_send') && errno === 'io') return true;
+  // measured: with --net omitted (default-deny) a refused connect AND a refused
+  // resolve both return io; only the explicit dns:deny=*:* rule returns perm.
+  // Treat io on any egress call as deny, or every blocked lookup reads as allowed.
+  if ((call === 'sock_connect' || call === 'sock_send' || call === 'resolve') && errno === 'io') return true;
   return false;
 }
 

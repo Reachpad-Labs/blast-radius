@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark">
-<title>@modelcontextprotocol/server-filesystem — Blast Radius</title>
+<title>@modelcontextprotocol/server-memory — Blast Radius</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 *{box-sizing:border-box}
@@ -10,8 +10,8 @@ header{padding-block:44px 22px;border-bottom:1px solid #2A2E2C}
 .eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;color:#636965;text-transform:uppercase}
 h1{font-family:"JetBrains Mono",monospace;font-size:28px;font-weight:700;margin:10px 0 0;letter-spacing:-.02em;word-break:break-all}
 .ver{color:#8C918C;font-size:13px;font-family:"JetBrains Mono",monospace;margin-top:6px}
-.verdict{margin-top:26px;border:1px solid #E8B339;border-left-width:3px;border-radius:4px;background:#161918;padding:18px 20px}
-.verdict .lvl{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.14em;color:#E8B339}
+.verdict{margin-top:26px;border:1px solid #6EE7A8;border-left-width:3px;border-radius:4px;background:#161918;padding:18px 20px}
+.verdict .lvl{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.14em;color:#6EE7A8}
 .verdict .line{font-size:17px;margin-top:7px}
 table{width:100%;border-collapse:collapse;margin-top:28px}
 td{border-bottom:1px solid #2A2E2C;padding:13px 10px;vertical-align:top;font-size:13.5px}
@@ -25,16 +25,16 @@ footer{margin-top:34px;color:#636965;font-size:12.5px;line-height:1.65}
 </style></head><body><div class="wrap">
 <header>
   <div class="eyebrow">Blast radius</div>
-  <h1>@modelcontextprotocol/server-filesystem</h1>
-  <div class="ver">2026.8.31 · 729dc8511e779e5cd6640851…</div>
+  <h1>@modelcontextprotocol/server-memory</h1>
+  <div class="ver">2026.8.31 · e6a04d5457d2d7d3a8ba33bc…</div>
 </header>
-<div class="verdict"><div class="lvl">WARN</div><div class="line">Read a seeded credential.</div></div>
+<div class="verdict"><div class="lvl">CLEAN</div><div class="line">No credential access and no egress observed.</div></div>
 <table><tr><td class="tier t-trace">FROM TRACE</td>
-    <td class="lab">Reads credentials</td><td class="val" style="color:#F0736A"><code>/home/.ssh/id_ed25519</code> <span class="none">×9</span><br><code>/home/.ssh/id_ed25519.29e062ef88540920e8b13f39ef544e46.tmp</code><br><code>/home/.ssh/id_ed25519.de94a6e92b16e333ea7f72a0c52baca7.tmp</code></td></tr><tr><td class="tier t-trace">FROM TRACE</td>
+    <td class="lab">Reads credentials</td><td class="val" style="color:#6EE7A8"><span class="none">none</span></td></tr><tr><td class="tier t-trace">FROM TRACE</td>
     <td class="lab">Egress attempted</td><td class="val" style="color:#6EE7A8"><span class="none">none</span></td></tr><tr><td class="tier t-trace">FROM TRACE</td>
     <td class="lab">Bytes staged outbound</td><td class="val" style="color:#6EE7A8"><span class="none">0</span></td></tr><tr><td class="tier t-sink">PROVEN AT SINK</td>
     <td class="lab">Canary in payload</td><td class="val" style="color:#6EE7A8"><span class="none">not observed</span></td></tr><tr><td class="tier t-trace">FROM TRACE</td>
-    <td class="lab">Writes outside its own tree</td><td class="val" style="color:#E8B339"><code>/home/.ssh/id_ed25519</code></td></tr><tr><td class="tier t-trace">FROM TRACE</td>
+    <td class="lab">Writes outside its own tree</td><td class="val" style="color:#6EE7A8"><span class="none">none</span></td></tr><tr><td class="tier t-trace">FROM TRACE</td>
     <td class="lab">Runtime fingerprinting</td><td class="val" style="color:#6EE7A8"><span class="none">none</span></td></tr></table>
 <footer>
 Observed in one execution under Wasmer against a canary world. Rows marked FROM TRACE are what the

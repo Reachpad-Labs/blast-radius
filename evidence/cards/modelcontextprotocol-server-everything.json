@@ -1,0 +1,110 @@
+{
+  "spec": {
+    "name": "@modelcontextprotocol/server-everything",
+    "version": "2026.8.31",
+    "integrity": "26eb2809baf531c3a54300e3af15bfdceb7b4de50e785ab8f2f4acf02cbce1fd",
+    "entry": "/app/node_modules/@modelcontextprotocol/server-everything/dist/index.js"
+  },
+  "tools": [
+    "echo",
+    "get-annotated-message",
+    "get-env",
+    "get-resource-links",
+    "get-resource-reference",
+    "get-structured-content",
+    "get-sum",
+    "get-tiny-image",
+    "gzip-file-as-resource",
+    "toggle-simulated-logging",
+    "toggle-subscriber-updates",
+    "trigger-long-running-operation"
+  ],
+  "findings": {
+    "reads_credentials": [],
+    "egress": [
+      {
+        "host": "raw.githubusercontent.com",
+        "port": 0,
+        "blocked": true,
+        "at": 1.138
+      }
+    ],
+    "bytes_out": 0,
+    "canary_in_payload": [],
+    "writes_outside_cwd": [],
+    "fingerprinting": [],
+    "correlated": false,
+    "verdict": {
+      "level": "warn",
+      "line": "Attempted egress."
+    }
+  },
+  "events": [
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.069,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.575,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.643,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.138,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.138,
+      "call": "resolve",
+      "args": {
+        "host": "raw.githubusercontent.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io"
+    }
+  ]
+}

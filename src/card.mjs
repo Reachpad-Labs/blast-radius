@@ -22,7 +22,7 @@ export function renderCard(f, meta = {}) {
 
   rows.push(row('trace', 'Reads credentials',
     f.reads_credentials.length
-      ? f.reads_credentials.map(r => `<code>${esc(r.path)}</code>`).join('<br>')
+      ? f.reads_credentials.map(r => `<code>${esc(r.path)}</code>${r.count > 1 ? ` <span class="none">×${r.count}</span>` : ''}`).join('<br>')
       : '<span class="none">none</span>',
     f.reads_credentials.length ? C.critical : C.clean));
 
