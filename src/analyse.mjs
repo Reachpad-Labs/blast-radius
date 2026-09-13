@@ -31,8 +31,8 @@ export function analyse(events, { sinkHits = [], canaries = {} } = {}) {
       const [host, port] = String(e.args.addr).split(':');
       egress.push({ host, port: port ? Number(port) : null, blocked: e.decision === DECISION.DENY, at: e.ts });
     }
-    if (e.call === 'sock_send' || e.call === 'sock_send_to') {
-      bytes_out += Number(e.args.nsent ?? e.args.bytes_written ?? 0);
+    if (e.call === 'sock_send' || e.call === 'sock_send_to' || e.call === 'fd_write') {
+      bytes_out += Number(e.args.nsent ?? e.args.bytes_written ?? e.args.nwritten ?? 0);
     }
     if ((e.call === 'path_open' || e.call === 'path_open2') && /write|creat|trunc/i.test(JSON.stringify(e.args))) {
       if (p && !p.startsWith('/app')) writes_outside_cwd.push(p);

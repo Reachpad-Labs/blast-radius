@@ -9,7 +9,12 @@ const LINE = /^(\S+)\s+TRACE\s+\S+\s+(\w+):\s+wasmer_wasix::syscalls::(?:wasi|wa
 export const KEEP = new Set([
   'path_open', 'path_open2', 'path_unlink_file', 'path_rename',
   'sock_open', 'sock_connect', 'sock_send', 'sock_send_to', 'resolve',
-  'proc_exec', 'proc_spawn', 'environ_get'
+  'proc_exec', 'proc_spawn', 'environ_get',
+  // Measured: Node does not use sock_send. A socket is an fd like any other and
+  // the payload leaves through fd_write, so the byte count is only visible if
+  // we follow the fd from sock_open/sock_connect. Without this the card says
+  // "0 bytes staged outbound" while 3,203 of them are arriving at the sink.
+  'fd_write'
 ]);
 
 // the runtime and the specimen reading their own code
@@ -45,6 +50,7 @@ function isDeny(call, errno) {
 export function parseTrace(stderrText, { canaries = {} } = {}) {
   const wanted = Object.values(canaries);
   const out = [];
+  const socketFds = new Set();   // fds we saw come back from sock_open/sock_connect
   let t0 = null;
 
   for (const raw of String(stderrText).split('\n')) {
@@ -56,6 +62,12 @@ export function parseTrace(stderrText, { canaries = {} } = {}) {
 
     const args = parseArgs(tail);
     if (args.path && BORING.some(re => re.test(args.path))) continue;
+
+    if ((call === 'sock_open' || call === 'sock_connect') && args.sock != null) socketFds.add(Number(args.sock));
+
+    // fd_write is stdout, stderr and every open file as well as the socket.
+    // Only the socket writes are egress.
+    if (call === 'fd_write' && !socketFds.has(Number(args.fd))) continue;
 
     // A file that is not there was not accessed — unless it was asked for
     // somewhere that only a sweep would look.
