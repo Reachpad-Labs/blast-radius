@@ -148,14 +148,16 @@ Two corrections to the filter came out of this run:
 
 ## Boot coverage, measured
 
-Ten real npm MCP servers, screened for native code (`find specimens/node_modules
+Sixteen real npm MCP servers, screened for native code (`find specimens/node_modules
 -name "*.node"` returns nothing), each fed `initialize` then `tools/list` under
-`wasmer/edgejs@0.2.0` with egress denied. Table and reasons in
+`wasmer/edgejs@0.2.0` with egress denied. The first ten were chosen up front;
+the other six were added by name through `run.mjs`, which now fetches any
+npm package on demand with install scripts disabled. Table and reasons in
 [SPECIMENS.md](../SPECIMENS.md), raw results in `evidence/boot-test.json`,
 per-specimen argv and env in `src/specimens.mjs`.
 
-**8 of 10 boot and list tools**, every one in under a second once the runtime
-is cached. The two that do not are both honest and both interesting:
+**13 of 16 boot and list tools**, every one in about a second once the runtime
+is cached. The ones that do not are all honest and all interesting:
 
 - **`@playwright/mcp`** throws `Error: Unsupported platform: wasi` from inside
   `playwright-core` before the server constructs. It is not our sandbox
@@ -167,6 +169,11 @@ is cached. The two that do not are both honest and both interesting:
   `initialize` it tried to forward. The package itself owns no tools, so the
   only thing installing it gives you locally is a tunnel. That is a card line
   in its own right.
+- **`@sentry/mcp-server`** prints its startup warnings, then goes quiet: no
+  syscalls, no egress attempt, no reply to `initialize`, killed by the
+  timeout. Traced for 40 s to be sure it was idle rather than slow. Edge.js
+  lists `node:diagnostics_channel` among its known gaps and Sentry's SDK leans
+  on it, which is a plausible cause we did not confirm.
 
 Two more traps came out of this run:
 
@@ -281,3 +288,49 @@ things it does not expose that this tool is built on:
 
 The SDK is the right surface for *running* a sandbox from an app. Blast Radius
 *instruments* one, and today that means the CLI.
+
+## Bytes on the wire are `fd_write`, not `sock_send`
+
+The first evidence run (a Python probe) sent with `sock_send`, and the
+analyser summed `nsent`. Node does not: it writes to a connected socket with
+`fd_write` on the socket's fd. Measured on the control specimen with the sink
+allowed:
+
+```
+sock_open:    return=Ok(Errno::success) ... sock=13
+sock_connect: return=Ok(Errno::success) sock=13 addr="127.0.0.1:8099"
+fd_write:     return=Ok(Errno::success) fd=13 nwritten=181
+```
+
+and `sock_send` never appears. So the card for the one specimen that provably
+exfiltrated said "Bytes staged outbound: 0". The parser now remembers which
+fds came from `sock_open`/`sock_accept` (and forgets them on `fd_close`) and
+keeps `fd_write` on those fds only; the analyser sums `nwritten` alongside
+`nsent`. Trap 11: **any per-fd claim needs fd bookkeeping**, and the same
+bookkeeping is what would resolve in-place file writes (see above).
+
+## What the sweep found in the wild
+
+Nothing critical, one thing worth a sentence. `exa-mcp-server` 3.4.1 dials
+two hosts when a tool is called: `api.exa.ai`, which is the product, and
+`api.agnost.ai`, which is an analytics service. Both were refused. The card
+reads "egress attempted: api.exa.ai blocked, api.agnost.ai blocked", which is
+the whole claim: we do not know what it would have sent, because payload bytes
+are not in the trace and egress was denied. That is the difference between
+observed-from-trace and proven-at-sink, on a real package.
+
+Every other third-party server dialed exactly one host, its own vendor's API.
+`mcp-server-kubernetes` dialed nothing and read nothing: it shells out to
+`kubectl`, which is not in the sandbox, so every tool call fails before it
+can do anything. A CLEAN card for a server that could not act is honest at the
+syscall level and says nothing about the package on a real machine; the footer
+on every card says so.
+
+## Fetching on demand, and why install scripts are off
+
+`node run.mjs <package>` now installs a missing package into `specimens/`
+before detonating it, always with `--ignore-scripts`. An npm lifecycle script
+runs on the host, outside the sandbox, with the user's real home directory.
+A package that wants your keys can take them in `postinstall` before we ever
+run it, and the trace would show a clean specimen. The sandbox is the only
+place the package gets to execute.

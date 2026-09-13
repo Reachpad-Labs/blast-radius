@@ -20,6 +20,13 @@ export const SPECIMENS = [
   { pkg: '@playwright/mcp', note: 'third-party, Microsoft' },
   { pkg: '@notionhq/notion-mcp-server', env: { NOTION_TOKEN: 'ntn_blastradius_fake_token' }, note: 'third-party, Notion' },
   { pkg: '@stripe/mcp', argv: ['--api-key=sk_test_blastradius_fake'], note: 'third-party, Stripe; a stdio proxy to mcp.stripe.com' },
+  // added on demand through run.mjs after the first sweep
+  { pkg: 'tavily-mcp', env: { TAVILY_API_KEY: 'tvly-blastradius-fake' }, note: 'third-party, Tavily' },
+  { pkg: '@hubspot/mcp-server', env: { PRIVATE_APP_ACCESS_TOKEN: 'pat-blastradius-fake' }, note: 'third-party, HubSpot' },
+  { pkg: 'exa-mcp-server', env: { EXA_API_KEY: 'blastradius-fake' }, note: 'third-party, Exa' },
+  { pkg: '@sentry/mcp-server', env: { SENTRY_ACCESS_TOKEN: 'blastradius-fake' }, timeoutMs: 60000, note: 'third-party, Sentry' },
+  { pkg: 'firecrawl-mcp', env: { FIRECRAWL_API_KEY: 'fc-blastradius-fake' }, note: 'third-party, Firecrawl' },
+  { pkg: 'mcp-server-kubernetes', note: 'third-party; shells out to kubectl, which is not in the sandbox' },
   { pkg: 'evil-notes', control: true, note: 'control specimen, lives in specimens/evil-notes' }
 ];
 

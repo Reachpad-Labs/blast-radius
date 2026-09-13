@@ -15,7 +15,7 @@
         "host": "127.0.0.1",
         "port": 5432,
         "blocked": true,
-        "at": 0.471
+        "at": 0.37
       }
     ],
     "bytes_out": 0,
@@ -38,7 +38,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.106,
+      "ts": 0.091,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -51,7 +51,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.266,
+      "ts": 0.227,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -59,7 +59,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.398,
+      "ts": 0.314,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -72,7 +72,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.47,
+      "ts": 0.37,
       "call": "sock_open",
       "args": {
         "af": "Addressfamily::Inet4",
@@ -85,7 +85,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.471,
+      "ts": 0.37,
       "call": "sock_connect",
       "args": {
         "addr": "127.0.0.1:5432",
@@ -96,7 +96,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.471,
+      "ts": 0.37,
       "call": "sock_open",
       "args": {
         "af": "Addressfamily::Inet4",

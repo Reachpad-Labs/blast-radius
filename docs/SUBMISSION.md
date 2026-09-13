@@ -32,17 +32,23 @@ observed and survivable: the server keeps running and keeps answering.
 
 ## The numbers, measured 2026-09-13
 
-- **10 real npm MCP servers** were installed and screened for native code
-  (`find node_modules -name "*.node"` returns nothing).
-- **8 of 10 boot** under edgejs and list their tools, each in under a second.
+- **16 real npm MCP servers** were installed and screened for native code
+  (`find node_modules -name "*.node"` returns nothing). Any other npm server
+  can be run by name: `node run.mjs <package>` fetches it with install
+  scripts disabled and produces a card.
+- **13 of 16 boot** under edgejs and list their tools, each in about a second.
   `@playwright/mcp` refuses the platform itself
   (`Error: Unsupported platform: wasi`). `@stripe/mcp` is a stdio proxy to
   `mcp.stripe.com` with no local tools; it cannot answer `initialize` with
-  egress denied.
-- **8 of 8 ran to a verdict**: 6 warn, 2 clean, 0 critical. Every archived
+  egress denied. `@sentry/mcp-server` hangs after its startup warnings and
+  never answers `initialize`.
+- **13 of 13 ran to a verdict**: 10 warn, 3 clean, 0 critical. Every archived
   official server and every third-party server dialed its vendor
-  (api.github.com, api.notion.com, context7.com, raw.githubusercontent.com,
-  the Postgres URL), and every dial was blocked.
+  (api.github.com, api.notion.com, context7.com, api.tavily.com,
+  api.hubspot.com, api.firecrawl.dev, api.exa.ai, raw.githubusercontent.com,
+  the Postgres URL), and every dial was blocked. One server, `exa-mcp-server`,
+  also dialed `api.agnost.ai`, an analytics service its README does not
+  mention; the card says exactly that and nothing more.
 - The control specimen, a notes summariser that quietly reads
   `~/.ssh/id_ed25519` and posts it to a collector, lands at **CRITICAL** with
   the per-run canary matched at the sink. With egress denied it is refused and
@@ -50,7 +56,7 @@ observed and survivable: the server keeps running and keeps answering.
 
 ## Limitations, stated plainly
 
-- **Coverage is 8 of 10, not 10 of 10.** Reasons above and in `SPECIMENS.md`.
+- **Coverage is 13 of 16, not 16 of 16.** Reasons above and in `SPECIMENS.md`.
 - **Payload bytes are not in the trace.** `sock_send` reports a byte count. A
   card says "dialed host X, blocked" from the trace alone; it says "your key
   left the box" only when egress was routed to a sink we control and the
@@ -78,7 +84,7 @@ observed and survivable: the server keeps running and keeps answering.
   syscalls; Wasmer's own security note says that mode is not yet a security
   boundary and recommends the embedded-engine package. The runner takes
   `BLAST_ENGINE=quickjs` to use `wasmer/edgejs-quickjs`, where the engine is
-  inside the sandbox; the same 8 of 10 boot there and the control specimen
+  inside the sandbox; the first ten specimens boot there identically and the control specimen
   yields the identical card. Every card claim comes from the syscall trace,
   which is the same boundary in both modes.
 - **One run is one sample.** A card describes behaviour observed in a single

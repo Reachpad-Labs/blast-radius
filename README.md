@@ -21,7 +21,7 @@ Everything below was verified on a real run today. Evidence is in `evidence/`.
 | Question | Answer |
 | --- | --- |
 | Do real npm MCP servers run under Wasmer? | **Yes.** `@modelcontextprotocol/server-memory` boots, completes the MCP handshake, lists 9 tools. |
-| How many real ones boot? | **8 of 10**, each in under a second. The two that do not, with reasons, in [SPECIMENS.md](SPECIMENS.md). |
+| How many real ones boot? | **13 of 16**, each in about a second. The ones that do not, with reasons, in [SPECIMENS.md](SPECIMENS.md). |
 | Can we see file access? | **Yes, with full paths.** |
 | Can we see network destinations? | **Yes, host and address.** |
 | Can we see payload bytes? | **No** — size only. Payload proof needs a sink we control. |
@@ -110,13 +110,26 @@ docs/            findings and diagrams
 
 ## Run it
 
+Any npm MCP server, by name. It is fetched into `specimens/` on demand with
+install scripts disabled (a postinstall runs on your machine, not in the
+sandbox, and that is exactly the kind of thing we are here to measure), then
+booted, enumerated, provoked and scored.
+
 ```sh
+node run.mjs tavily-mcp --env TAVILY_API_KEY=fake      # any package; keys are fakes, egress is denied
 node run.mjs @modelcontextprotocol/server-filesystem   # one card, scan mode
 node run.mjs evil-notes --allow-sink                  # with harness/sink.mjs running
 node harness/boot-test.mjs                            # who boots -> SPECIMENS.md
 node harness/sweep.mjs                                # every booted server -> evidence/cards/
-BLAST_ENGINE=quickjs node run.mjs evil-notes           # engine inside the sandbox too (slower)
+node run.mjs evil-notes --engine quickjs               # engine inside the sandbox too (slower)
 ```
+
+`--env K=V` and `--arg X` repeat. What a server needs to boot is recorded in
+`src/specimens.mjs` once known, so the sweep can run it without flags.
+
+What "any" covers: Node servers that speak MCP over stdio and have no native
+addon. Not Python servers, not packages with `.node` binaries, not servers that
+only listen on HTTP. `SPECIMENS.md` and `docs/FINDINGS.md` have the reasons.
 
 Cards render from the JSON beside them, so the demo never depends on a live
 detonation. [SPECIMENS.md](SPECIMENS.md) is the coverage table with reasons;

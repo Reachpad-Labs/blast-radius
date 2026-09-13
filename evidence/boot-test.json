@@ -1,5 +1,5 @@
 {
-  "ran": "2026-09-13T21:10:02.485Z",
+  "ran": "2026-09-13T21:48:06.761Z",
   "results": [
     {
       "pkg": "@modelcontextprotocol/server-memory",
@@ -21,7 +21,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 987,
+      "ms": 409,
       "note": "official"
     },
     {
@@ -49,7 +49,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 513,
+      "ms": 436,
       "note": "official; allowed roots are argv"
     },
     {
@@ -75,7 +75,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 495,
+      "ms": 451,
       "note": "official reference server"
     },
     {
@@ -90,7 +90,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 424,
+      "ms": 401,
       "note": "official"
     },
     {
@@ -130,7 +130,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 368,
+      "ms": 327,
       "note": "official, archived upstream; token from env"
     },
     {
@@ -145,7 +145,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 240,
+      "ms": 214,
       "note": "official, archived upstream; DB url is argv"
     },
     {
@@ -161,7 +161,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 862,
+      "ms": 749,
       "note": "third-party, Upstash"
     },
     {
@@ -174,7 +174,7 @@
       "toolNames": [],
       "exitCode": 1,
       "reason": "Error: Unsupported platform: wasi",
-      "ms": 434,
+      "ms": 395,
       "note": "third-party, Microsoft"
     },
     {
@@ -212,7 +212,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 322,
+      "ms": 295,
       "note": "third-party, Notion"
     },
     {
@@ -225,8 +225,169 @@
       "toolNames": [],
       "exitCode": 0,
       "reason": "Error: getaddrinfo ENOTFOUND mcp.stripe.com",
-      "ms": 359,
+      "ms": 432,
       "note": "third-party, Stripe; a stdio proxy to mcp.stripe.com"
+    },
+    {
+      "pkg": "tavily-mcp",
+      "name": "tavily-mcp",
+      "version": "0.2.22",
+      "integrity": "b7b031f5e6b44774f16f5f7c6519a793ad4cbd6bee2dacaac02793d995ab9edc",
+      "booted": true,
+      "tools": 5,
+      "toolNames": [
+        "tavily_search",
+        "tavily_extract",
+        "tavily_crawl",
+        "tavily_map",
+        "tavily_research"
+      ],
+      "exitCode": 0,
+      "reason": "",
+      "ms": 656,
+      "note": "third-party, Tavily"
+    },
+    {
+      "pkg": "@hubspot/mcp-server",
+      "name": "@hubspot/mcp-server",
+      "version": "0.4.0",
+      "integrity": "080dceca966b0c61744f532e566f8b1bdc3786a7a2bea3d08aa80a7a53373d23",
+      "booted": true,
+      "tools": 21,
+      "toolNames": [
+        "hubspot-get-user-details",
+        "hubspot-list-objects",
+        "hubspot-search-objects",
+        "hubspot-batch-create-associations",
+        "hubspot-get-association-definitions",
+        "hubspot-list-associations",
+        "hubspot-batch-create-objects",
+        "hubspot-batch-update-objects",
+        "hubspot-batch-read-objects",
+        "hubspot-list-properties",
+        "hubspot-get-property",
+        "hubspot-create-property",
+        "hubspot-update-property",
+        "hubspot-create-engagement",
+        "hubspot-get-engagement",
+        "hubspot-update-engagement",
+        "hubspot-generate-feedback-link",
+        "hubspot-get-schemas",
+        "hubspot-get-link",
+        "hubspot-list-workflows",
+        "hubspot-get-workflow"
+      ],
+      "exitCode": 0,
+      "reason": "",
+      "ms": 467,
+      "note": "third-party, HubSpot"
+    },
+    {
+      "pkg": "exa-mcp-server",
+      "name": "exa-mcp-server",
+      "version": "3.4.1",
+      "integrity": "208859af71bb9329ad0d1d781ecb301f983b970ba917b85b795c344ad615f6d3",
+      "booted": true,
+      "tools": 2,
+      "toolNames": [
+        "web_search_exa",
+        "web_fetch_exa"
+      ],
+      "exitCode": 0,
+      "reason": "",
+      "ms": 264,
+      "note": "third-party, Exa"
+    },
+    {
+      "pkg": "@sentry/mcp-server",
+      "name": "@sentry/mcp-server",
+      "version": "0.39.0",
+      "integrity": "e83838a545f0556f79a8ac0db1bb9ced9ad4214f11bdfdc5911e4b0140a888af",
+      "booted": false,
+      "tools": null,
+      "toolNames": [],
+      "exitCode": null,
+      "reason": "hung: no initialize reply within 60s, killed — Warning: No LLM API key found (OPENAI_API_KEY, ANTHROPIC_API_KEY, or OPENROUTER_API_KEY). | AI-powered search tools will be unavailable.",
+      "ms": 60030,
+      "note": "third-party, Sentry"
+    },
+    {
+      "pkg": "firecrawl-mcp",
+      "name": "firecrawl-mcp",
+      "version": "3.24.0",
+      "integrity": "983ad26c834ceef34f6b3d2a5cf8e1974230668d467566e094402a6d372a937e",
+      "booted": true,
+      "tools": 27,
+      "toolNames": [
+        "firecrawl_scrape",
+        "firecrawl_map",
+        "firecrawl_search",
+        "firecrawl_search_feedback",
+        "firecrawl_feedback",
+        "firecrawl_crawl",
+        "firecrawl_check_crawl_status",
+        "firecrawl_extract",
+        "firecrawl_agent",
+        "firecrawl_agent_status",
+        "firecrawl_interact",
+        "firecrawl_interact_stop",
+        "firecrawl_parse",
+        "firecrawl_monitor_create",
+        "firecrawl_monitor_list",
+        "firecrawl_monitor_get",
+        "firecrawl_monitor_update",
+        "firecrawl_monitor_delete",
+        "firecrawl_monitor_run",
+        "firecrawl_monitor_checks",
+        "firecrawl_monitor_check",
+        "firecrawl_research_search_papers",
+        "firecrawl_research_inspect_paper",
+        "firecrawl_research_related_papers",
+        "firecrawl_research_read_paper",
+        "firecrawl_research_search_github",
+        "firecrawl_developer_search"
+      ],
+      "exitCode": 0,
+      "reason": "",
+      "ms": 995,
+      "note": "third-party, Firecrawl"
+    },
+    {
+      "pkg": "mcp-server-kubernetes",
+      "name": "mcp-server-kubernetes",
+      "version": "4.1.6",
+      "integrity": "a11aea2d3218b6ac843858b1c2f0b4035431ffe73118807a613e888a518d89d5",
+      "booted": true,
+      "tools": 23,
+      "toolNames": [
+        "cleanup",
+        "kubectl_get",
+        "kubectl_describe",
+        "kubectl_apply",
+        "kubectl_delete",
+        "kubectl_create",
+        "kubectl_logs",
+        "kubectl_scale",
+        "kubectl_patch",
+        "kubectl_rollout",
+        "kubectl_context",
+        "kubectl_reconnect",
+        "explain_resource",
+        "install_helm_chart",
+        "upgrade_helm_chart",
+        "uninstall_helm_chart",
+        "node_management",
+        "port_forward",
+        "stop_port_forward",
+        "exec_in_pod",
+        "list_api_resources",
+        "kubectl_generic",
+        "ping"
+      ],
+      "exitCode": 0,
+      "reason": "",
+      "ms": 4639,
+      "note": "third-party; shells out to kubectl, which is not in the sandbox"
     }
   ]
 }

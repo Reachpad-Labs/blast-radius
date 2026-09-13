@@ -56,7 +56,7 @@ for (const s of SPECIMENS) {
     booted, tools: Array.isArray(tools) ? tools.length : null,
     toolNames: Array.isArray(tools) ? tools.map(t => t.name) : [],
     exitCode: r.exitCode,
-    reason: booted && Array.isArray(tools) ? '' : (list?.error?.message || reason(r.stderr) || `no JSON-RPC reply (exit ${r.exitCode})`),
+    reason: booted && Array.isArray(tools) ? '' : (r.exitCode === null ? `hung: no initialize reply within ${((s.timeoutMs || 240000) / 1000)}s, killed` + (reason(r.stderr) ? ' — ' + reason(r.stderr) : '') : (list?.error?.message || reason(r.stderr) || `no JSON-RPC reply (exit ${r.exitCode})`)),
     ms: Date.now() - t0,
     note: s.note || ''
   };

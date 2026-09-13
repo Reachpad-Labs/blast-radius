@@ -1,22 +1,28 @@
 {
   "spec": {
-    "name": "@upstash/context7-mcp",
-    "version": "4.1.0",
-    "integrity": "932b01c5ce5a85e9d6bca61afe78f4694c99bab2d5636f92296ed5ad902e374d",
-    "entry": "/app/node_modules/@upstash/context7-mcp/dist/index.js"
+    "name": "exa-mcp-server",
+    "version": "3.4.1",
+    "integrity": "208859af71bb9329ad0d1d781ecb301f983b970ba917b85b795c344ad615f6d3",
+    "entry": "/app/node_modules/exa-mcp-server/dist/stdio.cjs"
   },
   "tools": [
-    "resolve-library-id",
-    "query-docs"
+    "web_search_exa",
+    "web_fetch_exa"
   ],
   "findings": {
     "reads_credentials": [],
     "egress": [
       {
-        "host": "context7.com",
+        "host": "api.exa.ai",
         "port": 0,
         "blocked": true,
-        "at": 1.808
+        "at": 0.49
+      },
+      {
+        "host": "api.agnost.ai",
+        "port": 0,
+        "blocked": true,
+        "at": 0.504
       }
     ],
     "bytes_out": 0,
@@ -39,7 +45,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.242,
+      "ts": 0.115,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -52,7 +58,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.01,
+      "ts": 0.276,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -60,7 +66,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.193,
+      "ts": 0.389,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -73,7 +79,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.808,
+      "ts": 0.49,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -86,10 +92,10 @@
       "errno": "success"
     },
     {
-      "ts": 1.808,
+      "ts": 0.49,
       "call": "resolve",
       "args": {
-        "host": "context7.com",
+        "host": "api.exa.ai",
         "port": 0
       },
       "canary_hit": null,
@@ -97,7 +103,7 @@
       "errno": "io"
     },
     {
-      "ts": 1.81,
+      "ts": 0.492,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -110,10 +116,34 @@
       "errno": "success"
     },
     {
-      "ts": 1.81,
+      "ts": 0.492,
       "call": "resolve",
       "args": {
-        "host": "context7.com",
+        "host": "api.exa.ai",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io"
+    },
+    {
+      "ts": 0.504,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.504,
+      "call": "resolve",
+      "args": {
+        "host": "api.agnost.ai",
         "port": 0
       },
       "canary_hit": null,

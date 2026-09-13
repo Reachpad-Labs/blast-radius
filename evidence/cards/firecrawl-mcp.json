@@ -1,44 +1,47 @@
 {
   "spec": {
-    "name": "@notionhq/notion-mcp-server",
-    "version": "2.5.1",
-    "integrity": "70a958eff66104a3a76857a63206e8494548e9358031907905bcdadd52cb72b0",
-    "entry": "/app/node_modules/@notionhq/notion-mcp-server/bin/cli.mjs"
+    "name": "firecrawl-mcp",
+    "version": "3.24.0",
+    "integrity": "983ad26c834ceef34f6b3d2a5cf8e1974230668d467566e094402a6d372a937e",
+    "entry": "/app/node_modules/firecrawl-mcp/dist/index.js"
   },
   "tools": [
-    "API-get-user",
-    "API-get-users",
-    "API-get-self",
-    "API-post-search",
-    "API-get-block-children",
-    "API-patch-block-children",
-    "API-retrieve-a-block",
-    "API-update-a-block",
-    "API-delete-a-block",
-    "API-retrieve-a-page",
-    "API-patch-page",
-    "API-post-page",
-    "API-retrieve-a-page-property",
-    "API-retrieve-a-comment",
-    "API-create-a-comment",
-    "API-query-data-source",
-    "API-retrieve-a-data-source",
-    "API-update-a-data-source",
-    "API-create-a-data-source",
-    "API-list-data-source-templates",
-    "API-retrieve-a-database",
-    "API-move-page",
-    "API-retrieve-page-markdown",
-    "API-update-page-markdown"
+    "firecrawl_scrape",
+    "firecrawl_map",
+    "firecrawl_search",
+    "firecrawl_search_feedback",
+    "firecrawl_feedback",
+    "firecrawl_crawl",
+    "firecrawl_check_crawl_status",
+    "firecrawl_extract",
+    "firecrawl_agent",
+    "firecrawl_agent_status",
+    "firecrawl_interact",
+    "firecrawl_interact_stop",
+    "firecrawl_parse",
+    "firecrawl_monitor_create",
+    "firecrawl_monitor_list",
+    "firecrawl_monitor_get",
+    "firecrawl_monitor_update",
+    "firecrawl_monitor_delete",
+    "firecrawl_monitor_run",
+    "firecrawl_monitor_checks",
+    "firecrawl_monitor_check",
+    "firecrawl_research_search_papers",
+    "firecrawl_research_inspect_paper",
+    "firecrawl_research_related_papers",
+    "firecrawl_research_read_paper",
+    "firecrawl_research_search_github",
+    "firecrawl_developer_search"
   ],
   "findings": {
     "reads_credentials": [],
     "egress": [
       {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0,
         "blocked": true,
-        "at": 0.531
+        "at": 2.173
       }
     ],
     "bytes_out": 0,
@@ -61,7 +64,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.092,
+      "ts": 0.155,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -74,7 +77,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.297,
+      "ts": 1.205,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -82,7 +85,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.388,
+      "ts": 1.354,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -95,7 +98,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.531,
+      "ts": 2.173,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -108,10 +111,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.531,
+      "ts": 2.173,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -119,7 +122,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.534,
+      "ts": 2.176,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -132,10 +135,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.534,
+      "ts": 2.176,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -143,7 +146,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.535,
+      "ts": 2.178,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -156,10 +159,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.535,
+      "ts": 2.178,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -167,7 +170,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.536,
+      "ts": 2.18,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -180,10 +183,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.536,
+      "ts": 2.18,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -191,7 +194,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.538,
+      "ts": 2.181,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -204,10 +207,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.538,
+      "ts": 2.181,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -215,7 +218,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.539,
+      "ts": 2.183,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -228,10 +231,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.539,
+      "ts": 2.183,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -239,7 +242,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.54,
+      "ts": 2.188,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -252,10 +255,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.54,
+      "ts": 2.188,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -263,7 +266,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.541,
+      "ts": 2.189,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -276,10 +279,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.541,
+      "ts": 2.189,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -287,7 +290,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.542,
+      "ts": 2.191,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -300,10 +303,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.542,
+      "ts": 2.191,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -311,7 +314,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.544,
+      "ts": 2.192,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -324,10 +327,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.544,
+      "ts": 2.192,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -335,7 +338,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.545,
+      "ts": 2.193,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -348,10 +351,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.545,
+      "ts": 2.193,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -359,7 +362,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.546,
+      "ts": 2.194,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -372,10 +375,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.546,
+      "ts": 2.194,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -383,7 +386,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.546,
+      "ts": 2.196,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -396,10 +399,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.546,
+      "ts": 2.196,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -407,7 +410,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.548,
+      "ts": 2.197,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -420,10 +423,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.548,
+      "ts": 2.197,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -431,7 +434,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.549,
+      "ts": 2.198,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -444,10 +447,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.549,
+      "ts": 2.198,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -455,7 +458,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.549,
+      "ts": 2.199,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -468,10 +471,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.55,
+      "ts": 2.199,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -479,7 +482,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.55,
+      "ts": 2.2,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -492,10 +495,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.55,
+      "ts": 2.2,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,
@@ -503,7 +506,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.551,
+      "ts": 2.201,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -516,154 +519,10 @@
       "errno": "success"
     },
     {
-      "ts": 0.551,
+      "ts": 2.201,
       "call": "resolve",
       "args": {
-        "host": "api.notion.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.552,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success"
-    },
-    {
-      "ts": 0.552,
-      "call": "resolve",
-      "args": {
-        "host": "api.notion.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.553,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success"
-    },
-    {
-      "ts": 0.553,
-      "call": "resolve",
-      "args": {
-        "host": "api.notion.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.554,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success"
-    },
-    {
-      "ts": 0.554,
-      "call": "resolve",
-      "args": {
-        "host": "api.notion.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.555,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success"
-    },
-    {
-      "ts": 0.555,
-      "call": "resolve",
-      "args": {
-        "host": "api.notion.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.555,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success"
-    },
-    {
-      "ts": 0.556,
-      "call": "resolve",
-      "args": {
-        "host": "api.notion.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.556,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success"
-    },
-    {
-      "ts": 0.556,
-      "call": "resolve",
-      "args": {
-        "host": "api.notion.com",
+        "host": "api.firecrawl.dev",
         "port": 0
       },
       "canary_hit": null,

@@ -31,7 +31,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.308,
+      "ts": 0.274,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -44,7 +44,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.526,
+      "ts": 0.48,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -52,7 +52,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.814,
+      "ts": 0.746,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",

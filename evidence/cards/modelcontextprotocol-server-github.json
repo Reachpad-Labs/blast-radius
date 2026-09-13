@@ -40,7 +40,7 @@
         "host": "api.github.com",
         "port": 0,
         "blocked": true,
-        "at": 0.788
+        "at": 0.676
       }
     ],
     "bytes_out": 0,
@@ -63,7 +63,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.095,
+      "ts": 0.11,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -76,7 +76,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.384,
+      "ts": 0.382,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -84,7 +84,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.492,
+      "ts": 0.468,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -97,7 +97,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.788,
+      "ts": 0.676,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -110,7 +110,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.788,
+      "ts": 0.676,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -121,7 +121,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.791,
+      "ts": 0.678,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -134,7 +134,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.792,
+      "ts": 0.678,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -145,7 +145,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.794,
+      "ts": 0.681,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -158,7 +158,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.794,
+      "ts": 0.681,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -169,7 +169,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.797,
+      "ts": 0.683,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -182,7 +182,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.797,
+      "ts": 0.683,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -193,7 +193,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.798,
+      "ts": 0.685,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -206,7 +206,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.798,
+      "ts": 0.685,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -217,7 +217,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.8,
+      "ts": 0.686,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -230,7 +230,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.8,
+      "ts": 0.686,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -241,7 +241,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.801,
+      "ts": 0.687,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -254,7 +254,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.801,
+      "ts": 0.687,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -265,7 +265,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.803,
+      "ts": 0.688,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -278,7 +278,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.803,
+      "ts": 0.688,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -289,7 +289,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.804,
+      "ts": 0.689,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -302,7 +302,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.804,
+      "ts": 0.689,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -313,7 +313,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.805,
+      "ts": 0.69,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -326,7 +326,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.805,
+      "ts": 0.69,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -337,7 +337,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.806,
+      "ts": 0.691,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -350,7 +350,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.806,
+      "ts": 0.691,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -361,7 +361,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.807,
+      "ts": 0.692,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -374,7 +374,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.807,
+      "ts": 0.692,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -385,7 +385,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.808,
+      "ts": 0.693,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -398,7 +398,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.808,
+      "ts": 0.693,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -409,7 +409,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.81,
+      "ts": 0.694,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -422,7 +422,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.81,
+      "ts": 0.694,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -433,7 +433,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.81,
+      "ts": 0.695,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -446,7 +446,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.81,
+      "ts": 0.695,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -457,7 +457,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.811,
+      "ts": 0.696,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -470,7 +470,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.811,
+      "ts": 0.696,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -481,7 +481,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.812,
+      "ts": 0.697,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -494,7 +494,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.812,
+      "ts": 0.697,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -505,7 +505,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.813,
+      "ts": 0.698,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -518,7 +518,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.813,
+      "ts": 0.698,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -529,7 +529,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.814,
+      "ts": 0.699,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -542,7 +542,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.814,
+      "ts": 0.699,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -553,7 +553,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.815,
+      "ts": 0.699,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -566,7 +566,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.815,
+      "ts": 0.699,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -577,7 +577,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.816,
+      "ts": 0.7,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -590,7 +590,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.816,
+      "ts": 0.7,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -601,7 +601,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.816,
+      "ts": 0.701,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -614,7 +614,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.816,
+      "ts": 0.701,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -625,7 +625,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.817,
+      "ts": 0.701,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -638,7 +638,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.817,
+      "ts": 0.701,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -649,7 +649,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.818,
+      "ts": 0.702,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -662,7 +662,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.818,
+      "ts": 0.702,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -673,7 +673,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.822,
+      "ts": 0.706,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -686,7 +686,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.822,
+      "ts": 0.706,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -697,7 +697,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.825,
+      "ts": 0.708,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -710,7 +710,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.825,
+      "ts": 0.708,
       "call": "resolve",
       "args": {
         "host": "api.github.com",

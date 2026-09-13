@@ -26,19 +26,19 @@
       {
         "path": "/home/.ssh/id_ed25519",
         "canary": null,
-        "at": 1.302,
+        "at": 0.993,
         "count": 9
       },
       {
-        "path": "/home/.ssh/id_ed25519.29e062ef88540920e8b13f39ef544e46.tmp",
+        "path": "/home/.ssh/id_ed25519.f36e7fbf21e0b8955d07586b64272ee2.tmp",
         "canary": null,
-        "at": 1.324,
+        "at": 1,
         "count": 1
       },
       {
-        "path": "/home/.ssh/id_ed25519.de94a6e92b16e333ea7f72a0c52baca7.tmp",
+        "path": "/home/.ssh/id_ed25519.4d32d468d9ddf0cb3320a5789f365b24.tmp",
         "canary": null,
-        "at": 1.332,
+        "at": 1.005,
         "count": 1
       }
     ],
@@ -65,7 +65,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.366,
+      "ts": 0.298,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -78,7 +78,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.7,
+      "ts": 0.552,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -86,7 +86,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.085,
+      "ts": 0.816,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -99,7 +99,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.302,
+      "ts": 0.993,
       "call": "path_open2",
       "args": {
         "path": "/home/.ssh/id_ed25519",
@@ -112,7 +112,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.302,
+      "ts": 0.993,
       "call": "path_open2",
       "args": {
         "path": "/home/.ssh/id_ed25519",
@@ -125,7 +125,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.303,
+      "ts": 0.993,
       "call": "path_open2",
       "args": {
         "path": "/home/.ssh/id_ed25519",
@@ -137,7 +137,7 @@
       "errno": "exist"
     },
     {
-      "ts": 1.303,
+      "ts": 0.994,
       "call": "path_open2",
       "args": {
         "path": "/home/.ssh/id_ed25519",
@@ -150,7 +150,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.304,
+      "ts": 0.994,
       "call": "path_open2",
       "args": {
         "path": "/home/.ssh/id_ed25519",
@@ -162,7 +162,7 @@
       "errno": "notdir"
     },
     {
-      "ts": 1.304,
+      "ts": 0.994,
       "call": "path_open2",
       "args": {
         "path": "/home/.ssh/id_ed25519",
@@ -174,7 +174,7 @@
       "errno": "notdir"
     },
     {
-      "ts": 1.304,
+      "ts": 0.994,
       "call": "path_open2",
       "args": {
         "path": "/home/.ssh/id_ed25519",
@@ -186,7 +186,7 @@
       "errno": "notdir"
     },
     {
-      "ts": 1.304,
+      "ts": 0.994,
       "call": "path_open2",
       "args": {
         "path": "/home/.ssh/id_ed25519",
@@ -198,7 +198,7 @@
       "errno": "notdir"
     },
     {
-      "ts": 1.305,
+      "ts": 0.995,
       "call": "path_open2",
       "args": {
         "path": "/home",
@@ -211,7 +211,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.308,
+      "ts": 0.996,
       "call": "path_open2",
       "args": {
         "path": "/home",
@@ -224,7 +224,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.31,
+      "ts": 0.996,
       "call": "path_open2",
       "args": {
         "path": "/home/.ssh/id_ed25519",
@@ -237,10 +237,10 @@
       "errno": "success"
     },
     {
-      "ts": 1.324,
+      "ts": 1,
       "call": "path_open2",
       "args": {
-        "path": "/home/.ssh/id_ed25519.29e062ef88540920e8b13f39ef544e46.tmp",
+        "path": "/home/.ssh/id_ed25519.f36e7fbf21e0b8955d07586b64272ee2.tmp",
         "dirfd": 5,
         "follow_symlinks": "true",
         "ret_fd": 17
@@ -250,10 +250,10 @@
       "errno": "success"
     },
     {
-      "ts": 1.332,
+      "ts": 1.005,
       "call": "path_open2",
       "args": {
-        "path": "/home/.ssh/id_ed25519.de94a6e92b16e333ea7f72a0c52baca7.tmp",
+        "path": "/home/.ssh/id_ed25519.4d32d468d9ddf0cb3320a5789f365b24.tmp",
         "dirfd": 5,
         "follow_symlinks": "true",
         "ret_fd": 13
@@ -263,10 +263,10 @@
       "errno": "success"
     },
     {
-      "ts": 1.333,
+      "ts": 1.005,
       "call": "path_rename",
       "args": {
-        "old_path": "/home/.ssh/id_ed25519.29e062ef88540920e8b13f39ef544e46.tmp",
+        "old_path": "/home/.ssh/id_ed25519.f36e7fbf21e0b8955d07586b64272ee2.tmp",
         "new_path": "/home/.ssh/id_ed25519",
         "old_fd": 5,
         "new_fd": 5
@@ -276,10 +276,10 @@
       "errno": "success"
     },
     {
-      "ts": 1.334,
+      "ts": 1.006,
       "call": "path_rename",
       "args": {
-        "old_path": "/home/.ssh/id_ed25519.de94a6e92b16e333ea7f72a0c52baca7.tmp",
+        "old_path": "/home/.ssh/id_ed25519.4d32d468d9ddf0cb3320a5789f365b24.tmp",
         "new_path": "/home/.ssh/id_ed25519",
         "old_fd": 5,
         "new_fd": 5

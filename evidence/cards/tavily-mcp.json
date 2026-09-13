@@ -1,22 +1,25 @@
 {
   "spec": {
-    "name": "@upstash/context7-mcp",
-    "version": "4.1.0",
-    "integrity": "932b01c5ce5a85e9d6bca61afe78f4694c99bab2d5636f92296ed5ad902e374d",
-    "entry": "/app/node_modules/@upstash/context7-mcp/dist/index.js"
+    "name": "tavily-mcp",
+    "version": "0.2.22",
+    "integrity": "b7b031f5e6b44774f16f5f7c6519a793ad4cbd6bee2dacaac02793d995ab9edc",
+    "entry": "/app/node_modules/tavily-mcp/build/index.js"
   },
   "tools": [
-    "resolve-library-id",
-    "query-docs"
+    "tavily_search",
+    "tavily_extract",
+    "tavily_crawl",
+    "tavily_map",
+    "tavily_research"
   ],
   "findings": {
     "reads_credentials": [],
     "egress": [
       {
-        "host": "context7.com",
+        "host": "api.tavily.com",
         "port": 0,
         "blocked": true,
-        "at": 1.808
+        "at": 1.463
       }
     ],
     "bytes_out": 0,
@@ -39,7 +42,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.242,
+      "ts": 0.268,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -52,7 +55,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.01,
+      "ts": 0.775,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -60,7 +63,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.193,
+      "ts": 1.037,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -73,7 +76,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.808,
+      "ts": 1.463,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -86,10 +89,10 @@
       "errno": "success"
     },
     {
-      "ts": 1.808,
+      "ts": 1.463,
       "call": "resolve",
       "args": {
-        "host": "context7.com",
+        "host": "api.tavily.com",
         "port": 0
       },
       "canary_hit": null,
@@ -97,7 +100,7 @@
       "errno": "io"
     },
     {
-      "ts": 1.81,
+      "ts": 1.466,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -110,10 +113,82 @@
       "errno": "success"
     },
     {
-      "ts": 1.81,
+      "ts": 1.466,
       "call": "resolve",
       "args": {
-        "host": "context7.com",
+        "host": "api.tavily.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io"
+    },
+    {
+      "ts": 1.467,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.468,
+      "call": "resolve",
+      "args": {
+        "host": "api.tavily.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io"
+    },
+    {
+      "ts": 1.469,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.469,
+      "call": "resolve",
+      "args": {
+        "host": "api.tavily.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io"
+    },
+    {
+      "ts": 1.47,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.47,
+      "call": "resolve",
+      "args": {
+        "host": "api.tavily.com",
         "port": 0
       },
       "canary_hit": null,

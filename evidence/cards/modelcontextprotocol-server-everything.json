@@ -26,7 +26,7 @@
         "host": "raw.githubusercontent.com",
         "port": 0,
         "blocked": true,
-        "at": 1.138
+        "at": 1.207
       }
     ],
     "bytes_out": 0,
@@ -49,7 +49,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.069,
+      "ts": 0.066,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -62,7 +62,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.575,
+      "ts": 0.641,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -70,7 +70,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.643,
+      "ts": 0.711,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -83,7 +83,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.138,
+      "ts": 1.207,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -96,7 +96,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.138,
+      "ts": 1.207,
       "call": "resolve",
       "args": {
         "host": "raw.githubusercontent.com",

@@ -13,7 +13,8 @@
       {
         "path": "/home/.ssh/id_ed25519",
         "canary": null,
-        "at": 2.668
+        "at": 0.984,
+        "count": 1
       }
     ],
     "egress": [
@@ -21,12 +22,12 @@
         "host": "127.0.0.1",
         "port": 8099,
         "blocked": false,
-        "at": 2.675
+        "at": 0.985
       }
     ],
-    "bytes_out": 0,
+    "bytes_out": 188,
     "canary_in_payload": [
-      "CANARY-efbe3fe4"
+      "CANARY-87b91cb3"
     ],
     "writes_outside_cwd": [],
     "fingerprinting": [],
@@ -39,6 +40,14 @@
   "events": [
     {
       "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.406,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -51,7 +60,15 @@
       "errno": "success"
     },
     {
-      "ts": 2.226,
+      "ts": 0.61,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.871,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -64,7 +81,7 @@
       "errno": "success"
     },
     {
-      "ts": 2.668,
+      "ts": 0.984,
       "call": "path_open2",
       "args": {
         "path": "/home/.ssh/id_ed25519",
@@ -77,7 +94,7 @@
       "errno": "success"
     },
     {
-      "ts": 2.675,
+      "ts": 0.985,
       "call": "sock_open",
       "args": {
         "af": "Addressfamily::Inet4",
@@ -90,11 +107,23 @@
       "errno": "success"
     },
     {
-      "ts": 2.675,
+      "ts": 0.985,
       "call": "sock_connect",
       "args": {
         "addr": "127.0.0.1:8099",
         "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.986,
+      "call": "fd_write",
+      "args": {
+        "fd": 13,
+        "nwritten": 188,
+        "socket": true
       },
       "canary_hit": null,
       "decision": "allow",

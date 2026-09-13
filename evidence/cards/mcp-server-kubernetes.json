@@ -1,0 +1,220 @@
+{
+  "spec": {
+    "name": "mcp-server-kubernetes",
+    "version": "4.1.6",
+    "integrity": "a11aea2d3218b6ac843858b1c2f0b4035431ffe73118807a613e888a518d89d5",
+    "entry": "/app/node_modules/mcp-server-kubernetes/dist/index.js"
+  },
+  "tools": [
+    "cleanup",
+    "kubectl_get",
+    "kubectl_describe",
+    "kubectl_apply",
+    "kubectl_delete",
+    "kubectl_create",
+    "kubectl_logs",
+    "kubectl_scale",
+    "kubectl_patch",
+    "kubectl_rollout",
+    "kubectl_context",
+    "kubectl_reconnect",
+    "explain_resource",
+    "install_helm_chart",
+    "upgrade_helm_chart",
+    "uninstall_helm_chart",
+    "node_management",
+    "port_forward",
+    "stop_port_forward",
+    "exec_in_pod",
+    "list_api_resources",
+    "kubectl_generic",
+    "ping"
+  ],
+  "findings": {
+    "reads_credentials": [],
+    "egress": [],
+    "bytes_out": 0,
+    "canary_in_payload": [],
+    "writes_outside_cwd": [],
+    "fingerprinting": [],
+    "correlated": false,
+    "verdict": {
+      "level": "clean",
+      "line": "No credential access and no egress observed."
+    }
+  },
+  "events": [
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.336,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 7.092,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 7.421,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 14.849,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 14.85,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 14.852,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 14.852,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 14.853,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 14.855,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 14.855,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 14.856,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 14.859,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 20
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 14.86,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 20
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    }
+  ]
+}

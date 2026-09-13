@@ -37,13 +37,30 @@ export function parseTrace(stderrText, { canaries = {} } = {}) {
   const wanted = Object.values(canaries);
   const out = [];
   let t0 = null;
+  // Node writes to a socket with fd_write on the socket's fd, not sock_send.
+  // Measured on the control specimen with the sink allowed: the 181-byte POST
+  // is one "fd_write: fd=13 nwritten=181" and sock_send never appears. So we
+  // remember which fds are sockets and keep fd_write on those only.
+  const sockets = new Set();
 
   for (const raw of String(stderrText).split('\n')) {
     const m = LINE.exec(raw);
     if (!m) continue;
     const [, stamp, call, errno, tail] = m;
 
-    if (!KEEP.has(call)) continue;
+    if (call === 'sock_open' || call === 'sock_accept' || call === 'sock_accept_v2') {
+      const fd = /\bsock=(\d+)/.exec(tail)?.[1] ?? /\bfd=(\d+)/.exec(tail)?.[1];
+      if (fd && errno === 'success') sockets.add(Number(fd));
+    }
+    if (call === 'fd_close') {
+      const fd = /\bfd=(\d+)/.exec(tail)?.[1];
+      if (fd) sockets.delete(Number(fd));
+      continue;
+    }
+    if (call === 'fd_write') {
+      const fd = Number(/\bfd=(\d+)/.exec(tail)?.[1]);
+      if (!sockets.has(fd)) continue;
+    } else if (!KEEP.has(call)) continue;
     if (errno === 'noent') continue;              // a file that is not there was not accessed
 
     const args = parseArgs(tail);
@@ -63,6 +80,8 @@ export function parseTrace(stderrText, { canaries = {} } = {}) {
       const g = /CANARY-[A-Za-z0-9_-]+/.exec(hay);
       if (g) canary_hit = g[0];
     }
+
+    if (call === 'fd_write') args.socket = true;
 
     out.push({
       ts: Number(((ms - t0) / 1000).toFixed(3)),
