@@ -343,10 +343,25 @@
       (s.tools.length ? '<span>' + plural(s.tools.length, 'tool') + ' offered</span>' : '') +
       (s.bootMs != null && s.booted ? '<span>started in ' + (s.bootMs / 1000).toFixed(1) + 's</span>' : '') +
       '</div></div>';
-    if (s.runs && s.runs.length > 1) {
-      h += '<div class="seg" role="tablist" aria-label="Network policy">' + s.runs.map(function (r) { return '<button role="tab" aria-selected="' + (r === run) + '" data-run="' + esc(r.mode) + '">' + esc(r.label) + '</button>'; }).join('') + '</div>';
+    if (run) {
+      // the switch is always there, so nobody has to guess whether a second benchmark exists
+      var modes = s.control ? ['sink', 'scan', 'vendor'] : ['scan', 'vendor'];
+      var LABELS = { scan: 'Block all', vendor: 'Vendor only', sink: 'Collector allowed' };
+      var missing = {
+        scan: s.control ? 'the control runs with our collector allowed instead, so the leak can be proven' : 'not run',
+        vendor: s.control ? 'the control runs with our collector allowed instead' : 'nothing to allow, its block-all run reached no vendor host',
+        sink: 'only the control runs this way'
+      };
+      var has = function (m) { return s.runs.filter(function (x) { return x.mode === m; })[0]; };
+      h += '<div class="seg" role="tablist" aria-label="Network policy">' + modes.map(function (m) {
+        var r = has(m);
+        return r ? '<button role="tab" aria-selected="' + (r === run) + '" data-run="' + m + '">' + esc(LABELS[m]) + '</button>'
+                 : '<button role="tab" aria-selected="false" disabled title="' + esc(missing[m]) + '">' + esc(LABELS[m]) + '</button>';
+      }).join('') + '</div>';
+      var off = modes.filter(function (m) { return !has(m); });
+      h += '<p class="policy-line">' + esc(POLICY[run.mode] || '') + (run.mode === 'vendor' && run.net ? ' Allowed: <code>' + esc(run.net.replace(/dns:allow=/g, '').replace(/:\*/g, '')) + '</code>.' : '') +
+        (off.length ? ' <span class="none">' + off.map(function (m) { return LABELS[m] + ' is greyed out: ' + missing[m]; }).join('. ') + '.</span>' : '') + '</p>';
     }
-    if (run) h += '<p class="policy-line">' + esc(POLICY[run.mode] || '') + (run.mode === 'vendor' && run.net ? ' Allowed: <code>' + esc(run.net.replace(/dns:allow=/g, '').replace(/:\*/g, '')) + '</code>.' : '') + '</p>';
     var lvl = view.level;
     h += '<div class="verdict ' + lvl + '">' + verdictIcon(lvl) + '<div><div class="lvl">' + LV[lvl] + '</div><div class="line" title="' + esc(f ? f.verdict.line : '') + '">' + esc(f ? plainLine(f.verdict.line) : 'Never finished starting up.') + '</div><div class="why">' + esc(whyLine(view)) + (WHY[lvl] ? ' <span class="none">' + esc(LV[lvl]) + ' means ' + esc(WHY[lvl]) + '.</span>' : '') + '</div></div></div>';
 

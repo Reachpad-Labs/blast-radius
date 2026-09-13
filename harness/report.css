@@ -82,6 +82,7 @@ h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.01em;text-wrap:balance}
 .seg{display:inline-flex;background:var(--fill);border-radius:9px;padding:2px;gap:2px;margin:-6px 0 10px}
 .seg button{padding:5px 12px;border-radius:7px;font-size:13px;font-weight:500;color:var(--ink2)}
 .seg button[aria-selected="true"]{background:var(--bg);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.14)}
+.seg button[disabled]{color:var(--ink3);cursor:not-allowed}
 .policy-line{font-size:12.5px;color:var(--ink2);margin:0 0 14px;line-height:1.5}
 .policy-line code{background:var(--code-bg);padding:1px 6px;border-radius:5px}
 
