@@ -22,7 +22,7 @@ const spec = await acquire(pkg);
 const world = await seedWorld('.run/world');
 const net = allowSink ? 'ipv4:allow=127.0.0.1:8099' : null;
 const argv = /filesystem/.test(spec.name) ? [world.home] : [];
-const common = { entry: spec.entry, worldDir: world.dir, net, argv, env: world.env };
+const common = { entry: spec.entry, worldDir: world.dir, mounts: world.mounts, net, argv, env: world.env };
 
 process.stderr.write(`[1/3] ${spec.name}@${spec.version}  enumerating tools\n`);
 const pass1 = await detonate({ ...common, rpc: rpcLines(INIT, LIST) });

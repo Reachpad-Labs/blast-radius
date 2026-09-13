@@ -8,7 +8,8 @@
 // canary per run is what makes a later match proof rather than a heuristic.
 //
 // Two surfaces carry canaries, because a real box has two:
-//   files — mounted at /home and /app in the guest
+//   files — every top-level directory of the template is mounted at /<name>,
+//           so the world supplies /home, /etc, /proc and /sys
 //   env   — handed to the guest with --env, because Wasmer inherits NOTHING
 //
 // Env canaries can only ever be proven at the sink: environ_get copies the
@@ -85,16 +86,33 @@ export async function seedWorld(destDir, { template = 'fixtures/world' } = {}) {
   }
 
   const env = seedEnv();
+
+  // /proc/self/environ is the other way to read the environment, and a stealer
+  // that uses it must land on the SAME canaries or a sink hit is unattributable.
+  // WASIX has no procfs, so we mount a directory that looks like one.
+  const NUL = String.fromCharCode(0);
+  await writeFile(path.join(destDir, 'proc/self/environ'),
+    Object.entries(env).map(([k, v]) => k + '=' + v).join(NUL) + NUL);
+  await writeFile(path.join(destDir, 'proc/self/cmdline'),
+    ['node', '/app/index.js'].join(NUL) + NUL);
+
   for (const [k, v] of Object.entries(env)) {
     const m = PLACEHOLDER.exec(v);
     PLACEHOLDER.lastIndex = 0;
     if (m) canaries[`env:${k}`] = m[0];
   }
 
+  // Every top-level directory becomes a mount at the same name in the guest.
+  // Adding /var or /opt to the template needs no change in detonate.
+  const mounts = (await readdir(destDir, { withFileTypes: true }))
+    .filter(e => e.isDirectory())
+    .map(e => ({ host: path.join(path.resolve(destDir), e.name), guest: '/' + e.name }));
+
   return {
     dir: path.resolve(destDir),
     home: GUEST_HOME,
     probePath: `${GUEST_HOME}/.ssh/id_ed25519`,
+    mounts,
     canaries,
     env
   };

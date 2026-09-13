@@ -165,9 +165,12 @@ Consequences, in order of how much recall they cost:
    sweep over paths that do not exist in the world produces zero events. Fixed
    by making the world contain what a real box contains — 16 canary files
    across `.ssh`, `.aws`, `.config/gh`, `.docker`, `.kube`, `.npmrc`, `.netrc`,
-   `.claude` and an MCP config with tokens in it. The alternative fix, keeping
-   `noent` under `/home` as a lower-confidence `attempted` tier, is still open
-   and would catch sweeps for paths we did not think to seed.
+   `.claude` and an MCP config with tokens in it — **and** by keeping `noent`
+   under sensitive roots as an `attempted` tier, which catches sweeps for paths
+   we did not think to seed. Measured on the control specimen: 5 attempted
+   paths, exactly the 5 it asked for that the world does not hold, and **zero**
+   on a benign `server-filesystem` run. Node's startup misses are excluded by
+   name (`openssl.cnf`, `config.gypi`, `doc/api/cli.md`, `/etc/ssl/`).
 4. **Mode-based reasoning is untestable here.** Modes do not survive the mount.
    The fixtures are `600` on the host anyway, so this stays correct if Wasmer
    ever preserves them.
@@ -180,3 +183,28 @@ tier, never `observed-from-trace`.
 Two smaller measured facts: symlinks work and follow into mounted volumes, and
 the guest can **write** to the mounted world, which is why `seedWorld` rebuilds
 it from the template on every run.
+
+## /etc, /proc and /sys can be emulated, and it costs nothing
+
+The guest filesystem is only what the runtime mounts, so a directory mounted at
+`/proc` *is* procfs as far as the specimen can tell. Measured working:
+
+```
+/etc/passwd        read      a dev user, uid 1000, home /home/dev
+/etc/shadow        read      canary in the hash field
+/proc/version      read      a plausible Ubuntu 6.8 kernel string
+/proc/self/environ read      generated at seed time, same canaries as --env
+/sys/class/dmi/id/ read      sys_vendor "Amazon EC2", a product_uuid
+dns lookup         works     resolving after mounting over the image's /etc
+```
+
+Two things this buys. `/proc/self/environ` is the other way to read the
+environment, and without it a stealer using that path would hit nothing while
+the `--env` canaries sat unread. And `/sys/class/dmi/id` plus `/proc/cpuinfo`
+give a specimen something to fingerprint, which is what the `fingerprinting`
+row on the card was always for — `/proc/version` was in the probe list before
+anything could reach it.
+
+The one thing to watch: mounting a directory at `/etc` **shadows** the image's
+`/etc`, which holds the `hosts` file. Supply your own or name resolution goes
+with it. Ours does; DNS was verified resolving after the mount.

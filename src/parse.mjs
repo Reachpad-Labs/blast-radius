@@ -15,6 +15,16 @@ export const KEEP = new Set([
 // the runtime and the specimen reading their own code
 const BORING = [/^\/nix\/store/, /^\/app(\/|$)/, /^\/bin(\/|$)/, /^\/lib(\/|$)/, /^\/usr\/lib/];
 
+// Where a miss is worth keeping. A credential sweep is mostly misses: the
+// specimen asks for twenty paths and the world happens to hold six of them.
+// Dropping every Errno::noent makes that sweep invisible, so under these roots
+// a miss survives as an event carrying errno="noent" — the attempted tier.
+const SENSITIVE = [/^\/home\//, /^\/root\//, /^\/etc\//, /^\/proc\//, /^\/sys\//, /^\/var\//];
+
+// Node's own startup misses. Measured: it probes these on every run and they
+// are not the specimen's doing.
+const STARTUP_MISS = [/openssl\.cnf$/, /config\.gypi$/, /doc\/api\/cli\.md$/, /\/etc\/ssl\//, /node_modules/];
+
 function parseArgs(tail) {
   const args = {};
   for (const m of tail.matchAll(/(\w+)="([^"]*)"/g)) args[m[1]] = m[2];
@@ -43,10 +53,16 @@ export function parseTrace(stderrText, { canaries = {} } = {}) {
     const [, stamp, call, errno, tail] = m;
 
     if (!KEEP.has(call)) continue;
-    if (errno === 'noent') continue;              // a file that is not there was not accessed
 
     const args = parseArgs(tail);
     if (args.path && BORING.some(re => re.test(args.path))) continue;
+
+    // A file that is not there was not accessed — unless it was asked for
+    // somewhere that only a sweep would look.
+    if (errno === 'noent') {
+      const p = args.path;
+      if (!p || !SENSITIVE.some(re => re.test(p)) || STARTUP_MISS.some(re => re.test(p))) continue;
+    }
 
     const ms = Date.parse(stamp);
     if (t0 === null) t0 = ms;

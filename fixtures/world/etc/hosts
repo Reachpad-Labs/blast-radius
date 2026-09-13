@@ -1,0 +1,4 @@
+127.0.0.1 localhost
+::1 localhost ip6-localhost
+127.0.1.1 devbox-one
+10.24.8.11 prod-01.acme.internal

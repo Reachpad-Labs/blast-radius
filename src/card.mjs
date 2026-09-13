@@ -26,6 +26,12 @@ export function renderCard(f, meta = {}) {
       : '<span class="none">none</span>',
     f.reads_credentials.length ? C.critical : C.clean));
 
+  rows.push(row('trace', 'Paths swept, not present',
+    f.attempted?.length
+      ? f.attempted.map(p => `<code>${esc(p)}</code>`).join('<br>')
+      : '<span class="none">none</span>',
+    f.attempted?.length ? C.warn : C.clean));
+
   rows.push(row('trace', 'Egress attempted',
     f.egress.length
       ? f.egress.map(e => `<code>${esc(e.host)}${e.port ? ':' + e.port : ''}</code> <span style="color:${e.blocked ? C.clean : C.critical}">${e.blocked ? 'blocked' : 'allowed'}</span>`).join('<br>')

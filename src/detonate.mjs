@@ -9,11 +9,14 @@ const RUNTIME = 'wasmer/edgejs@0.2.0';
 // env: the guest environment. Wasmer inherits NOTHING from the host, so an
 //      unseeded run hands the specimen process.env === {} — and env is where
 //      the credentials on a real box actually live. Measured, not assumed.
-export function detonate({ entry, worldDir, specimensDir = 'specimens', net = null, argv = [], env = {}, rpc = '', timeoutMs = 120000 }) {
+// mounts: [{ host, guest }] from seedWorld — /home, /etc, /proc, /sys. Mounting
+//         over the image's /etc is safe: DNS still resolves, measured.
+export function detonate({ entry, worldDir, mounts = null, specimensDir = 'specimens', net = null, argv = [], env = {}, rpc = '', timeoutMs = 120000 }) {
+  const world = mounts || [{ host: path.join(worldDir, 'home'), guest: '/home' }];
   const args = [
     'run', RUNTIME, '--experimental-napi',
     '--volume', `${path.resolve(specimensDir)}:/app`,
-    '--volume', `${path.join(worldDir, 'home')}:/home`,
+    ...world.flatMap(m => ['--volume', `${m.host}:${m.guest}`]),
     ...Object.entries(env).flatMap(([k, v]) => ['--env', `${k}=${v}`]),
     ...(net ? [`--net=${net}`] : []),
     '--', entry, ...argv

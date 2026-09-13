@@ -104,9 +104,36 @@ Env canaries are `proven-at-sink` only. `environ_get` copies the whole block in
 one call, so the trace shows *that* the environment was read and never *which*
 variable was taken.
 
+And a machine around it. WASIX has no procfs and its `/etc` holds one file, so
+the world supplies its own — every top-level directory of the template is
+mounted at the same name in the guest:
+
+```
+/etc/   passwd (a `dev` user, uid 1000), group, shadow, hosts, resolv.conf,
+        hostname, machine-id, os-release (Ubuntu 24.04)
+/proc/  version, cpuinfo, meminfo, mounts, self/status, self/cmdline,
+        self/environ  ← generated at seed time, same canaries as --env
+/sys/   class/dmi/id/{sys_vendor,product_name,product_uuid}  (reads as EC2)
+```
+
+Mounting over the image's `/etc` is safe — DNS still resolves, measured.
+`/proc/self/environ` matters because it is the *other* way to read the
+environment; a specimen that uses it lands on the same canary values, so a sink
+hit stays attributable.
+
 Every fixture carrying a `CANARY-xxxxx` placeholder gets a fresh value per run,
 keyed by its path, so a hit names the file it came from. Adding a fixture needs
-no code change.
+no code change, and adding a top-level directory needs no change in `detonate`.
+
+## Three claim tiers
+
+- **observed-from-trace** — a path opened, a host resolved, bytes counted.
+- **attempted** — a path asked for that was not there. Only kept under roots a
+  credential hunt would walk (`/home`, `/root`, `/etc`, `/proc`, `/sys`, `/var`),
+  minus Node's own startup misses. Three or more is a sweep, and the card says so.
+- **proven-at-sink** — a specific canary string in a specific payload. The only
+  tier that can ever carry an env canary, because `environ_get` copies the whole
+  block in one call.
 
 ## Traps
 
