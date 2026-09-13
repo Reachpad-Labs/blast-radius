@@ -54,7 +54,7 @@ printf '%s\n%s\n' \
 RUST_LOG="wasmer_wasix::syscalls=trace" \
 wasmer run wasmer/edgejs@0.2.0 --experimental-napi \
   --volume "$PWD/specimens:/app" \
-  --volume "$PWD/world/home:/home" \
+  --volume "$PWD/fixtures/world/home:/home" \
   --net="dns:deny=*:*" \
   -- /app/node_modules/@modelcontextprotocol/server-memory/dist/index.js \
   < rpc.txt 2>trace.log
@@ -67,48 +67,50 @@ Omitting `--net` entirely is default-deny and the guest still runs.
 ## Prove a canary left the box
 
 ```sh
-node sink.mjs &                                # capture sink on :8099
+node harness/sink.mjs &                                # capture sink on :8099
 wasmer run python/python@3.13.20 \
-  --volume "$PWD/world/home:/home" --volume "$PWD/world/app:/app" \
-  --net -- /app/exfil.py
+  --volume "$PWD/fixtures/world/home:/home" --volume "$PWD/fixtures/world/app:/app" \
+  --net -- /app/exfil.py   # from harness/probes/
 cat sink.log                                   # canary string, on the wire
 ```
 
-## Traps that cost us time
+## Traps
 
-- **The package is `wasmer/edgejs`, not `wasmer/edge-js`.** The hyphenated name
-  returns null from the registry and makes it look like Node is unsupported.
-- **Node needs `--experimental-napi`** or it refuses with an N-API error.
-- **`--mapdir` is deprecated**, use `--volume host:guest`.
-- **Python MCP servers are out.** `pip install mcp` fails: the dependency tree
-  reaches `rpds-py`, which is Rust, and there is no wasm32-wasi wheel. Node
-  servers work because the good ones are pure JS — check with
-  `find node_modules -name "*.node"` before adding a specimen.
-- **The trace is noisy.** ~3,900 lines for a trivial script, dominated by the
-  runtime reading its own stdlib out of `/nix/store`. Filter by path prefix.
-- **`WASMER_LOG` does nothing**; the variable is `RUST_LOG`, and the useful
-  target is `wasmer_wasix::syscalls=trace`.
+Eight of them, all measured today, in [docs/FINDINGS.md](docs/FINDINGS.md).
+Read that before touching anything. It will save you an hour.
 
 ## Layout
 
 ```
-world/          the canary world mounted into the guest
-specimens/      MCP servers under test (npm install here)
-sink.mjs        TCP sink that logs payload bytes
-docs/           architecture + pipeline diagrams, WASM import dumper
-evidence/       real trace output from today's runs
+run.mjs        entry point, wires the six stages together
+src/           THE PRODUCT - one file per pipeline stage
+  schema.mjs     the frozen event shape every stage speaks
+  acquire.mjs    1. fetch and pin the specimen
+  world.mjs      2. build the canary world
+  detonate.mjs   3. run it under Wasmer and provoke it
+  parse.mjs      4. Wasmer trace -> schema events
+  analyse.mjs    5. events -> claims        (pure, testable)
+  card.mjs       6. claims -> verdict card  (pure, testable)
+
+harness/       test rig, not shipped
+  sink.mjs       TCP sink on :8099 that logs payload bytes
+  dump-imports.mjs   dumps a .wasm import surface
+  probes/        throwaway specimens that proved the mechanism
+
+fixtures/world/  the canary world template, mounted into the guest
+specimens/       MCP servers under test (npm install here)
+evidence/        real output from today's runs, so claims are checkable
+docs/            findings and diagrams
 ```
+
+Every file in `src/` is a stub carrying its own interface contract, the exact
+commands where relevant, and the specific trap that applies to it. Open the one
+you own and the job is written down.
 
 ## Event schema
 
-Every collector emits the same line. Do not renegotiate this.
+Every stage speaks this. Do not renegotiate it.
 
 ```
 { ts, call, args, canary_hit, decision }
 ```
-
-## Lanes
-
-- **shim/driver** — run a specimen, capture the trace, emit schema lines
-- **specimens** — candidate MCP servers, pure JS only, plus one deliberately evil one
-- **pipeline** — canary world, analyser, verdict card
