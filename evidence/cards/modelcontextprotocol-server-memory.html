@@ -4,42 +4,56 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 *{box-sizing:border-box}
-body{background:#0E100F;color:#ECE7DE;font-family:Inter,system-ui,sans-serif;margin:0;padding:0 20px;padding-block:0 60px;font-size:15px}
-.wrap{max-width:820px;margin:0 auto}
-header{padding-block:44px 22px;border-bottom:1px solid #2A2E2C}
-.eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;color:#636965;text-transform:uppercase}
-h1{font-family:"JetBrains Mono",monospace;font-size:28px;font-weight:700;margin:10px 0 0;letter-spacing:-.02em;word-break:break-all}
-.ver{color:#8C918C;font-size:13px;font-family:"JetBrains Mono",monospace;margin-top:6px}
-.verdict{margin-top:26px;border:1px solid #6EE7A8;border-left-width:3px;border-radius:4px;background:#161918;padding:18px 20px}
-.verdict .lvl{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.14em;color:#6EE7A8}
-.verdict .line{font-size:17px;margin-top:7px}
-table{width:100%;border-collapse:collapse;margin-top:28px}
-td{border-bottom:1px solid #2A2E2C;padding:13px 10px;vertical-align:top;font-size:13.5px}
-.tier{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;white-space:nowrap;width:1%;padding-top:16px}
-.t-trace{color:#636965} .t-sink{color:#7FB2E5}
-.lab{color:#8C918C;white-space:nowrap;width:1%;padding-right:26px}
-.val code{font-family:"JetBrains Mono",monospace;font-size:12.5px;word-break:break-all}
-.none{color:#636965}
-footer{margin-top:34px;color:#636965;font-size:12.5px;line-height:1.65}
-@media(max-width:560px){.tier{display:none}.lab{white-space:normal}}
+body{background:#0E100F;color:#ECE7DE;font-family:Inter,system-ui,sans-serif;margin:0;padding:0 20px;padding-block:0 52px;font-size:15px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:680px;margin:0 auto}
+header{padding-block:40px 0}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.18em;color:#636965;text-transform:uppercase}
+h1{font-family:"JetBrains Mono",monospace;font-size:25px;font-weight:700;margin:9px 0 0;letter-spacing:-.02em;word-break:break-all}
+.ver{color:#636965;font-size:12px;font-family:"JetBrains Mono",monospace;margin-top:5px}
+
+.verdict{margin-top:24px;border:1px solid #6EE7A8;border-radius:6px;background:linear-gradient(180deg,#1C201E,#161918);padding:20px 22px}
+.lvl{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;letter-spacing:.16em;color:#0E100F;background:#6EE7A8;padding:3px 8px;border-radius:3px}
+.line{font-size:19px;line-height:1.35;margin-top:12px;letter-spacing:-.01em}
+
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#2A2E2C;border:1px solid #2A2E2C;border-radius:6px;margin-top:14px;overflow:hidden}
+.tile{background:#161918;padding:15px 14px}
+.num{font-family:"JetBrains Mono",monospace;font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.cap{color:#8C918C;font-size:11.5px;margin-top:7px;line-height:1.25}
+
+.ev{margin-top:26px}
+.evhead{display:flex;align-items:baseline;gap:10px}
+.evhead h2{font-size:14.5px;font-weight:600;margin:0;letter-spacing:-.01em}
+.badge{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:3px 6px;border-radius:3px;border:1px solid #2A2E2C;color:#636965;white-space:nowrap}
+.b-sink{color:#7FB2E5;border-color:#7FB2E555}
+.b-attempt{color:#E8B339;border-color:#E8B33955}
+.b-stdout,.b-world{color:#F0736A;border-color:#F0736A55}
+ul{list-style:none;margin:10px 0 0;padding:0}
+li{padding:7px 0;border-bottom:1px solid #2A2E2C;font-size:13.5px}
+li:last-child{border-bottom:0}
+code{font-family:"JetBrains Mono",monospace;font-size:12.5px;word-break:break-all}
+.faint{color:#636965}
+.hit{color:#F0736A}
+.tag{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:#636965;margin-left:6px}
+.quiet{color:#8C918C;margin:10px 0 0;font-size:13.5px}
+
+footer{margin-top:34px;padding-top:16px;border-top:1px solid #2A2E2C;color:#636965;font-size:12px;line-height:1.6}
+@media(max-width:560px){.tiles{grid-template-columns:repeat(2,1fr)}h1{font-size:21px}.line{font-size:17px}}
 </style></head><body><div class="wrap">
 <header>
   <div class="eyebrow">Blast radius</div>
   <h1>@modelcontextprotocol/server-memory</h1>
-  <div class="ver">2026.8.31 · e6a04d5457d2d7d3a8ba33bc…</div>
+  <div class="ver">2026.8.31 · sha256 e6a04d5457d2d7d3…</div>
 </header>
-<div class="verdict"><div class="lvl">EXPECTED</div><div class="line">Did nothing beyond starting up and answering.</div></div>
-<table><tr><td class="tier t-trace">FROM TRACE</td>
-    <td class="lab">Reads credentials</td><td class="val" style="color:#6EE7A8"><span class="none">none</span></td></tr><tr><td class="tier t-trace">FROM TRACE</td>
-    <td class="lab">Egress attempted</td><td class="val" style="color:#6EE7A8"><span class="none">none</span></td></tr><tr><td class="tier t-trace">FROM TRACE</td>
-    <td class="lab">Bytes staged outbound</td><td class="val" style="color:#6EE7A8"><span class="none">0</span></td></tr><tr><td class="tier t-sink">PROVEN AT SINK</td>
-    <td class="lab">Canary in payload</td><td class="val" style="color:#6EE7A8"><span class="none">not observed</span></td></tr><tr><td class="tier t-trace">FROM TRACE</td>
-    <td class="lab">Writes outside its own tree</td><td class="val" style="color:#6EE7A8"><span class="none">none</span></td></tr><tr><td class="tier t-trace">FROM TRACE</td>
-    <td class="lab">Runtime fingerprinting</td><td class="val" style="color:#6EE7A8"><span class="none">none</span></td></tr></table>
+<div class="verdict"><span class="lvl">EXPECTED</span><div class="line">Did nothing beyond starting up and answering.</div></div>
+<div class="tiles"><div class="tile"><div class="num" style="color:#6EE7A8">0</div><div class="cap">credentials read</div></div><div class="tile"><div class="num" style="color:#636965">0</div><div class="cap">more sought</div></div><div class="tile"><div class="num" style="color:#6EE7A8">0</div><div class="cap">staged outbound</div></div><div class="tile"><div class="num" style="color:#636965">0</div><div class="cap">canaries proven</div></div></div>
+<section class="ev"><div class="evhead"><span class="badge b-trace">from trace</span>
+        <h2 style="color:#6EE7A8">Nothing to report</h2></div>
+        <p class="quiet">No credential path opened, no host dialled, no sweep. In this run.</p></section>
 <footer>
-Observed in one execution under Wasmer against a canary world. Rows marked FROM TRACE are what the
-runtime reported at the WASI boundary. The row marked PROVEN AT SINK required routing egress to a
-collector we control; payload bytes are not present in the trace.<br>
-This describes behaviour observed in a single run. It is not a claim about the package in general.
+One execution under Wasmer against a canary world seeded fresh for this run — every string above
+was minted minutes ago and exists nowhere else. <b>From trace</b> is what the runtime reported at the
+WASI boundary. <b>Proven at sink</b> required routing egress to a collector we control; payload bytes
+are not in the trace.<br>
+Behaviour observed in one run. Not a claim about the package in general.
 </footer>
 </div></body></html>

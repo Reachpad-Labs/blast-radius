@@ -40,7 +40,8 @@
         "host": "api.notion.com",
         "port": 0,
         "blocked": true,
-        "at": 0.282,
+        "at": 0.808,
+        "pass": 2,
         "expected": true,
         "why": "its vendor, by name",
         "ips": []
@@ -48,6 +49,14 @@
     ],
     "bytes_out": 0,
     "canary_in_payload": [],
+    "returned_to_model": [],
+    "staged_on_disk": [],
+    "attempted": [
+      "/etc/nsswitch.conf",
+      "/etc/netsvc.conf",
+      "/etc/svc.conf"
+    ],
+    "attempted_credentials": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
     "unprompted_reads": [],
@@ -59,7 +68,9 @@
         "notionhq",
         "notion"
       ],
-      "argHosts": [],
+      "argHosts": [
+        "db.acme.internal"
+      ],
       "probePaths": []
     },
     "verdict": {
@@ -74,10 +85,11 @@
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.05,
+      "ts": 0.271,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -87,18 +99,20 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.159,
+      "ts": 0,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.207,
+      "ts": 0.284,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -108,10 +122,64 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.282,
+      "ts": 0.774,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/resolv.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 0.774,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/nsswitch.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 0.775,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/netsvc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 0.775,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/svc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 0.807,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -121,10 +189,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.282,
+      "ts": 0.808,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -132,10 +201,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.284,
+      "ts": 0.814,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -145,10 +215,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.284,
+      "ts": 0.814,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -156,10 +227,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.284,
+      "ts": 0.819,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -169,10 +241,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.284,
+      "ts": 0.821,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -180,10 +253,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.285,
+      "ts": 0.824,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -193,10 +267,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.285,
+      "ts": 0.826,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -204,10 +279,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.286,
+      "ts": 0.829,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -217,10 +293,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.286,
+      "ts": 0.83,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -228,10 +305,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.286,
+      "ts": 0.836,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -241,10 +319,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.286,
+      "ts": 0.838,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -252,10 +331,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.287,
+      "ts": 0.842,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -265,10 +345,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.287,
+      "ts": 0.843,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -276,10 +357,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.288,
+      "ts": 0.845,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -289,10 +371,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.288,
+      "ts": 0.846,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -300,10 +383,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.288,
+      "ts": 0.85,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -313,10 +397,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.288,
+      "ts": 0.864,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -324,10 +409,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.289,
+      "ts": 0.864,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -337,10 +423,25 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.289,
+      "ts": 0.864,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 0.868,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -348,10 +449,23 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.29,
+      "ts": 0.868,
+      "call": "resolve",
+      "args": {
+        "host": "api.notion.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io",
+      "pass": 2
+    },
+    {
+      "ts": 0.868,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -361,10 +475,25 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.29,
+      "ts": 0.868,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 0.869,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -372,10 +501,23 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.29,
+      "ts": 0.871,
+      "call": "resolve",
+      "args": {
+        "host": "api.notion.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io",
+      "pass": 2
+    },
+    {
+      "ts": 0.872,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -385,10 +527,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.29,
+      "ts": 0.875,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -396,10 +539,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.291,
+      "ts": 0.877,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -409,10 +553,25 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.291,
+      "ts": 0.883,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 0.885,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -420,10 +579,23 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.291,
+      "ts": 0.885,
+      "call": "resolve",
+      "args": {
+        "host": "api.notion.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io",
+      "pass": 2
+    },
+    {
+      "ts": 0.888,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -433,10 +605,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.291,
+      "ts": 0.889,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -444,10 +617,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.292,
+      "ts": 0.892,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -457,10 +631,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.292,
+      "ts": 0.894,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -468,10 +643,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.292,
+      "ts": 0.896,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -481,10 +657,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.292,
+      "ts": 0.896,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -492,10 +669,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.293,
+      "ts": 0.899,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -505,10 +683,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.293,
+      "ts": 0.899,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -516,10 +695,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.293,
+      "ts": 0.905,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -529,10 +709,25 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.293,
+      "ts": 0.908,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 0.909,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -540,10 +735,23 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.294,
+      "ts": 0.909,
+      "call": "resolve",
+      "args": {
+        "host": "api.notion.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io",
+      "pass": 2
+    },
+    {
+      "ts": 0.91,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -553,10 +761,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.294,
+      "ts": 0.911,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -564,10 +773,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.294,
+      "ts": 0.914,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -577,10 +787,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.294,
+      "ts": 0.916,
       "call": "resolve",
       "args": {
         "host": "api.notion.com",
@@ -588,103 +799,8 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.295,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success"
-    },
-    {
-      "ts": 0.295,
-      "call": "resolve",
-      "args": {
-        "host": "api.notion.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.295,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success"
-    },
-    {
-      "ts": 0.295,
-      "call": "resolve",
-      "args": {
-        "host": "api.notion.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.295,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success"
-    },
-    {
-      "ts": 0.295,
-      "call": "resolve",
-      "args": {
-        "host": "api.notion.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.296,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success"
-    },
-    {
-      "ts": 0.296,
-      "call": "resolve",
-      "args": {
-        "host": "api.notion.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     }
   ]
 }

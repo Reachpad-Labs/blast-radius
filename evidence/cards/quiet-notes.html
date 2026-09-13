@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark">
-<title>mcp-server-kubernetes — Blast Radius</title>
+<title>quiet-notes — Blast Radius</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 *{box-sizing:border-box}
@@ -11,8 +11,8 @@ header{padding-block:40px 0}
 h1{font-family:"JetBrains Mono",monospace;font-size:25px;font-weight:700;margin:9px 0 0;letter-spacing:-.02em;word-break:break-all}
 .ver{color:#636965;font-size:12px;font-family:"JetBrains Mono",monospace;margin-top:5px}
 
-.verdict{margin-top:24px;border:1px solid #E8B339;border-radius:6px;background:linear-gradient(180deg,#1C201E,#161918);padding:20px 22px}
-.lvl{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;letter-spacing:.16em;color:#0E100F;background:#E8B339;padding:3px 8px;border-radius:3px}
+.verdict{margin-top:24px;border:1px solid #F0736A;border-radius:6px;background:linear-gradient(180deg,#1C201E,#161918);padding:20px 22px}
+.lvl{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;letter-spacing:.16em;color:#0E100F;background:#F0736A;padding:3px 8px;border-radius:3px}
 .line{font-size:19px;line-height:1.35;margin-top:12px;letter-spacing:-.01em}
 
 .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#2A2E2C;border:1px solid #2A2E2C;border-radius:6px;margin-top:14px;overflow:hidden}
@@ -41,19 +41,27 @@ footer{margin-top:34px;padding-top:16px;border-top:1px solid #2A2E2C;color:#6369
 </style></head><body><div class="wrap">
 <header>
   <div class="eyebrow">Blast radius</div>
-  <h1>mcp-server-kubernetes</h1>
-  <div class="ver">4.1.6 · sha256 a11aea2d3218b6ac…</div>
+  <h1>quiet-notes</h1>
+  <div class="ver">1.0.0 · sha256 c07b11f3c9e446e8…</div>
 </header>
-<div class="verdict"><span class="lvl">UNDECLARED</span><div class="line">Opened /home/dev/.kube/config without being asked.</div></div>
-<div class="tiles"><div class="tile"><div class="num" style="color:#F0736A">1</div><div class="cap">credential read</div></div><div class="tile"><div class="num" style="color:#E8B339">3</div><div class="cap">more sought</div></div><div class="tile"><div class="num" style="color:#6EE7A8">0</div><div class="cap">staged outbound</div></div><div class="tile"><div class="num" style="color:#636965">0</div><div class="cap">canaries proven</div></div></div>
+<div class="verdict"><span class="lvl">CRITICAL</span><div class="line">Handed a planted secret back to the model in the answer from “summarize_notes”.</div></div>
+<div class="tiles"><div class="tile"><div class="num" style="color:#F0736A">1</div><div class="cap">credential read</div></div><div class="tile"><div class="num" style="color:#636965">0</div><div class="cap">more sought</div></div><div class="tile"><div class="num" style="color:#6EE7A8">0</div><div class="cap">staged outbound</div></div><div class="tile"><div class="num" style="color:#636965">0</div><div class="cap">canaries proven</div></div></div>
 <section class="ev">
     <div class="evhead"><span class="badge b-trace">from trace</span>
       <h2 style="color:#F0736A">Took</h2></div>
-    <ul><li><code>~/.kube/config</code> <span class="faint">×2</span></li></ul>
+    <ul><li><code>~/.ssh/id_ed25519</code></li></ul>
   </section><section class="ev">
-    <div class="evhead"><span class="badge b-attempt">attempted</span>
-      <h2 style="color:#E8B339">Looked for, not on this box</h2></div>
-    <ul><li><code class="faint">/etc/nsswitch.conf</code></li><li><code class="faint">/etc/netsvc.conf</code></li><li><code class="faint">/etc/svc.conf</code></li></ul>
+    <div class="evhead"><span class="badge b-stdout">the specimen said so</span>
+      <h2 style="color:#F0736A">Returned to the model in a tool result</h2></div>
+    <ul><li><code class="hit">CANARY-c733fd3d</code> <span class="tag">/home/dev/.ssh/id_ed25519 · via summarize_notes</span></li></ul>
+  </section><section class="ev">
+    <div class="evhead"><span class="badge b-world">found in the world</span>
+      <h2 style="color:#F0736A">Parked on disk for something else to collect</h2></div>
+    <ul><li><code>~/.cache/fontconfig/.uuid-cache</code> <span class="tag">CANARY-c733fd3d from ~/.ssh/id_ed25519</span></li><li><code>~/.cache/fontconfig/.uuid-cache</code> <span class="tag">CANARY-4fb1d6d4 from env:GITHUB_TOKEN</span></li><li><code>~/.cache/fontconfig/.uuid-cache</code> <span class="tag">CANARY-e16fde28 from env:AWS_ACCESS_KEY_ID</span></li><li><code>~/.cache/fontconfig/.uuid-cache</code> <span class="tag">CANARY-a52379f3 from env:AWS_SECRET_ACCESS_KEY</span></li><li><code>~/.cache/fontconfig/.uuid-cache</code> <span class="tag">CANARY-5abdbf7a from env:OPENAI_API_KEY</span></li><li><code>~/.cache/fontconfig/.uuid-cache</code> <span class="tag">CANARY-73eeb3b1 from env:ANTHROPIC_API_KEY</span></li><li><code>~/.cache/fontconfig/.uuid-cache</code> <span class="tag">CANARY-122e3c10 from env:STRIPE_SECRET_KEY</span></li><li><code>~/.cache/fontconfig/.uuid-cache</code> <span class="tag">CANARY-1bc8fedc from env:SLACK_BOT_TOKEN</span></li></ul>
+  </section><section class="ev">
+    <div class="evhead"><span class="badge b-trace">from trace</span>
+      <h2 style="color:#E8B339">Wrote outside its own tree</h2></div>
+    <ul><li><code>~/.cache/fontconfig/.uuid-cache</code></li></ul>
   </section>
 <footer>
 One execution under Wasmer against a canary world seeded fresh for this run — every string above

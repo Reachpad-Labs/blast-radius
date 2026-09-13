@@ -28,13 +28,64 @@
         "host": "raw.githubusercontent.com",
         "port": 0,
         "blocked": true,
-        "at": 0.614,
+        "at": 2.678,
+        "pass": 2,
         "expected": false,
-        "why": "undeclared"
+        "why": "undeclared",
+        "ips": []
       }
     ],
     "bytes_out": 0,
     "canary_in_payload": [],
+    "returned_to_model": [
+      {
+        "canary": "CANARY-d7a50eab",
+        "tool": "get-env",
+        "from": "GITHUB_TOKEN"
+      },
+      {
+        "canary": "CANARY-9af700d5",
+        "tool": "get-env",
+        "from": "AWS_ACCESS_KEY_ID"
+      },
+      {
+        "canary": "CANARY-7722e414",
+        "tool": "get-env",
+        "from": "AWS_SECRET_ACCESS_KEY"
+      },
+      {
+        "canary": "CANARY-612b298e",
+        "tool": "get-env",
+        "from": "OPENAI_API_KEY"
+      },
+      {
+        "canary": "CANARY-4c825ad6",
+        "tool": "get-env",
+        "from": "ANTHROPIC_API_KEY"
+      },
+      {
+        "canary": "CANARY-fa6d6634",
+        "tool": "get-env",
+        "from": "STRIPE_SECRET_KEY"
+      },
+      {
+        "canary": "CANARY-7d52f671",
+        "tool": "get-env",
+        "from": "DATABASE_URL"
+      },
+      {
+        "canary": "CANARY-6aecb9b9",
+        "tool": "get-env",
+        "from": "SLACK_BOT_TOKEN"
+      }
+    ],
+    "staged_on_disk": [],
+    "attempted": [
+      "/etc/nsswitch.conf",
+      "/etc/netsvc.conf",
+      "/etc/svc.conf"
+    ],
+    "attempted_credentials": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
     "unprompted_reads": [],
@@ -47,12 +98,14 @@
       "vendorTokens": [
         "everything"
       ],
-      "argHosts": [],
+      "argHosts": [
+        "db.acme.internal"
+      ],
       "probePaths": []
     },
     "verdict": {
-      "level": "undeclared",
-      "line": "Reached out to raw.githubusercontent.com, which nothing declared."
+      "level": "critical",
+      "line": "Handed 8 planted secrets back to the model in the answer from “get-env”."
     }
   },
   "events": [
@@ -62,10 +115,11 @@
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.035,
+      "ts": 0.215,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -75,18 +129,20 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.314,
+      "ts": 0,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.349,
+      "ts": 0.222,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -96,10 +152,64 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.613,
+      "ts": 2.641,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/resolv.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 2.642,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/nsswitch.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 2.642,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/netsvc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 2.642,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/svc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 2.677,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -109,10 +219,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.614,
+      "ts": 2.678,
       "call": "resolve",
       "args": {
         "host": "raw.githubusercontent.com",
@@ -120,7 +231,8 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     }
   ]
 }

@@ -42,7 +42,8 @@
         "host": "api.github.com",
         "port": 0,
         "blocked": true,
-        "at": 0.385,
+        "at": 1.171,
+        "pass": 2,
         "expected": true,
         "why": "its vendor, by name",
         "ips": []
@@ -50,6 +51,14 @@
     ],
     "bytes_out": 0,
     "canary_in_payload": [],
+    "returned_to_model": [],
+    "staged_on_disk": [],
+    "attempted": [
+      "/etc/nsswitch.conf",
+      "/etc/netsvc.conf",
+      "/etc/svc.conf"
+    ],
+    "attempted_credentials": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
     "unprompted_reads": [],
@@ -60,9 +69,11 @@
       "vendorTokens": [
         "github"
       ],
-      "argHosts": [],
+      "argHosts": [
+        "db.acme.internal"
+      ],
       "probePaths": [
-        "/home/.ssh/id_ed25519"
+        "/home/dev/.ssh/id_ed25519"
       ]
     },
     "verdict": {
@@ -77,10 +88,11 @@
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.059,
+      "ts": 0.316,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -90,18 +102,20 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.214,
+      "ts": 0,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.262,
+      "ts": 0.273,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -111,10 +125,64 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.385,
+      "ts": 1.12,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/resolv.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 1.123,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/nsswitch.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 1.123,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/netsvc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 1.123,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/svc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 1.17,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -124,10 +192,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.385,
+      "ts": 1.171,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -135,10 +204,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.387,
+      "ts": 1.184,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -148,10 +218,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.387,
+      "ts": 1.185,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -159,10 +230,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.389,
+      "ts": 1.195,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -172,10 +244,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.389,
+      "ts": 1.206,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -183,10 +256,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.39,
+      "ts": 1.22,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -196,10 +270,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.39,
+      "ts": 1.223,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -207,10 +282,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.39,
+      "ts": 1.227,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -220,10 +296,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.39,
+      "ts": 1.231,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -231,10 +308,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.391,
+      "ts": 1.232,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -244,10 +322,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.391,
+      "ts": 1.233,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -255,10 +334,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.392,
+      "ts": 1.24,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -268,10 +348,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.392,
+      "ts": 1.243,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -279,10 +360,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.392,
+      "ts": 1.248,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -292,10 +374,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.392,
+      "ts": 1.249,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -303,10 +386,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.393,
+      "ts": 1.253,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -316,10 +400,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.393,
+      "ts": 1.253,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -327,10 +412,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.393,
+      "ts": 1.259,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -340,10 +426,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.394,
+      "ts": 1.261,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -351,10 +438,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.394,
+      "ts": 1.267,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -364,10 +452,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.394,
+      "ts": 1.268,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -375,10 +464,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.395,
+      "ts": 1.27,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -388,10 +478,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.395,
+      "ts": 1.271,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -399,10 +490,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.395,
+      "ts": 1.277,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -412,10 +504,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.395,
+      "ts": 1.281,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -423,10 +516,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.396,
+      "ts": 1.287,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -436,10 +530,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.396,
+      "ts": 1.287,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -447,10 +542,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.396,
+      "ts": 1.292,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -460,10 +556,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.396,
+      "ts": 1.295,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -471,10 +568,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.397,
+      "ts": 1.298,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -484,10 +582,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.397,
+      "ts": 1.298,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -495,10 +594,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.398,
+      "ts": 1.303,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -508,10 +608,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.398,
+      "ts": 1.304,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -519,10 +620,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.398,
+      "ts": 1.307,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -532,10 +634,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.398,
+      "ts": 1.308,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -543,10 +646,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.398,
+      "ts": 1.312,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -556,10 +660,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.398,
+      "ts": 1.316,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -567,10 +672,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.399,
+      "ts": 1.317,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -580,10 +686,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.399,
+      "ts": 1.32,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -591,10 +698,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.399,
+      "ts": 1.32,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -604,10 +712,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.399,
+      "ts": 1.321,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -615,10 +724,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.4,
+      "ts": 1.323,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -628,10 +738,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.4,
+      "ts": 1.324,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -639,10 +750,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.4,
+      "ts": 1.325,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -652,10 +764,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.4,
+      "ts": 1.325,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -663,10 +776,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.4,
+      "ts": 1.328,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -676,10 +790,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.4,
+      "ts": 1.329,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -687,10 +802,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.403,
+      "ts": 1.341,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -700,10 +816,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.403,
+      "ts": 1.341,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -711,10 +828,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 0.404,
+      "ts": 1.362,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -724,10 +842,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.404,
+      "ts": 1.364,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
@@ -735,7 +854,8 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     }
   ]
 }

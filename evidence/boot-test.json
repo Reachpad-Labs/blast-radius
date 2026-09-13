@@ -1,5 +1,5 @@
 {
-  "ran": "2026-09-13T21:48:06.761Z",
+  "ran": "2026-09-13T23:43:36.349Z",
   "results": [
     {
       "pkg": "@modelcontextprotocol/server-memory",
@@ -21,7 +21,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 409,
+      "ms": 2392,
       "note": "official"
     },
     {
@@ -49,7 +49,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 436,
+      "ms": 2245,
       "note": "official; allowed roots are argv"
     },
     {
@@ -75,7 +75,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 451,
+      "ms": 2352,
       "note": "official reference server"
     },
     {
@@ -90,7 +90,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 401,
+      "ms": 1846,
       "note": "official"
     },
     {
@@ -130,7 +130,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 327,
+      "ms": 1431,
       "note": "official, archived upstream; token from env"
     },
     {
@@ -145,7 +145,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 214,
+      "ms": 819,
       "note": "official, archived upstream; DB url is argv"
     },
     {
@@ -161,7 +161,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 749,
+      "ms": 3632,
       "note": "third-party, Upstash"
     },
     {
@@ -174,7 +174,7 @@
       "toolNames": [],
       "exitCode": 1,
       "reason": "Error: Unsupported platform: wasi",
-      "ms": 395,
+      "ms": 1698,
       "note": "third-party, Microsoft"
     },
     {
@@ -212,7 +212,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 295,
+      "ms": 1131,
       "note": "third-party, Notion"
     },
     {
@@ -225,7 +225,7 @@
       "toolNames": [],
       "exitCode": 0,
       "reason": "Error: getaddrinfo ENOTFOUND mcp.stripe.com",
-      "ms": 432,
+      "ms": 1603,
       "note": "third-party, Stripe; a stdio proxy to mcp.stripe.com"
     },
     {
@@ -244,7 +244,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 656,
+      "ms": 3548,
       "note": "third-party, Tavily"
     },
     {
@@ -279,7 +279,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 467,
+      "ms": 2464,
       "note": "third-party, HubSpot"
     },
     {
@@ -295,7 +295,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 264,
+      "ms": 1116,
       "note": "third-party, Exa"
     },
     {
@@ -307,8 +307,8 @@
       "tools": null,
       "toolNames": [],
       "exitCode": null,
-      "reason": "hung: no initialize reply within 60s, killed — Warning: No LLM API key found (OPENAI_API_KEY, ANTHROPIC_API_KEY, or OPENROUTER_API_KEY). | AI-powered search tools will be unavailable.",
-      "ms": 60030,
+      "reason": "hung: no initialize reply within 60s, killed — Warning: Multiple LLM API keys are set, but no provider is explicitly configured. | Please set EMBEDDED_AGENT_PROVIDER='openai', 'azure-openai', 'anthropic', or 'openrouter' to specify which provider to use.",
+      "ms": 60132,
       "note": "third-party, Sentry"
     },
     {
@@ -349,7 +349,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 995,
+      "ms": 4338,
       "note": "third-party, Firecrawl"
     },
     {
@@ -386,7 +386,7 @@
       ],
       "exitCode": 0,
       "reason": "",
-      "ms": 4639,
+      "ms": 21852,
       "note": "third-party; shells out to kubectl, which is not in the sandbox"
     }
   ]

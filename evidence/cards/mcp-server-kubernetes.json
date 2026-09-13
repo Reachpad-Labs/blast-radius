@@ -33,13 +33,32 @@
     "ping"
   ],
   "findings": {
-    "reads_credentials": [],
+    "reads_credentials": [
+      {
+        "path": "/home/dev/.kube/config",
+        "canary": null,
+        "at": 33.268,
+        "pass": 1,
+        "asked": false,
+        "count": 2
+      }
+    ],
     "egress": [],
     "bytes_out": 0,
     "canary_in_payload": [],
+    "returned_to_model": [],
+    "staged_on_disk": [],
+    "attempted": [
+      "/etc/nsswitch.conf",
+      "/etc/netsvc.conf",
+      "/etc/svc.conf"
+    ],
+    "attempted_credentials": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
-    "unprompted_reads": [],
+    "unprompted_reads": [
+      "/home/dev/.kube/config"
+    ],
     "undeclared_hosts": [],
     "unprompted_writes": [],
     "correlated": false,
@@ -47,12 +66,14 @@
       "vendorTokens": [
         "kubernetes"
       ],
-      "argHosts": [],
+      "argHosts": [
+        "db.acme.internal"
+      ],
       "probePaths": []
     },
     "verdict": {
-      "level": "expected",
-      "line": "Did nothing beyond starting up and answering."
+      "level": "undeclared",
+      "line": "Opened /home/dev/.kube/config without being asked."
     }
   },
   "events": [
@@ -62,10 +83,11 @@
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.209,
+      "ts": 1.635,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -75,18 +97,87 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 4.521,
+      "ts": 31.577,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/resolv.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 1
+    },
+    {
+      "ts": 31.578,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/nsswitch.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 1
+    },
+    {
+      "ts": 31.578,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/netsvc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 1
+    },
+    {
+      "ts": 31.578,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/svc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 1
+    },
+    {
+      "ts": 33.268,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.kube/config",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 1
+    },
+    {
+      "ts": 0,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 4.713,
+      "ts": 1.603,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -96,10 +187,78 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 8.371,
+      "ts": 30.934,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/resolv.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 30.935,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/nsswitch.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 30.935,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/netsvc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 30.935,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/svc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 32.207,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.kube/config",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 32.261,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -109,10 +268,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 8.373,
+      "ts": 32.266,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -122,10 +282,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 8.374,
+      "ts": 32.28,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -135,10 +296,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 8.374,
+      "ts": 32.285,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -148,10 +310,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 8.375,
+      "ts": 32.29,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -161,10 +324,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 8.375,
+      "ts": 32.294,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -174,10 +338,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 8.375,
+      "ts": 32.298,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -187,10 +352,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 8.375,
+      "ts": 32.302,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -200,10 +366,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 8.377,
+      "ts": 32.315,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -213,10 +380,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 8.377,
+      "ts": 32.32,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -226,7 +394,8 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     }
   ]
 }

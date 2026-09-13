@@ -34,8 +34,14 @@ export const SPECIMENS = [
 // canary and not a real key. The world already mints GITHUB_TOKEN; this is the
 // alias the official GitHub server reads, pointed at the same value so a hit at
 // the sink is attributable to one canary rather than two.
-export function seededEnv(world) {
-  return { GITHUB_PERSONAL_ACCESS_TOKEN: world.env.GITHUB_TOKEN };
+// Takes the world from seedWorld(). Tolerates a bare canary map too, because
+// the boot test used to pass one and a crash in a helper is a poor way to find
+// out — measured: it took down a whole regeneration run.
+export function seededEnv(world = {}) {
+  const token = world.env?.GITHUB_TOKEN            // the world, as seedWorld returns it
+    ?? world.githubToken                            // the old canary map
+    ?? world['env:GITHUB_TOKEN'];                   // a canary map keyed by origin
+  return token ? { GITHUB_TOKEN: token, GITHUB_PERSONAL_ACCESS_TOKEN: token } : {};
 }
 
 export function specimenFor(pkg) {

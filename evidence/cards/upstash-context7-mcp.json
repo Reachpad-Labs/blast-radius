@@ -18,7 +18,8 @@
         "host": "context7.com",
         "port": 0,
         "blocked": true,
-        "at": 1.11,
+        "at": 4.949,
+        "pass": 2,
         "expected": true,
         "why": "its vendor, by name",
         "ips": []
@@ -26,6 +27,14 @@
     ],
     "bytes_out": 0,
     "canary_in_payload": [],
+    "returned_to_model": [],
+    "staged_on_disk": [],
+    "attempted": [
+      "/etc/nsswitch.conf",
+      "/etc/netsvc.conf",
+      "/etc/svc.conf"
+    ],
+    "attempted_credentials": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
     "unprompted_reads": [],
@@ -37,7 +46,9 @@
         "upstash",
         "context7"
       ],
-      "argHosts": [],
+      "argHosts": [
+        "db.acme.internal"
+      ],
       "probePaths": []
     },
     "verdict": {
@@ -52,10 +63,11 @@
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.133,
+      "ts": 0.846,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -65,18 +77,73 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.634,
+      "ts": 2.357,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/resolv.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 1
+    },
+    {
+      "ts": 2.358,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/nsswitch.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 1
+    },
+    {
+      "ts": 2.358,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/netsvc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 1
+    },
+    {
+      "ts": 2.358,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/svc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 1
+    },
+    {
+      "ts": 0,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.739,
+      "ts": 1.192,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -86,10 +153,64 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.11,
+      "ts": 3.077,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/resolv.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 3.078,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/nsswitch.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 3.078,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/netsvc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 3.078,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/svc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 4.948,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -99,10 +220,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.11,
+      "ts": 4.949,
       "call": "resolve",
       "args": {
         "host": "context7.com",
@@ -110,10 +232,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.112,
+      "ts": 4.958,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -123,10 +246,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.112,
+      "ts": 4.958,
       "call": "resolve",
       "args": {
         "host": "context7.com",
@@ -134,7 +258,8 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     }
   ]
 }

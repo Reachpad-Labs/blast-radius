@@ -15,7 +15,7 @@
 //   sink    --allow-sink: only 127.0.0.1:8099, our collector, so payloads can be proven
 // --env K=V, --arg X and --allow HOST repeat; env and arg add to src/specimens.mjs.
 // --engine host|quickjs picks the Edge.js package (see src/detonate.mjs).
-import { writeFile, mkdir, readFile } from 'node:fs/promises';
+import { writeFile, mkdir, readFile, rm } from 'node:fs/promises';
 import { acquire } from './src/acquire.mjs';
 import { seedWorld, scanWorld, snapshotPaths } from './src/world.mjs';
 import { detonate, stageSpecimens, rpcLines, argsFor, INIT, LIST } from './src/detonate.mjs';
@@ -43,7 +43,13 @@ if (!['scan', 'vendor'].includes(cli.netMode)) { console.error('--net takes scan
 const spec = await acquire(pkg);
 const mode = allowSink ? 'sink' : cli.netMode;
 const slug = spec.name.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') + (mode === 'vendor' ? '--vendor' : '');
-const world = await seedWorld(mode === 'vendor' ? '.run/world-vendor' : '.run/world');
+// Scratch is per run, not shared. Two pipelines at once — a sweep and a one-off
+// control — used to re-seed the same world and re-stage the same specimen tree
+// underneath each other, and the victim died with "Failed to execute builtin"
+// as its module vanished mid-execution. Measured: it cost four cards in a sweep
+// and looked exactly like four servers failing to boot.
+const scratch = `.run/${slug}`;
+const world = await seedWorld(`${scratch}/world`);
 
 // Where every planted string already lives before anything runs, and every file
 // the world holds. /proc/self/environ is planted with the environment secrets by
@@ -51,7 +57,7 @@ const world = await seedWorld(mode === 'vendor' ? '.run/world-vendor' : '.run/wo
 // copy — measured, it reported 8 of them.
 const baseline = new Set((await scanWorld(world.dir, world)).map(h => h.path + '|' + h.canary));
 const before = await snapshotPaths(world.dir);
-const specimensDir = await stageSpecimens();   // the guest gets a copy, never our tree
+const specimensDir = await stageSpecimens('specimens', `${scratch}/specimens`);   // the guest gets a copy, never our tree
 
 // the vendor allow-list comes from a previous scan card: every host it reached
 // that the analyser judged to be its own vendor or one we passed in
@@ -165,6 +171,9 @@ const findings = analyse(events, {
 await mkdir('.run', { recursive: true });
 await writeFile(`.run/${slug}.json`, JSON.stringify({ spec, mode, net, tools: tools.map(t => t.name), findings, events }, null, 2));
 await writeFile(`.run/${slug}.html`, renderCard(findings, spec));
+
+// The staged copy is 39 MB and one per run; the world stays for inspection.
+await rm(`${scratch}/specimens`, { recursive: true, force: true, maxRetries: 10, retryDelay: 50 });
 
 process.stderr.write(`[3/3] ${events.length} events  ->  ${findings.verdict.level.toUpperCase()}: ${findings.verdict.line}\n`);
 process.stderr.write(`      .run/${slug}.html\n`);

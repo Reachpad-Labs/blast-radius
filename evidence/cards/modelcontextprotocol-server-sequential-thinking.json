@@ -15,6 +15,10 @@
     "egress": [],
     "bytes_out": 0,
     "canary_in_payload": [],
+    "returned_to_model": [],
+    "staged_on_disk": [],
+    "attempted": [],
+    "attempted_credentials": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
     "unprompted_reads": [],
@@ -26,7 +30,9 @@
         "sequential",
         "thinking"
       ],
-      "argHosts": [],
+      "argHosts": [
+        "db.acme.internal"
+      ],
       "probePaths": []
     },
     "verdict": {
@@ -41,10 +47,11 @@
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.183,
+      "ts": 1.263,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -54,18 +61,20 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.313,
+      "ts": 0,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.465,
+      "ts": 1.06,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -75,7 +84,8 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     }
   ]
 }

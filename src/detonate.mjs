@@ -1,6 +1,6 @@
 // STAGE 3 — run the specimen under Wasmer and provoke it.
 import { spawn } from 'node:child_process';
-import { cp, rm } from 'node:fs/promises';
+import { rm, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { GUEST_HOME } from './world.mjs';
 
@@ -23,8 +23,25 @@ export const DEFAULT_ENGINE = process.env.BLAST_ENGINE || 'host';
 // Detonate a copy, never the tree we keep. The world is already a per-run copy
 // for the same reason.
 export async function stageSpecimens(src = 'specimens', dest = '.run/specimens') {
-  await rm(dest, { recursive: true, force: true });
-  await cp(src, dest, { recursive: true });
+  // Both halves of this learned something from a 16-server tree.
+  //
+  // maxRetries is not optional: Node's recursive rm unlinks in parallel and on a
+  // tree this deep it finds a directory it is still emptying and throws
+  // ENOTEMPTY. Measured — every run of the sweep died on
+  // @opentelemetry/instrumentation-nestjs-core.
+  await rm(dest, { recursive: true, force: true, maxRetries: 10, retryDelay: 50 });
+
+  // And the copy is `cp -a`, not fs.cp, because fs.cp chmods every entry it
+  // copies and chmod FOLLOWS symlinks: one dangling link in node_modules (npm
+  // dedupe leaves them; zod ships one) and it throws ENOENT on a path that does
+  // not resolve. cp -a preserves links verbatim and never chases them.
+  await mkdir(path.dirname(dest), { recursive: true });
+  await new Promise((resolve, reject) => {
+    const p = spawn('cp', ['-a', '--', path.resolve(src), path.resolve(dest)], { stdio: ['ignore', 'ignore', 'pipe'] });
+    let err = '';
+    p.stderr.on('data', d => { err += d; });
+    p.on('close', code => code === 0 ? resolve() : reject(new Error(`staging ${src} failed (exit ${code}): ${err.trim().slice(0, 300)}`)));
+  });
   return path.resolve(dest);
 }
 

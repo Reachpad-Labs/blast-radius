@@ -41,9 +41,11 @@ for (const s of SPECIMENS) {
   catch (e) { results.push({ pkg: s.pkg, booted: false, tools: null, reason: e.message, ms: 0 }); continue; }
 
   process.stderr.write(`booting ${spec.name}@${spec.version} ... `);
-  const env = { ...seededEnv(world.canaries), ...(s.env || {}) };
+  // Boot in the same world the sweep uses, or a server that only fails for want
+  // of a HOME or an /etc reads here as a server that cannot boot at all.
+  const env = { ...world.env, ...seededEnv(world), ...(s.env || {}) };
   const r = await detonate({
-    entry: spec.entry, worldDir: world.dir, net: null, argv: s.argv || [], env,
+    entry: spec.entry, worldDir: world.dir, mounts: world.mounts, net: null, argv: s.argv || [], env,
     rpc: rpcLines(INIT, LIST), trace: false, timeoutMs: s.timeoutMs || 240000
   });
   const msgs = jsonLines(r.stdout);

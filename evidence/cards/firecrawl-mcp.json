@@ -43,7 +43,8 @@
         "host": "api.firecrawl.dev",
         "port": 0,
         "blocked": true,
-        "at": 1.347,
+        "at": 5.213,
+        "pass": 2,
         "expected": true,
         "why": "its vendor, by name",
         "ips": []
@@ -51,6 +52,14 @@
     ],
     "bytes_out": 0,
     "canary_in_payload": [],
+    "returned_to_model": [],
+    "staged_on_disk": [],
+    "attempted": [
+      "/etc/nsswitch.conf",
+      "/etc/netsvc.conf",
+      "/etc/svc.conf"
+    ],
+    "attempted_credentials": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
     "unprompted_reads": [],
@@ -61,9 +70,11 @@
       "vendorTokens": [
         "firecrawl"
       ],
-      "argHosts": [],
+      "argHosts": [
+        "db.acme.internal"
+      ],
       "probePaths": [
-        "/home/.ssh/id_ed25519"
+        "/home/dev/.ssh/id_ed25519"
       ]
     },
     "verdict": {
@@ -78,10 +89,11 @@
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.107,
+      "ts": 0.746,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -91,18 +103,73 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.767,
+      "ts": 5.073,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/resolv.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 1
+    },
+    {
+      "ts": 5.074,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/nsswitch.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 1
+    },
+    {
+      "ts": 5.074,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/netsvc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 1
+    },
+    {
+      "ts": 5.074,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/svc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 1
+    },
+    {
+      "ts": 0,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.867,
+      "ts": 0.655,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -112,10 +179,64 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.347,
+      "ts": 4.65,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/resolv.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 4.651,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/nsswitch.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 4.651,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/netsvc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 4.651,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/svc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 5.212,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -125,10 +246,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.347,
+      "ts": 5.213,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -136,10 +258,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.349,
+      "ts": 5.223,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -149,10 +272,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.349,
+      "ts": 5.224,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -160,10 +284,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.35,
+      "ts": 5.229,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -173,10 +298,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.35,
+      "ts": 5.23,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -184,10 +310,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.351,
+      "ts": 5.237,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -197,10 +324,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.351,
+      "ts": 5.24,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -208,10 +336,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.352,
+      "ts": 5.245,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -221,10 +350,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.352,
+      "ts": 5.246,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -232,10 +362,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.353,
+      "ts": 5.251,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -245,10 +376,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.353,
+      "ts": 5.252,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -256,10 +388,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.356,
+      "ts": 5.268,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -269,10 +402,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.356,
+      "ts": 5.27,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -280,10 +414,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.356,
+      "ts": 5.274,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -293,10 +428,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.356,
+      "ts": 5.274,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -304,10 +440,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.357,
+      "ts": 5.288,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -317,10 +454,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.357,
+      "ts": 5.289,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -328,10 +466,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.358,
+      "ts": 5.294,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -341,10 +480,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.358,
+      "ts": 5.294,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -352,10 +492,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.359,
+      "ts": 5.298,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -365,10 +506,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.359,
+      "ts": 5.301,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -376,10 +518,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.359,
+      "ts": 5.307,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -389,10 +532,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.359,
+      "ts": 5.309,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -400,10 +544,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.36,
+      "ts": 5.311,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -413,10 +558,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.36,
+      "ts": 5.312,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -424,10 +570,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.361,
+      "ts": 5.316,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -437,10 +584,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.361,
+      "ts": 5.316,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -448,10 +596,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.361,
+      "ts": 5.32,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -461,10 +610,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.361,
+      "ts": 5.322,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -472,10 +622,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.362,
+      "ts": 5.325,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -485,10 +636,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.362,
+      "ts": 5.325,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -496,10 +648,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.363,
+      "ts": 5.328,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -509,10 +662,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.363,
+      "ts": 5.328,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -520,10 +674,11 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     },
     {
-      "ts": 1.364,
+      "ts": 5.331,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -533,10 +688,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 1.364,
+      "ts": 5.331,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -544,7 +700,8 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io"
+      "errno": "io",
+      "pass": 2
     }
   ]
 }

@@ -2,7 +2,7 @@
   "spec": {
     "name": "evil-notes",
     "version": "1.0.0",
-    "integrity": "353eea55c3b35c91ddef5503c9b05c1d34fae0f68a44321a407243b51070f97c",
+    "integrity": "e0b75941ecd58f0aeae16723bc79cbf8e6934c6b22f993ffc9630cd0efccd5a6",
     "entry": "/app/evil-notes/index.js"
   },
   "mode": "sink",
@@ -13,9 +13,58 @@
   "findings": {
     "reads_credentials": [
       {
-        "path": "/home/.ssh/id_ed25519",
+        "path": "/home/dev/.ssh/id_ed25519",
         "canary": null,
-        "at": 0.552,
+        "at": 1.592,
+        "pass": 2,
+        "asked": false,
+        "count": 1
+      },
+      {
+        "path": "/home/dev/.ssh/id_rsa",
+        "canary": null,
+        "at": 1.592,
+        "pass": 2,
+        "asked": false,
+        "count": 1
+      },
+      {
+        "path": "/home/dev/.aws/credentials",
+        "canary": null,
+        "at": 1.593,
+        "pass": 2,
+        "asked": false,
+        "count": 1
+      },
+      {
+        "path": "/home/dev/.npmrc",
+        "canary": null,
+        "at": 1.593,
+        "pass": 2,
+        "asked": false,
+        "count": 1
+      },
+      {
+        "path": "/home/dev/.config/gh/hosts.yml",
+        "canary": null,
+        "at": 1.594,
+        "pass": 2,
+        "asked": false,
+        "count": 1
+      },
+      {
+        "path": "/home/dev/.docker/config.json",
+        "canary": null,
+        "at": 1.594,
+        "pass": 2,
+        "asked": false,
+        "count": 1
+      },
+      {
+        "path": "/home/dev/.config/Claude/claude_desktop_config.json",
+        "canary": null,
+        "at": 1.595,
+        "pass": 2,
         "asked": false,
         "count": 1
       }
@@ -25,19 +74,50 @@
         "host": "127.0.0.1",
         "port": 8099,
         "blocked": false,
-        "at": 0.555,
+        "at": 1.601,
+        "pass": 2,
         "expected": false,
-        "why": "undeclared"
+        "why": "undeclared",
+        "ips": []
       }
     ],
-    "bytes_out": 188,
+    "bytes_out": 3294,
     "canary_in_payload": [
-      "CANARY-218ea724"
+      "CANARY-b5e6d47d",
+      "CANARY-bbc110e8",
+      "CANARY-7ec77162",
+      "CANARY-d8646b66",
+      "CANARY-9ab0e145",
+      "CANARY-0e7040ad",
+      "CANARY-da94aadb",
+      "CANARY-57b1bd44",
+      "CANARY-f9f9bf3f",
+      "CANARY-51e1da86",
+      "CANARY-73875b9b",
+      "CANARY-62b7b103",
+      "CANARY-195e13ab",
+      "CANARY-2a09cda6"
     ],
+    "returned_to_model": [],
+    "staged_on_disk": [],
+    "attempted": [
+      "/home/dev/.config/solana/id.json",
+      "/home/dev/.ethereum/keystore",
+      "/home/dev/.config/rclone/rclone.conf",
+      "/home/dev/.mozilla/firefox/cookies.sqlite",
+      "/home/dev/.local/share/keyrings/login.keyring"
+    ],
+    "attempted_credentials": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
     "unprompted_reads": [
-      "/home/.ssh/id_ed25519"
+      "/home/dev/.ssh/id_ed25519",
+      "/home/dev/.ssh/id_rsa",
+      "/home/dev/.aws/credentials",
+      "/home/dev/.npmrc",
+      "/home/dev/.config/gh/hosts.yml",
+      "/home/dev/.docker/config.json",
+      "/home/dev/.config/Claude/claude_desktop_config.json"
     ],
     "undeclared_hosts": [
       "127.0.0.1:8099"
@@ -49,7 +129,9 @@
         "evil",
         "notes"
       ],
-      "argHosts": [],
+      "argHosts": [
+        "db.acme.internal"
+      ],
       "probePaths": []
     },
     "verdict": {
@@ -64,10 +146,11 @@
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.233,
+      "ts": 1.034,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -77,18 +160,20 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 1
     },
     {
-      "ts": 0.357,
+      "ts": 0,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.493,
+      "ts": 1.209,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -98,23 +183,174 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.552,
+      "ts": 1.592,
       "call": "path_open2",
       "args": {
-        "path": "/home/.ssh/id_ed25519",
+        "path": "/home/dev/.ssh/id_ed25519",
         "dirfd": 5,
         "follow_symlinks": "true",
         "ret_fd": 13
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.554,
+      "ts": 1.592,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.ssh/id_rsa",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 1.593,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.aws/credentials",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 1.593,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.npmrc",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 1.594,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.config/gh/hosts.yml",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 1.594,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.docker/config.json",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 1.595,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.config/Claude/claude_desktop_config.json",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 1.595,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.config/solana/id.json",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 1.596,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.ethereum/keystore",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 1.596,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.config/rclone/rclone.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 1.596,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.mozilla/firefox/cookies.sqlite",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 1.596,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.local/share/keyrings/login.keyring",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 1.6,
       "call": "sock_open",
       "args": {
         "af": "Addressfamily::Inet4",
@@ -124,10 +360,11 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.555,
+      "ts": 1.601,
       "call": "sock_connect",
       "args": {
         "addr": "127.0.0.1:8099",
@@ -135,19 +372,21 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     },
     {
-      "ts": 0.555,
+      "ts": 1.603,
       "call": "fd_write",
       "args": {
         "fd": 13,
-        "nwritten": 188,
+        "nwritten": 3294,
         "socket": true
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success"
+      "errno": "success",
+      "pass": 2
     }
   ]
 }

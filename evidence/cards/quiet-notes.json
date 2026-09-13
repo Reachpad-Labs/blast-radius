@@ -1,0 +1,181 @@
+{
+  "spec": {
+    "name": "quiet-notes",
+    "version": "1.0.0",
+    "integrity": "c07b11f3c9e446e85cd7741a78c863f49de2c52a8defbd959328bf0446738c2e",
+    "entry": "/app/quiet-notes/index.js"
+  },
+  "mode": "scan",
+  "net": null,
+  "tools": [
+    "summarize_notes"
+  ],
+  "findings": {
+    "reads_credentials": [
+      {
+        "path": "/home/dev/.ssh/id_ed25519",
+        "canary": null,
+        "at": 1.662,
+        "pass": 2,
+        "asked": false,
+        "count": 1
+      }
+    ],
+    "egress": [],
+    "bytes_out": 0,
+    "canary_in_payload": [],
+    "returned_to_model": [
+      {
+        "canary": "CANARY-c733fd3d",
+        "tool": "summarize_notes",
+        "from": "/home/dev/.ssh/id_ed25519"
+      }
+    ],
+    "staged_on_disk": [
+      {
+        "path": "/home/dev/.cache/fontconfig/.uuid-cache",
+        "canary": "CANARY-c733fd3d",
+        "from": "/home/dev/.ssh/id_ed25519"
+      },
+      {
+        "path": "/home/dev/.cache/fontconfig/.uuid-cache",
+        "canary": "CANARY-4fb1d6d4",
+        "from": "env:GITHUB_TOKEN"
+      },
+      {
+        "path": "/home/dev/.cache/fontconfig/.uuid-cache",
+        "canary": "CANARY-e16fde28",
+        "from": "env:AWS_ACCESS_KEY_ID"
+      },
+      {
+        "path": "/home/dev/.cache/fontconfig/.uuid-cache",
+        "canary": "CANARY-a52379f3",
+        "from": "env:AWS_SECRET_ACCESS_KEY"
+      },
+      {
+        "path": "/home/dev/.cache/fontconfig/.uuid-cache",
+        "canary": "CANARY-5abdbf7a",
+        "from": "env:OPENAI_API_KEY"
+      },
+      {
+        "path": "/home/dev/.cache/fontconfig/.uuid-cache",
+        "canary": "CANARY-73eeb3b1",
+        "from": "env:ANTHROPIC_API_KEY"
+      },
+      {
+        "path": "/home/dev/.cache/fontconfig/.uuid-cache",
+        "canary": "CANARY-122e3c10",
+        "from": "env:STRIPE_SECRET_KEY"
+      },
+      {
+        "path": "/home/dev/.cache/fontconfig/.uuid-cache",
+        "canary": "CANARY-1bc8fedc",
+        "from": "env:SLACK_BOT_TOKEN"
+      }
+    ],
+    "attempted": [],
+    "attempted_credentials": [],
+    "writes_outside_cwd": [
+      "/home/dev/.cache/fontconfig/.uuid-cache"
+    ],
+    "fingerprinting": [],
+    "unprompted_reads": [
+      "/home/dev/.ssh/id_ed25519"
+    ],
+    "undeclared_hosts": [],
+    "unprompted_writes": [
+      "/home/dev/.cache/fontconfig/.uuid-cache"
+    ],
+    "correlated": false,
+    "policy": {
+      "vendorTokens": [
+        "quiet",
+        "notes"
+      ],
+      "argHosts": [
+        "db.acme.internal"
+      ],
+      "probePaths": []
+    },
+    "verdict": {
+      "level": "critical",
+      "line": "Handed a planted secret back to the model in the answer from “summarize_notes”."
+    }
+  },
+  "events": [
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 1
+    },
+    {
+      "ts": 1.151,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 1
+    },
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 1.181,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 1.662,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.ssh/id_ed25519",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 1.667,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/dev/.cache/fontconfig/.uuid-cache",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    }
+  ]
+}
