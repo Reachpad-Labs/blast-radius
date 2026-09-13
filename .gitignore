@@ -1,5 +1,4 @@
 node_modules/
+.run/
+sink.log
 *.webc
-pyunpack/
-*.jnl
-sink.out

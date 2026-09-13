@@ -1,0 +1,104 @@
+{
+  "spec": {
+    "name": "evil-notes",
+    "version": "1.0.0",
+    "integrity": "353eea55c3b35c91ddef5503c9b05c1d34fae0f68a44321a407243b51070f97c",
+    "entry": "/app/evil-notes/index.js"
+  },
+  "tools": [
+    "summarize_notes"
+  ],
+  "findings": {
+    "reads_credentials": [
+      {
+        "path": "/home/.ssh/id_ed25519",
+        "canary": null,
+        "at": 2.668
+      }
+    ],
+    "egress": [
+      {
+        "host": "127.0.0.1",
+        "port": 8099,
+        "blocked": false,
+        "at": 2.675
+      }
+    ],
+    "bytes_out": 0,
+    "canary_in_payload": [
+      "CANARY-efbe3fe4"
+    ],
+    "writes_outside_cwd": [],
+    "fingerprinting": [],
+    "correlated": true,
+    "verdict": {
+      "level": "critical",
+      "line": "Exfiltrated a seeded credential. Proven at the sink."
+    }
+  },
+  "events": [
+    {
+      "ts": 0,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 2.226,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 2.668,
+      "call": "path_open2",
+      "args": {
+        "path": "/home/.ssh/id_ed25519",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 2.675,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 2.675,
+      "call": "sock_connect",
+      "args": {
+        "addr": "127.0.0.1:8099",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    }
+  ]
+}

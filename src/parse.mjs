@@ -1,32 +1,72 @@
-// STAGE 4 — turn Wasmer's trace into schema events.
+// STAGE 4 — turn Wasmer's syscall trace into schema events.
 //
-// parseTrace(stderrText, { canaries }) -> Event[]
-//
-// Input lines look like:
-//   ...TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2:
-//        return=Ok(Errno::success) dirfd=5 path="/home/.ssh/id_ed25519" ret_fd=6
-//   ...TRACE ThreadId(22) resolve: wasmer_wasix::syscalls::wasix::resolve:
-//        return=Ok(Errno::perm) port=0 host="example.com"
-//
-// RULES  (measured on a real server-filesystem run: 30,678 lines -> 2 events)
-//   1. Keep only lines containing "return=". Each syscall also emits an entry
-//      line and a "close time.busy=" line; keep those and every count triples.
-//   2. Keep only calls that are actual access or egress:
-//        path_open2 path_open sock_open sock_connect sock_send
-//        resolve proc_exec proc_spawn path_unlink_file
-//      Everything else is bookkeeping. path_filestat_get alone was 19,722 of
-//      the 30,678 lines: that is Node resolving modules, not touching secrets.
-//   3. Drop paths under /nix/store, /app, /bin, /lib. That is the runtime and
-//      the specimen reading their own code. Note /app, not /app/node_modules:
-//      a server loads its own index.js and package.json too.
-//   4. Drop Errno::noent. A file that does not exist was not accessed. This is
-//      what removes Node startup probes for openssl.cnf, config.gypi and
-//      doc/api/cli.md, and it is the single highest-yield rule.
-//   5. decision = "deny" when the errno is perm or acces, and ALSO when a
-//      sock_connect returns io. Measured: a DNS denial gives Errno::perm, but
-//      a raw-IP connect under default-deny networking gives Errno::io.
-//   6. canary_hit = any CANARY- substring appearing in the args.
-//
-// After all six, a real run of @modelcontextprotocol/server-filesystem asked to
-// read the seeded key leaves exactly two events: /dev/null, and
-//   path_open2 path="/home/.ssh/id_ed25519" ret_fd=13
+// Rules measured on real runs; see docs/FINDINGS.md for the numbers.
+import { DECISION } from './schema.mjs';
+
+const LINE = /^(\S+)\s+TRACE\s+\S+\s+(\w+):\s+wasmer_wasix::syscalls::(?:wasi|wasix)::\w+:\s+return=Ok\(Errno::(\w+)\)(.*)$/;
+
+// calls that represent real access or egress; everything else is bookkeeping
+export const KEEP = new Set([
+  'path_open', 'path_open2', 'path_unlink_file', 'path_rename',
+  'sock_open', 'sock_connect', 'sock_send', 'sock_send_to', 'resolve',
+  'proc_exec', 'proc_spawn', 'environ_get'
+]);
+
+// the runtime and the specimen reading their own code
+const BORING = [/^\/nix\/store/, /^\/app(\/|$)/, /^\/bin(\/|$)/, /^\/lib(\/|$)/, /^\/usr\/lib/];
+
+function parseArgs(tail) {
+  const args = {};
+  for (const m of tail.matchAll(/(\w+)="([^"]*)"/g)) args[m[1]] = m[2];
+  for (const m of tail.matchAll(/(\w+)=([A-Za-z0-9_:.]+)(?=\s|$)/g)) {
+    if (!(m[1] in args)) args[m[1]] = /^\d+$/.test(m[2]) ? Number(m[2]) : m[2];
+  }
+  return args;
+}
+
+function isDeny(call, errno) {
+  if (errno === 'perm' || errno === 'acces') return true;
+  // measured: a raw-IP connect under default-deny networking returns io,
+  // while a DNS denial returns perm. Treat both as deny.
+  if ((call === 'sock_connect' || call === 'sock_send') && errno === 'io') return true;
+  return false;
+}
+
+export function parseTrace(stderrText, { canaries = {} } = {}) {
+  const wanted = Object.values(canaries);
+  const out = [];
+  let t0 = null;
+
+  for (const raw of String(stderrText).split('\n')) {
+    const m = LINE.exec(raw);
+    if (!m) continue;
+    const [, stamp, call, errno, tail] = m;
+
+    if (!KEEP.has(call)) continue;
+    if (errno === 'noent') continue;              // a file that is not there was not accessed
+
+    const args = parseArgs(tail);
+    if (args.path && BORING.some(re => re.test(args.path))) continue;
+
+    const ms = Date.parse(stamp);
+    if (t0 === null) t0 = ms;
+
+    const hay = tail;
+    let canary_hit = null;
+    for (const c of wanted) if (c && hay.includes(c)) { canary_hit = c; break; }
+    if (!canary_hit) {
+      const g = /CANARY-[A-Za-z0-9_-]+/.exec(hay);
+      if (g) canary_hit = g[0];
+    }
+
+    out.push({
+      ts: Number(((ms - t0) / 1000).toFixed(3)),
+      call,
+      args,
+      canary_hit,
+      decision: isDeny(call, errno) ? DECISION.DENY : DECISION.ALLOW,
+      errno
+    });
+  }
+  return out;
+}

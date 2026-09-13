@@ -1,25 +1,73 @@
-// STAGE 5 — turn events into claims. Pure function, no Wasmer, fully testable
-// against evidence/syscalls-sample.log.
-//
-// analyse(events, { sinkHits, canaries }) -> Findings
-//
-// Findings = {
-//   reads_credentials:  [{ path, canary }]        which canary files were opened
-//   egress:             [{ host, port, blocked }] from resolve / sock_connect
-//   bytes_out:          number                    sum of sock_send bytes_written
-//   canary_in_payload:  [canary]                  FROM sinkHits ONLY
-//   writes_outside_cwd: [path]
-//   fingerprinting:     [string]                  reads of process.versions etc.
-// }
-//
-// THE CLAIM TIERS — keep these apart, a judge will ask which one a line is.
-//   observed-from-trace: reads_credentials, egress, bytes_out. Available for
-//                        any specimen dialing anywhere.
-//   proven-at-sink:      canary_in_payload. Requires egress routed to our sink.
-//
-// Never derive canary_in_payload from the trace. Payload bytes are NOT in the
-// trace; sock_send reports bytes_written only.
+// STAGE 5 — events into claims. Pure: no Wasmer, no filesystem.
+import { DECISION } from './schema.mjs';
 
-export function analyse(events, { sinkHits = [], canaries }) {
-  throw new Error('not implemented: see the Findings shape above');
+const CRED = [/\.ssh\//, /\.env$/, /\.aws\//, /credentials/i, /id_[a-z0-9]+$/, /\.npmrc$/, /\.netrc$/];
+const PROBES = [/process\.versions/, /\/proc\/version/, /config\.gypi/];
+
+export function analyse(events, { sinkHits = [], canaries = {} } = {}) {
+  const reads_credentials = [];
+  const egress = [];
+  let bytes_out = 0;
+  const writes_outside_cwd = [];
+  const fingerprinting = [];
+
+  for (const e of events) {
+    const p = e.args.path;
+
+    if (p && (CRED.some(re => re.test(p)) || e.canary_hit)) {
+      reads_credentials.push({ path: p, canary: e.canary_hit, at: e.ts });
+    }
+    if (p && PROBES.some(re => re.test(p))) fingerprinting.push(p);
+
+    if (e.call === 'resolve' && e.args.host) {
+      egress.push({ host: e.args.host, port: e.args.port ?? null, blocked: e.decision === DECISION.DENY, at: e.ts });
+    }
+    if (e.call === 'sock_connect' && e.args.addr) {
+      const [host, port] = String(e.args.addr).split(':');
+      egress.push({ host, port: port ? Number(port) : null, blocked: e.decision === DECISION.DENY, at: e.ts });
+    }
+    if (e.call === 'sock_send' || e.call === 'sock_send_to') {
+      bytes_out += Number(e.args.nsent ?? e.args.bytes_written ?? 0);
+    }
+    if ((e.call === 'path_open' || e.call === 'path_open2') && /write|creat|trunc/i.test(JSON.stringify(e.args))) {
+      if (p && !p.startsWith('/app')) writes_outside_cwd.push(p);
+    }
+  }
+
+  // proven-at-sink ONLY. Never derived from the trace: payload bytes are not in it.
+  const known = Object.values(canaries).filter(Boolean);
+  const blob = sinkHits.join('\n');
+  const canary_in_payload = known.filter(c => blob.includes(c));
+
+  const firstRead = reads_credentials[0]?.at;
+  const firstEgress = egress[0]?.at;
+  const correlated = firstRead != null && firstEgress != null && firstEgress >= firstRead;
+
+  return {
+    reads_credentials,
+    egress: dedupe(egress),
+    bytes_out,
+    canary_in_payload,
+    writes_outside_cwd: [...new Set(writes_outside_cwd)],
+    fingerprinting: [...new Set(fingerprinting)],
+    correlated,
+    verdict: verdict({ reads_credentials, egress, canary_in_payload, correlated })
+  };
+}
+
+function dedupe(list) {
+  const seen = new Map();
+  for (const e of list) {
+    const k = e.host + ':' + e.port;
+    if (!seen.has(k) || (seen.get(k).blocked && !e.blocked)) seen.set(k, e);
+  }
+  return [...seen.values()];
+}
+
+function verdict({ reads_credentials, egress, canary_in_payload, correlated }) {
+  if (canary_in_payload.length) return { level: 'critical', line: 'Exfiltrated a seeded credential. Proven at the sink.' };
+  if (reads_credentials.length && correlated) return { level: 'critical', line: 'Read a seeded credential, then attempted egress.' };
+  if (reads_credentials.length) return { level: 'warn', line: 'Read a seeded credential.' };
+  if (egress.length) return { level: 'warn', line: 'Attempted egress.' };
+  return { level: 'clean', line: 'No credential access and no egress observed.' };
 }

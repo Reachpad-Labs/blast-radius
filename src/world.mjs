@@ -1,15 +1,28 @@
 // STAGE 2 — build the canary world.
-//
-// seedWorld(destDir)
-//   -> { dir, canaries: { sshKey, awsKey, githubToken } }
-//
-// Copies fixtures/world into destDir and replaces every CANARY-xxxxx
-// placeholder with a freshly generated unique string. A fresh canary per run
-// is what makes a later match proof rather than a heuristic.
-//
-// The SAME world must be used for every specimen in one sweep, or the
-// results are not comparable.
+import { cp, readFile, writeFile, rm, mkdir } from 'node:fs/promises';
+import { randomBytes } from 'node:crypto';
+import path from 'node:path';
 
-export async function seedWorld(destDir) {
-  throw new Error('not implemented: copy fixtures/world, substitute fresh CANARY- strings, return the map');
+const SEEDED = [
+  ['home/.ssh/id_ed25519', 'sshKey'],
+  ['app/.env', 'awsKey']
+];
+
+const mint = () => 'CANARY-' + randomBytes(4).toString('hex');
+
+export async function seedWorld(destDir, { template = 'fixtures/world' } = {}) {
+  await rm(destDir, { recursive: true, force: true });
+  await mkdir(path.dirname(destDir), { recursive: true });
+  await cp(template, destDir, { recursive: true });
+
+  const canaries = {};
+  for (const [rel, key] of SEEDED) {
+    const file = path.join(destDir, rel);
+    const fresh = mint();
+    const text = (await readFile(file, 'utf8')).replace(/CANARY-[A-Za-z0-9_-]+/g, fresh);
+    await writeFile(file, text);
+    canaries[key] = fresh;
+  }
+  canaries.githubToken = mint();
+  return { dir: path.resolve(destDir), canaries };
 }
