@@ -18,7 +18,7 @@
 //
 // The SAME world must be used for every specimen in one sweep, or the
 // results are not comparable.
-import { cp, readFile, writeFile, rm, mkdir, readdir } from 'node:fs/promises';
+import { cp, readFile, writeFile, rm, mkdir, readdir, chmod, stat } from 'node:fs/promises';
 import { randomBytes } from 'node:crypto';
 import path from 'node:path';
 
@@ -58,6 +58,42 @@ function seedEnv() {
   return env;
 }
 
+// Permissions, the only way the guest can have them.
+//
+// WASI reports mode=0 uid=0 for everything, so nothing INSIDE the guest can
+// enforce anything. But the host's modes are enforced by the host kernel when
+// Wasmer touches the file, and Wasmer runs as an ordinary user — so a system
+// path made read-only on the host refuses a guest write with EPERM, which is
+// what a fresh box does to a process running as uid 1000.
+//
+// Measured: file 0444 refuses a write; directory 0555 refuses create and
+// unlink; a writable file inside a read-only directory is still writable,
+// exactly as POSIX says. So both have to be set.
+const SYSTEM_ROOTS = ['etc', 'proc', 'sys'];
+
+// 0000 on the host means even the owner is refused, which is the closest we can
+// get to root:shadow 0640 seen from uid 1000. The canary in it should never
+// come back from a run — it is the negative control.
+const UNREADABLE = ['etc/shadow'];
+
+async function chmodTree(dir, { fileMode, dirMode }) {
+  await chmod(dir, dirMode);
+  for (const ent of await readdir(dir, { withFileTypes: true })) {
+    const full = path.join(dir, ent.name);
+    if (ent.isDirectory()) await chmodTree(full, { fileMode, dirMode });
+    else await chmod(full, fileMode);
+  }
+}
+
+// rm cannot unlink out of a 0555 directory, so undo the hardening first.
+async function relax(dir) {
+  let st;
+  try { st = await stat(dir); } catch { return; }
+  if (!st.isDirectory()) { await chmod(dir, 0o644).catch(() => {}); return; }
+  await chmod(dir, 0o755).catch(() => {});
+  for (const ent of await readdir(dir, { withFileTypes: true })) await relax(path.join(dir, ent.name));
+}
+
 async function* walk(dir) {
   for (const ent of await readdir(dir, { withFileTypes: true })) {
     const full = path.join(dir, ent.name);
@@ -67,6 +103,7 @@ async function* walk(dir) {
 }
 
 export async function seedWorld(destDir, { template = 'fixtures/world' } = {}) {
+  await relax(destDir);
   await rm(destDir, { recursive: true, force: true });
   await mkdir(path.dirname(destDir), { recursive: true });
   await cp(template, destDir, { recursive: true });
@@ -101,6 +138,13 @@ export async function seedWorld(destDir, { template = 'fixtures/world' } = {}) {
     PLACEHOLDER.lastIndex = 0;
     if (m) canaries[`env:${k}`] = m[0];
   }
+
+  // Harden last: everything above has to write into these trees first.
+  for (const root of SYSTEM_ROOTS) {
+    const dir = path.join(destDir, root);
+    try { await chmodTree(dir, { fileMode: 0o444, dirMode: 0o555 }); } catch {}
+  }
+  for (const rel of UNREADABLE) await chmod(path.join(destDir, rel), 0o000).catch(() => {});
 
   // Every top-level directory becomes a mount at the same name in the guest.
   // Adding /var or /opt to the template needs no change in detonate.

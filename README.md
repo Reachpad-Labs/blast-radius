@@ -116,6 +116,14 @@ mounted at the same name in the guest:
 /sys/   class/dmi/id/{sys_vendor,product_name,product_uuid}  (reads as EC2)
 ```
 
+These trees are hardened after seeding — files `0444`, directories `0555`, and
+`/etc/shadow` `0000`. WASI itself has no permissions (every path reports
+`mode=0 uid=0`), but the host kernel enforces the host's modes when Wasmer
+touches the file, so the guest gets the shape of a fresh box seen from uid 1000:
+`/etc/passwd` reads and refuses writes, `/etc/shadow` refuses the read, and
+`$HOME` is fully writable. The shadow canary is the negative control — it should
+never reach the sink.
+
 Mounting over the image's `/etc` is safe — DNS still resolves, measured.
 `/proc/self/environ` matters because it is the *other* way to read the
 environment; a specimen that uses it lands on the same canary values, so a sink

@@ -244,3 +244,53 @@ handed the copy. The world was already a per-run copy.
 its lifecycle scripts on the host as you, before Wasmer is ever involved. Use
 `npm install --ignore-scripts`, and treat the install itself as the part of this
 tool that is not protected by any of the above.
+
+## Permissions: the guest cannot have them, the host can
+
+WASI reports `mode=0 uid=0` for every path, so nothing *inside* the guest
+enforces anything. But the host kernel checks the host's modes when Wasmer
+touches a file, and Wasmer runs as an ordinary user — so a system path made
+read-only on the host refuses a guest write, which is what a fresh box does to a
+process running as uid 1000.
+
+Measured, on a plain volume:
+
+```
+file 0444                    write DENIED (EPERM)
+directory 0555               create DENIED, unlink DENIED
+writable file in a 0555 dir  write SUCCEEDS   — POSIX: the file's mode governs
+```
+
+Both have to be set, so `seedWorld` hardens `/etc`, `/proc` and `/sys` to files
+`0444` / dirs `0555` after seeding, and `/etc/shadow` to `0000` — the closest we
+get to `root:shadow 0640` seen from uid 1000. The resulting guest:
+
+```
+read  /etc/passwd              root:x:0:0:root:/root:/bin/bash
+write /etc/passwd              DENIED:EPERM
+create /etc/evil.conf          DENIED:EPERM
+read  /etc/shadow              DENIED:EPERM
+write /proc/self/environ       DENIED:EPERM
+write /home/dev/notes.txt      WROTE
+write ~/.ssh/id_ed25519        WROTE
+create ~/.config/autostart     CREATED
+```
+
+That is the shape of a fresh machine: system paths readable and not writable,
+the shadow file out of reach, and the home directory fully yours — including
+overwriting your own key and planting an autostart directory, both of which are
+real persistence moves and both of which land in the `writes outside its own
+tree` row.
+
+Two caveats to state plainly. The errno is `EPERM` where Linux would give
+`EACCES`. And a specimen that *stats* a path still sees `mode=0`, so a check
+that reads permissions rather than attempting the write gets an unrealistic
+answer.
+
+Two consequences for the harness itself:
+
+- `rm` cannot unlink out of a `0555` directory, so `seedWorld` relaxes the old
+  world before removing it. Without that the second run of the day fails.
+- `/etc/shadow` carries a canary that should **never** come back from a run. It
+  is the negative control: if it ever appears at the sink, the permission model
+  is not doing what this section claims.
