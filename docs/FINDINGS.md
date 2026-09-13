@@ -71,3 +71,31 @@ means implementing all of them — writing an operating system, not a shim. And
 Wasmer already implemented all 150 and exposes policy over them through `--net`
 plus a per-syscall trace through `RUST_LOG`. So we rent their import table
 instead of writing one.
+
+## The filter, measured
+
+A real `@modelcontextprotocol/server-filesystem` run, asked to read the seeded
+key with egress denied, emits **30,678 trace lines**. Six rules reduce that to
+**2 events**:
+
+| after | lines | what went |
+| --- | --- | --- |
+| raw | 30,678 | |
+| keep `return=` only | ~11,600 | entry and `close time.busy=` duplicates |
+| keep access/egress calls only | 2,638 | `path_filestat_get` alone was 19,722 — Node resolving modules |
+| drop `/nix/store`, `/app/node_modules`, `/bin`, `/lib` | 15 | runtime and specimen reading their own code |
+| drop `Errno::noent` | **2** | Node startup probes for `openssl.cnf`, `config.gypi`, `doc/api/cli.md` |
+
+What survives:
+
+```
+path_open2: return=Ok(Errno::success) path="/dev/null" ret_fd=12
+path_open2: return=Ok(Errno::success) path="/home/.ssh/id_ed25519" ret_fd=13
+```
+
+**Dropping `Errno::noent` is the highest-yield rule** and it is not obvious: a
+file that does not exist was not accessed. Node probes a dozen paths at startup
+that are not there, and without this rule every server looks nosy.
+
+Node is far noisier than Python — 30,678 lines against 3,885 for a trivial
+Python script — so a `/nix/store` prefix filter alone is nowhere near enough.

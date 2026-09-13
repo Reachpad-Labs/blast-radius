@@ -1,0 +1,600 @@
+2026-09-13T20:38:08.306695Z TRACE ThreadId(22) environ_sizes_get: wasmer_wasix::syscalls::wasi::environ_sizes_get: env_var_count=0 env_buf_size=0
+2026-09-13T20:38:08.306893Z TRACE ThreadId(22) environ_sizes_get: wasmer_wasix::syscalls::wasi::environ_sizes_get: return=Ok(Errno::success)
+2026-09-13T20:38:08.306923Z TRACE ThreadId(22) environ_sizes_get: wasmer_wasix::syscalls::wasi::environ_sizes_get: close time.busy=286µs time.idle=25.2µs
+2026-09-13T20:38:08.307022Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: return=Errno::success fd=3
+2026-09-13T20:38:08.307042Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: close time.busy=23.7µs time.idle=4.56µs fd=3
+2026-09-13T20:38:08.307101Z TRACE ThreadId(22) fd_prestat_dir_name: wasmer_wasix::syscalls::wasi::fd_prestat_dir_name: return=Errno::success fd=3 path="/"
+2026-09-13T20:38:08.307109Z TRACE ThreadId(22) fd_prestat_dir_name: wasmer_wasix::syscalls::wasi::fd_prestat_dir_name: close time.busy=27.2µs time.idle=877ns fd=3 path="/"
+2026-09-13T20:38:08.307144Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: return=Errno::success fd=4
+2026-09-13T20:38:08.307150Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: close time.busy=6.58µs time.idle=814ns fd=4
+2026-09-13T20:38:08.307160Z TRACE ThreadId(22) fd_prestat_dir_name: wasmer_wasix::syscalls::wasi::fd_prestat_dir_name: return=Errno::success fd=4 path="."
+2026-09-13T20:38:08.307165Z TRACE ThreadId(22) fd_prestat_dir_name: wasmer_wasix::syscalls::wasi::fd_prestat_dir_name: close time.busy=6.86µs time.idle=634ns fd=4 path="."
+2026-09-13T20:38:08.307174Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.307179Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: close time.busy=6.04µs time.idle=651ns fd=5
+2026-09-13T20:38:08.307188Z TRACE ThreadId(22) fd_prestat_dir_name: wasmer_wasix::syscalls::wasi::fd_prestat_dir_name: return=Errno::success fd=5 path="/"
+2026-09-13T20:38:08.307193Z TRACE ThreadId(22) fd_prestat_dir_name: wasmer_wasix::syscalls::wasi::fd_prestat_dir_name: close time.busy=6.36µs time.idle=655ns fd=5 path="/"
+2026-09-13T20:38:08.307202Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: return=Errno::badf fd=6
+2026-09-13T20:38:08.307207Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: close time.busy=5.90µs time.idle=723ns fd=6
+2026-09-13T20:38:08.307582Z TRACE ThreadId(22) proc_signals_sizes_get: wasmer_wasix::syscalls::wasix::proc_signals_sizes_get: return=Ok(Errno::success) signal_count=0
+2026-09-13T20:38:08.307610Z TRACE ThreadId(22) proc_signals_sizes_get: wasmer_wasix::syscalls::wasix::proc_signals_sizes_get: close time.busy=37.9µs time.idle=2.19µs signal_count=0
+2026-09-13T20:38:08.307664Z TRACE ThreadId(22) proc_signals_get: wasmer_wasix::syscalls::wasix::proc_signals_get: return=Ok(Errno::success)
+2026-09-13T20:38:08.307680Z TRACE ThreadId(22) proc_signals_get: wasmer_wasix::syscalls::wasix::proc_signals_get: close time.busy=12.6µs time.idle=5.77µs
+2026-09-13T20:38:08.307730Z TRACE ThreadId(22) callback_signal: wasmer_wasix::syscalls::wasix::callback_signal: return=Ok(()) name="__wasm_signal" funct_is_some=true
+2026-09-13T20:38:08.307749Z TRACE ThreadId(22) callback_signal: wasmer_wasix::syscalls::wasix::callback_signal: close time.busy=34.4µs time.idle=1.39µs name="__wasm_signal" funct_is_some=true
+2026-09-13T20:38:08.307791Z DEBUG ThreadId(22) args_sizes_get: wasmer_wasix::syscalls::wasi::args_sizes_get: argc=3, argv_buf_size=83
+2026-09-13T20:38:08.307800Z TRACE ThreadId(22) args_sizes_get: wasmer_wasix::syscalls::wasi::args_sizes_get: return=Errno::success
+2026-09-13T20:38:08.307806Z TRACE ThreadId(22) args_sizes_get: wasmer_wasix::syscalls::wasi::args_sizes_get: close time.busy=20.7µs time.idle=973ns
+2026-09-13T20:38:08.307873Z DEBUG ThreadId(22) args_get: wasmer_wasix::syscalls::wasi::args_get: args:
+                   0: edge
+                   1: /app/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js
+                   2: /home
+2026-09-13T20:38:08.307914Z TRACE ThreadId(22) args_get: wasmer_wasix::syscalls::wasi::args_get: return=Errno::success
+2026-09-13T20:38:08.307930Z TRACE ThreadId(22) args_get: wasmer_wasix::syscalls::wasi::args_get: close time.busy=78.0µs time.idle=7.77µs
+2026-09-13T20:38:08.307974Z TRACE ThreadId(22) fd_filestat_get: wasmer_wasix::syscalls::wasi::fd_filestat_get: return=Ok(Errno::success) fd=0 size=0 mtime=0
+2026-09-13T20:38:08.307984Z TRACE ThreadId(22) fd_filestat_get: wasmer_wasix::syscalls::wasi::fd_filestat_get: close time.busy=20.8µs time.idle=1.24µs fd=0 size=0 mtime=0
+2026-09-13T20:38:08.308020Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=0
+2026-09-13T20:38:08.308029Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=18.9µs time.idle=978ns fd=0
+2026-09-13T20:38:08.308042Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=0
+2026-09-13T20:38:08.308055Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=14.1µs time.idle=773ns fd=0
+2026-09-13T20:38:08.308099Z TRACE ThreadId(22) tty_get: wasmer_wasix::syscalls::wasix::tty_get: return=Errno::success
+2026-09-13T20:38:08.308109Z TRACE ThreadId(22) tty_get: wasmer_wasix::syscalls::wasix::tty_get: close time.busy=28.7µs time.idle=1.08µs
+2026-09-13T20:38:08.308123Z TRACE ThreadId(22) fd_filestat_get: wasmer_wasix::syscalls::wasi::fd_filestat_get: return=Ok(Errno::success) fd=1 size=0 mtime=0
+2026-09-13T20:38:08.308129Z TRACE ThreadId(22) fd_filestat_get: wasmer_wasix::syscalls::wasi::fd_filestat_get: close time.busy=10.6µs time.idle=883ns fd=1 size=0 mtime=0
+2026-09-13T20:38:08.308140Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=1
+2026-09-13T20:38:08.308145Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=6.13µs time.idle=620ns fd=1
+2026-09-13T20:38:08.308153Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=1
+2026-09-13T20:38:08.308158Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=5.62µs time.idle=581ns fd=1
+2026-09-13T20:38:08.308172Z TRACE ThreadId(22) tty_get: wasmer_wasix::syscalls::wasix::tty_get: return=Errno::success
+2026-09-13T20:38:08.308179Z TRACE ThreadId(22) tty_get: wasmer_wasix::syscalls::wasix::tty_get: close time.busy=12.8µs time.idle=631ns
+2026-09-13T20:38:08.308190Z TRACE ThreadId(22) fd_filestat_get: wasmer_wasix::syscalls::wasi::fd_filestat_get: return=Ok(Errno::success) fd=2 size=0 mtime=0
+2026-09-13T20:38:08.308196Z TRACE ThreadId(22) fd_filestat_get: wasmer_wasix::syscalls::wasi::fd_filestat_get: close time.busy=9.60µs time.idle=687ns fd=2 size=0 mtime=0
+2026-09-13T20:38:08.308207Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=2
+2026-09-13T20:38:08.308213Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=6.51µs time.idle=767ns fd=2
+2026-09-13T20:38:08.308222Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=2
+2026-09-13T20:38:08.308228Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=6.42µs time.idle=718ns fd=2
+2026-09-13T20:38:08.308242Z TRACE ThreadId(22) tty_get: wasmer_wasix::syscalls::wasix::tty_get: return=Errno::success
+2026-09-13T20:38:08.308248Z TRACE ThreadId(22) tty_get: wasmer_wasix::syscalls::wasix::tty_get: close time.busy=12.6µs time.idle=812ns
+2026-09-13T20:38:08.308360Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=256 path="/"
+2026-09-13T20:38:08.308378Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=36.9µs time.idle=1.22µs max_path_len=256 path="/"
+2026-09-13T20:38:08.308420Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js" fd=5
+2026-09-13T20:38:08.308734Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.308751Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=333µs time.idle=1.42µs fd=5
+2026-09-13T20:38:08.309451Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:38:08.309483Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=38.1µs time.idle=2.44µs fd=5
+2026-09-13T20:38:08.309637Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::noent) dirfd=5 follow_symlinks=true path="/usr/local/ssl/openssl.cnf"
+2026-09-13T20:38:08.309649Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=122µs time.idle=1.32µs dirfd=5 follow_symlinks=true path="/usr/local/ssl/openssl.cnf"
+2026-09-13T20:38:08.310831Z TRACE ThreadId(22) proc_id: wasmer_wasix::syscalls::wasix::proc_id: return=Errno::success pid=1
+2026-09-13T20:38:08.310877Z TRACE ThreadId(22) proc_id: wasmer_wasix::syscalls::wasix::proc_id: close time.busy=63.5µs time.idle=4.17µs pid=1
+2026-09-13T20:38:08.312088Z TRACE ThreadId(22) random_get: wasmer_wasix::syscalls::wasi::random_get: return=Errno::success buf_len=48
+2026-09-13T20:38:08.312132Z TRACE ThreadId(22) random_get: wasmer_wasix::syscalls::wasi::random_get: close time.busy=60.8µs time.idle=4.44µs buf_len=48
+2026-09-13T20:38:08.312212Z TRACE ThreadId(22) proc_id: wasmer_wasix::syscalls::wasix::proc_id: return=Errno::success pid=1
+2026-09-13T20:38:08.312223Z TRACE ThreadId(22) proc_id: wasmer_wasix::syscalls::wasix::proc_id: close time.busy=15.8µs time.idle=1.10µs pid=1
+2026-09-13T20:38:08.312252Z TRACE ThreadId(22) proc_id: wasmer_wasix::syscalls::wasix::proc_id: return=Errno::success pid=1
+2026-09-13T20:38:08.312260Z TRACE ThreadId(22) proc_id: wasmer_wasix::syscalls::wasix::proc_id: close time.busy=10.5µs time.idle=1.02µs pid=1
+2026-09-13T20:38:08.327802Z TRACE ThreadId(22) fd_pipe: wasmer_wasix::syscalls::wasix::fd_pipe: return=Ok(Errno::success) read_fd=6 write_fd=7
+2026-09-13T20:38:08.327882Z TRACE ThreadId(22) fd_pipe: wasmer_wasix::syscalls::wasix::fd_pipe: close time.busy=133µs time.idle=6.00µs read_fd=6 write_fd=7
+2026-09-13T20:38:08.327920Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=6
+2026-09-13T20:38:08.327939Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=16.3µs time.idle=4.94µs fd=6
+2026-09-13T20:38:08.327949Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=7
+2026-09-13T20:38:08.327954Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=6.50µs time.idle=680ns fd=7
+2026-09-13T20:38:08.328024Z TRACE ThreadId(22) fd_write: wasmer_wasix::syscalls::wasi::fd_write: return=Ok(Errno::success) fd=7 nwritten=1
+2026-09-13T20:38:08.328033Z TRACE ThreadId(22) fd_write: wasmer_wasix::syscalls::wasi::fd_write: close time.busy=35.0µs time.idle=1.08µs fd=7 nwritten=1
+2026-09-13T20:38:08.328124Z TRACE ThreadId(22) fd_pipe: wasmer_wasix::syscalls::wasix::fd_pipe: return=Ok(Errno::success) read_fd=8 write_fd=9
+2026-09-13T20:38:08.328133Z TRACE ThreadId(22) fd_pipe: wasmer_wasix::syscalls::wasix::fd_pipe: close time.busy=90.1µs time.idle=716ns read_fd=8 write_fd=9
+2026-09-13T20:38:08.328144Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=8
+2026-09-13T20:38:08.328150Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=6.53µs time.idle=790ns fd=8
+2026-09-13T20:38:08.328184Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=9
+2026-09-13T20:38:08.328190Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=6.71µs time.idle=798ns fd=9
+2026-09-13T20:38:08.328204Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=8
+2026-09-13T20:38:08.328211Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=9.06µs time.idle=777ns fd=8
+2026-09-13T20:38:08.328237Z TRACE ThreadId(22) fd_fdstat_set_flags: wasmer_wasix::syscalls::wasi::fd_fdstat_set_flags: return=Ok(Errno::success) fd=8
+2026-09-13T20:38:08.328245Z TRACE ThreadId(22) fd_fdstat_set_flags: wasmer_wasix::syscalls::wasi::fd_fdstat_set_flags: close time.busy=9.18µs time.idle=1.41µs fd=8
+2026-09-13T20:38:08.328255Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=9
+2026-09-13T20:38:08.328260Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=5.93µs time.idle=650ns fd=9
+2026-09-13T20:38:08.328269Z TRACE ThreadId(22) fd_fdstat_set_flags: wasmer_wasix::syscalls::wasi::fd_fdstat_set_flags: return=Ok(Errno::success) fd=9
+2026-09-13T20:38:08.328274Z TRACE ThreadId(22) fd_fdstat_set_flags: wasmer_wasix::syscalls::wasi::fd_fdstat_set_flags: close time.busy=5.56µs time.idle=609ns fd=9
+2026-09-13T20:38:08.328296Z TRACE ThreadId(22) fd_pipe: wasmer_wasix::syscalls::wasix::fd_pipe: return=Ok(Errno::success) read_fd=10 write_fd=11
+2026-09-13T20:38:08.328302Z TRACE ThreadId(22) fd_pipe: wasmer_wasix::syscalls::wasix::fd_pipe: close time.busy=15.2µs time.idle=836ns read_fd=10 write_fd=11
+2026-09-13T20:38:08.328312Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=10
+2026-09-13T20:38:08.328353Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=41.5µs time.idle=870ns fd=10
+2026-09-13T20:38:08.328363Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=11
+2026-09-13T20:38:08.328369Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=6.34µs time.idle=728ns fd=11
+2026-09-13T20:38:08.328378Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=10
+2026-09-13T20:38:08.328384Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=6.16µs time.idle=599ns fd=10
+2026-09-13T20:38:08.328392Z TRACE ThreadId(22) fd_fdstat_set_flags: wasmer_wasix::syscalls::wasi::fd_fdstat_set_flags: return=Ok(Errno::success) fd=10
+2026-09-13T20:38:08.328397Z TRACE ThreadId(22) fd_fdstat_set_flags: wasmer_wasix::syscalls::wasi::fd_fdstat_set_flags: close time.busy=5.57µs time.idle=609ns fd=10
+2026-09-13T20:38:08.328406Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=11
+2026-09-13T20:38:08.328411Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=5.47µs time.idle=610ns fd=11
+2026-09-13T20:38:08.328419Z TRACE ThreadId(22) fd_fdstat_set_flags: wasmer_wasix::syscalls::wasi::fd_fdstat_set_flags: return=Ok(Errno::success) fd=11
+2026-09-13T20:38:08.328424Z TRACE ThreadId(22) fd_fdstat_set_flags: wasmer_wasix::syscalls::wasi::fd_fdstat_set_flags: close time.busy=5.29µs time.idle=589ns fd=11
+2026-09-13T20:38:08.328527Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=256 path="/"
+2026-09-13T20:38:08.328537Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=25.3µs time.idle=1.60µs max_path_len=256 path="/"
+2026-09-13T20:38:08.328572Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=0
+2026-09-13T20:38:08.328604Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=32.9µs time.idle=880ns fd=0
+2026-09-13T20:38:08.328615Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=1
+2026-09-13T20:38:08.328620Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=5.66µs time.idle=674ns fd=1
+2026-09-13T20:38:08.328631Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=2
+2026-09-13T20:38:08.328643Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=14.5µs time.idle=1.15µs fd=2
+2026-09-13T20:38:08.328653Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=3
+2026-09-13T20:38:08.328659Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=6.51µs time.idle=1.05µs fd=3
+2026-09-13T20:38:08.328666Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=4
+2026-09-13T20:38:08.328671Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=5.49µs time.idle=548ns fd=4
+2026-09-13T20:38:08.328680Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=5
+2026-09-13T20:38:08.328685Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=5.43µs time.idle=642ns fd=5
+2026-09-13T20:38:08.328693Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=6
+2026-09-13T20:38:08.328699Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=5.71µs time.idle=680ns fd=6
+2026-09-13T20:38:08.328706Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=7
+2026-09-13T20:38:08.328712Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=5.71µs time.idle=544ns fd=7
+2026-09-13T20:38:08.328720Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=8
+2026-09-13T20:38:08.328726Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=6.28µs time.idle=566ns fd=8
+2026-09-13T20:38:08.328733Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=9
+2026-09-13T20:38:08.328738Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=5.00µs time.idle=463ns fd=9
+2026-09-13T20:38:08.328746Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=10
+2026-09-13T20:38:08.328751Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=5.54µs time.idle=485ns fd=10
+2026-09-13T20:38:08.328758Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::success) fd=11
+2026-09-13T20:38:08.328763Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=4.51µs time.idle=693ns fd=11
+2026-09-13T20:38:08.328770Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::badf) fd=12
+2026-09-13T20:38:08.328775Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=5.84µs time.idle=502ns fd=12
+2026-09-13T20:38:08.328783Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::badf) fd=13
+2026-09-13T20:38:08.328787Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=4.78µs time.idle=538ns fd=13
+2026-09-13T20:38:08.328795Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::badf) fd=14
+2026-09-13T20:38:08.328813Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=18.6µs time.idle=623ns fd=14
+2026-09-13T20:38:08.328825Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::badf) fd=15
+2026-09-13T20:38:08.328831Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=6.92µs time.idle=700ns fd=15
+2026-09-13T20:38:08.328839Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: return=Ok(Errno::badf) fd=16
+2026-09-13T20:38:08.328844Z TRACE ThreadId(22) fd_fdflags_set: wasmer_wasix::syscalls::wasix::fd_fdflags_set: close time.busy=5.50µs time.idle=556ns fd=16
+2026-09-13T20:38:08.329935Z TRACE ThreadId(22) proc_id: wasmer_wasix::syscalls::wasix::proc_id: return=Errno::success pid=1
+2026-09-13T20:38:08.330005Z TRACE ThreadId(22) proc_id: wasmer_wasix::syscalls::wasix::proc_id: close time.busy=86.4µs time.idle=6.32µs pid=1
+2026-09-13T20:38:08.330049Z TRACE ThreadId(22) proc_id: wasmer_wasix::syscalls::wasix::proc_id: return=Errno::success pid=1
+2026-09-13T20:38:08.330058Z TRACE ThreadId(22) proc_id: wasmer_wasix::syscalls::wasix::proc_id: close time.busy=12.3µs time.idle=1.18µs pid=1
+2026-09-13T20:38:08.330087Z TRACE ThreadId(22) proc_parent: wasmer_wasix::syscalls::wasix::proc_parent: return=Errno::success pid=1 parent=0
+2026-09-13T20:38:08.330094Z TRACE ThreadId(22) proc_parent: wasmer_wasix::syscalls::wasix::proc_parent: close time.busy=12.9µs time.idle=1.02µs pid=1 parent=0
+2026-09-13T20:38:08.330178Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=4096 path="/"
+2026-09-13T20:38:08.330188Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=25.8µs time.idle=1.15µs max_path_len=4096 path="/"
+2026-09-13T20:38:08.330223Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/private/tmp/edgejs-wasmer-release-0.2.0/deps/undici/src/package.json" fd=5
+2026-09-13T20:38:08.330277Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.330286Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=65.4µs time.idle=1.19µs fd=5
+2026-09-13T20:38:08.330304Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/deps/undici/src/package.json" fd=5
+2026-09-13T20:38:08.330346Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.330362Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=58.8µs time.idle=1.03µs fd=5
+2026-09-13T20:38:08.330375Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/deps/undici/src/package.json" fd=5
+2026-09-13T20:38:08.330387Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.330393Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=19.0µs time.idle=857ns fd=5
+2026-09-13T20:38:08.330427Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=4096 path="/"
+2026-09-13T20:38:08.330434Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=12.4µs time.idle=879ns max_path_len=4096 path="/"
+2026-09-13T20:38:08.330450Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/private/tmp/edgejs-wasmer-release-0.2.0/test/node_trace.1.log" fd=5
+2026-09-13T20:38:08.330463Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.330485Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=35.9µs time.idle=974ns fd=5
+2026-09-13T20:38:08.330518Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/test/node_trace.1.log" fd=5
+2026-09-13T20:38:08.330532Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.330538Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=20.6µs time.idle=1.00µs fd=5
+2026-09-13T20:38:08.330547Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/test/node_trace.1.log" fd=5
+2026-09-13T20:38:08.330557Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.330562Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=15.3µs time.idle=751ns fd=5
+2026-09-13T20:38:08.330588Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=4096 path="/"
+2026-09-13T20:38:08.330595Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=11.1µs time.idle=827ns max_path_len=4096 path="/"
+2026-09-13T20:38:08.330609Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/private/tmp/edgejs-wasmer-release-0.2.0/test/fixtures/tz-version.txt" fd=5
+2026-09-13T20:38:08.330621Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.330627Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=18.4µs time.idle=905ns fd=5
+2026-09-13T20:38:08.330638Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/test/fixtures/tz-version.txt" fd=5
+2026-09-13T20:38:08.330648Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.330654Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=15.6µs time.idle=731ns fd=5
+2026-09-13T20:38:08.330663Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/test/fixtures/tz-version.txt" fd=5
+2026-09-13T20:38:08.330672Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.330678Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=15.6µs time.idle=719ns fd=5
+2026-09-13T20:38:08.330693Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=4096 path="/"
+2026-09-13T20:38:08.330699Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=9.50µs time.idle=761ns max_path_len=4096 path="/"
+2026-09-13T20:38:08.330712Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/private/tmp/edgejs-wasmer-release-0.2.0/test/node_trace.1.log" fd=5
+2026-09-13T20:38:08.330724Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.330729Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=17.5µs time.idle=755ns fd=5
+2026-09-13T20:38:08.330739Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/test/node_trace.1.log" fd=5
+2026-09-13T20:38:08.330749Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.330754Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=15.4µs time.idle=763ns fd=5
+2026-09-13T20:38:08.330764Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/test/node_trace.1.log" fd=5
+2026-09-13T20:38:08.330784Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.330791Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=27.2µs time.idle=790ns fd=5
+2026-09-13T20:38:08.331451Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=4096 path="/"
+2026-09-13T20:38:08.331487Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=49.5µs time.idle=2.07µs max_path_len=4096 path="/"
+2026-09-13T20:38:08.331513Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/private/tmp/edgejs-wasmer-release-0.2.0/node/config.gypi" fd=5
+2026-09-13T20:38:08.331538Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.331546Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=33.7µs time.idle=1.14µs fd=5
+2026-09-13T20:38:08.331558Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/node/config.gypi" fd=5
+2026-09-13T20:38:08.331570Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.331576Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=17.9µs time.idle=865ns fd=5
+2026-09-13T20:38:08.331587Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/node/config.gypi" fd=5
+2026-09-13T20:38:08.331597Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.331603Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=16.0µs time.idle=851ns fd=5
+2026-09-13T20:38:08.331617Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=4096 path="/"
+2026-09-13T20:38:08.331622Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=10.2µs time.idle=677ns max_path_len=4096 path="/"
+2026-09-13T20:38:08.331634Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/node/config.gypi" fd=5
+2026-09-13T20:38:08.331644Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.331650Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=16.1µs time.idle=755ns fd=5
+2026-09-13T20:38:08.332722Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=256 path="/"
+2026-09-13T20:38:08.332769Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=63.5µs time.idle=3.36µs max_path_len=256 path="/"
+2026-09-13T20:38:08.333613Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=4096 path="/"
+2026-09-13T20:38:08.333651Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=50.9µs time.idle=3.12µs max_path_len=4096 path="/"
+2026-09-13T20:38:08.333675Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/node-lib" fd=5
+2026-09-13T20:38:08.333711Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.333718Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=44.2µs time.idle=1.02µs fd=5
+2026-09-13T20:38:08.333734Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/lib" fd=5
+2026-09-13T20:38:08.333745Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.333751Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=17.2µs time.idle=767ns fd=5
+2026-09-13T20:38:08.333784Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/private/tmp/edgejs-wasmer-release-0.2.0/lib" fd=5
+2026-09-13T20:38:08.333799Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.333805Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=21.4µs time.idle=952ns fd=5
+2026-09-13T20:38:08.333815Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/lib" fd=5
+2026-09-13T20:38:08.333824Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.333829Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=15.2µs time.idle=746ns fd=5
+2026-09-13T20:38:08.333838Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/lib" fd=5
+2026-09-13T20:38:08.333847Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.333852Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=13.9µs time.idle=659ns fd=5
+2026-09-13T20:38:08.334129Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=4096 path="/"
+2026-09-13T20:38:08.334139Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=16.6µs time.idle=1.11µs max_path_len=4096 path="/"
+2026-09-13T20:38:08.334153Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/lib/internal/deps" fd=5
+2026-09-13T20:38:08.334165Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.334171Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=18.4µs time.idle=778ns fd=5
+2026-09-13T20:38:08.334181Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/node/deps" fd=5
+2026-09-13T20:38:08.334190Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.334196Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=15.4µs time.idle=775ns fd=5
+2026-09-13T20:38:08.334205Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/private/tmp/edgejs-wasmer-release-0.2.0/deps" fd=5
+2026-09-13T20:38:08.334216Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.334223Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=18.3µs time.idle=785ns fd=5
+2026-09-13T20:38:08.334234Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/deps" fd=5
+2026-09-13T20:38:08.334244Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.334249Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=15.5µs time.idle=803ns fd=5
+2026-09-13T20:38:08.334258Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/deps" fd=5
+2026-09-13T20:38:08.334266Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.334272Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=14.0µs time.idle=708ns fd=5
+2026-09-13T20:38:08.365968Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=4096 path="/"
+2026-09-13T20:38:08.366053Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=126µs time.idle=4.98µs max_path_len=4096 path="/"
+2026-09-13T20:38:08.366100Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:38:08.366109Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=18.8µs time.idle=1.46µs fd=5
+2026-09-13T20:38:08.366166Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::noent) dirfd=5 follow_symlinks=true path="/private/tmp/edgejs-wasmer-release-0.2.0/node/config.gypi"
+2026-09-13T20:38:08.366186Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=62.6µs time.idle=1.36µs dirfd=5 follow_symlinks=true path="/private/tmp/edgejs-wasmer-release-0.2.0/node/config.gypi"
+2026-09-13T20:38:08.366215Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/private" fd=5
+2026-09-13T20:38:08.366236Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.366243Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=28.7µs time.idle=3.35µs fd=5
+2026-09-13T20:38:08.366272Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/private/tmp" fd=5
+2026-09-13T20:38:08.366283Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.366288Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=17.4µs time.idle=1.39µs fd=5
+2026-09-13T20:38:08.366308Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/private/tmp/edgejs-wasmer-release-0.2.0" fd=5
+2026-09-13T20:38:08.366580Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.366605Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=297µs time.idle=1.25µs fd=5
+2026-09-13T20:38:08.366631Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/private/tmp/edgejs-wasmer-release-0.2.0/node" fd=5
+2026-09-13T20:38:08.366645Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.366651Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=21.8µs time.idle=1.35µs fd=5
+2026-09-13T20:38:08.366665Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/private/tmp/edgejs-wasmer-release-0.2.0/node/config.gypi" fd=5
+2026-09-13T20:38:08.366675Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.366681Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=16.4µs time.idle=1.04µs fd=5
+2026-09-13T20:38:08.366718Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:38:08.366726Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=10.5µs time.idle=1.31µs fd=5
+2026-09-13T20:38:08.366748Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::noent) dirfd=5 follow_symlinks=true path="/node/config.gypi"
+2026-09-13T20:38:08.366755Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=19.6µs time.idle=979ns dirfd=5 follow_symlinks=true path="/node/config.gypi"
+2026-09-13T20:38:08.366771Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/node" fd=5
+2026-09-13T20:38:08.366782Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.366805Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=34.0µs time.idle=1.07µs fd=5
+2026-09-13T20:38:08.366818Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/node/config.gypi" fd=5
+2026-09-13T20:38:08.366834Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.366842Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=24.9µs time.idle=1.03µs fd=5
+2026-09-13T20:38:08.366863Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:38:08.366871Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=9.76µs time.idle=1.30µs fd=5
+2026-09-13T20:38:08.366890Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::noent) dirfd=5 follow_symlinks=true path="/node/config.gypi"
+2026-09-13T20:38:08.366897Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=16.5µs time.idle=803ns dirfd=5 follow_symlinks=true path="/node/config.gypi"
+2026-09-13T20:38:08.366911Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/node" fd=5
+2026-09-13T20:38:08.366923Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.366929Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=18.4µs time.idle=1.14µs fd=5
+2026-09-13T20:38:08.366947Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/node/config.gypi" fd=5
+2026-09-13T20:38:08.366963Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.366970Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=25.5µs time.idle=1.26µs fd=5
+2026-09-13T20:38:08.478678Z TRACE ThreadId(22) proc_id: wasmer_wasix::syscalls::wasix::proc_id: return=Errno::success pid=1
+2026-09-13T20:38:08.478748Z TRACE ThreadId(22) proc_id: wasmer_wasix::syscalls::wasix::proc_id: close time.busy=86.7µs time.idle=5.50µs pid=1
+2026-09-13T20:38:08.484485Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js" fd=5
+2026-09-13T20:38:08.484619Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.484636Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=155µs time.idle=6.10µs fd=5
+2026-09-13T20:38:08.485567Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app" fd=5
+2026-09-13T20:38:08.485632Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.485644Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=78.8µs time.idle=3.59µs fd=5
+2026-09-13T20:38:08.485893Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules" fd=5
+2026-09-13T20:38:08.485928Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.485939Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=46.8µs time.idle=1.82µs fd=5
+2026-09-13T20:38:08.486051Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol" fd=5
+2026-09-13T20:38:08.486104Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.486113Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=62.0µs time.idle=1.60µs fd=5
+2026-09-13T20:38:08.486221Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem" fd=5
+2026-09-13T20:38:08.486254Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.486262Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=41.2µs time.idle=1.64µs fd=5
+2026-09-13T20:38:08.486406Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist" fd=5
+2026-09-13T20:38:08.486447Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.486455Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=49.5µs time.idle=1.49µs fd=5
+2026-09-13T20:38:08.486571Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js" fd=5
+2026-09-13T20:38:08.486605Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.486621Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=51.0µs time.idle=1.31µs fd=5
+2026-09-13T20:38:08.486967Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/package.json" fd=5
+2026-09-13T20:38:08.487036Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.487047Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=80.8µs time.idle=1.66µs fd=5
+2026-09-13T20:38:08.487069Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app" fd=5
+2026-09-13T20:38:08.487087Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.487093Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=23.9µs time.idle=938ns fd=5
+2026-09-13T20:38:08.487109Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules" fd=5
+2026-09-13T20:38:08.487124Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.487130Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=21.9µs time.idle=793ns fd=5
+2026-09-13T20:38:08.487141Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol" fd=5
+2026-09-13T20:38:08.487158Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.487164Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=22.5µs time.idle=934ns fd=5
+2026-09-13T20:38:08.487176Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem" fd=5
+2026-09-13T20:38:08.487193Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.487199Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=22.9µs time.idle=756ns fd=5
+2026-09-13T20:38:08.487227Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist" fd=5
+2026-09-13T20:38:08.487247Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.487252Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=26.0µs time.idle=926ns fd=5
+2026-09-13T20:38:08.487263Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/package.json" fd=5
+2026-09-13T20:38:08.487285Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.487291Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=28.1µs time.idle=714ns fd=5
+2026-09-13T20:38:08.487308Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/package.json" fd=5
+2026-09-13T20:38:08.487373Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.487388Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=79.8µs time.idle=840ns fd=5
+2026-09-13T20:38:08.487415Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:38:08.487422Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=12.8µs time.idle=790ns fd=5
+2026-09-13T20:38:08.487499Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::success) dirfd=5 follow_symlinks=true path="/app/node_modules/@modelcontextprotocol/server-filesystem/package.json" ret_fd=12
+2026-09-13T20:38:08.487507Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=74.6µs time.idle=878ns dirfd=5 follow_symlinks=true path="/app/node_modules/@modelcontextprotocol/server-filesystem/package.json" ret_fd=12
+2026-09-13T20:38:08.487893Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: return=Ok(Errno::success) fd=12 nread=1169
+2026-09-13T20:38:08.487906Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: close time.busy=360µs time.idle=992ns fd=12 nread=1169
+2026-09-13T20:38:08.488038Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: return=Ok(Errno::success) fd=12 nread=0
+2026-09-13T20:38:08.488048Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: close time.busy=130µs time.idle=1.00µs fd=12 nread=0
+2026-09-13T20:38:08.488161Z TRACE ThreadId(22) fd_seek: wasmer_wasix::syscalls::wasi::fd_seek: new_offset=1169 fd=12 offset=0 whence=Whence::Cur
+2026-09-13T20:38:08.488170Z TRACE ThreadId(22) fd_seek: wasmer_wasix::syscalls::wasi::fd_seek: return=Ok(Errno::success) fd=12 offset=0 whence=Whence::Cur
+2026-09-13T20:38:08.488175Z TRACE ThreadId(22) fd_seek: wasmer_wasix::syscalls::wasi::fd_seek: close time.busy=22.3µs time.idle=1.63µs fd=12 offset=0 whence=Whence::Cur
+2026-09-13T20:38:08.488231Z TRACE ThreadId(22) fd_close: wasmer_wasix::syscalls::wasi::fd_close: return=Ok(Errno::success) pid=1 fd=12
+2026-09-13T20:38:08.488239Z TRACE ThreadId(22) fd_close: wasmer_wasix::syscalls::wasi::fd_close: close time.busy=46.2µs time.idle=1.23µs pid=1 fd=12
+2026-09-13T20:38:08.494601Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=256 path="/"
+2026-09-13T20:38:08.494660Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=85.1µs time.idle=3.83µs max_path_len=256 path="/"
+2026-09-13T20:38:08.495330Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js" fd=5
+2026-09-13T20:38:08.495410Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.495417Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=89.2µs time.idle=16.4µs fd=5
+2026-09-13T20:38:08.495511Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app" fd=5
+2026-09-13T20:38:08.495528Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.495532Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=20.6µs time.idle=1.12µs fd=5
+2026-09-13T20:38:08.495626Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules" fd=5
+2026-09-13T20:38:08.495642Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.495646Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=20.4µs time.idle=1.04µs fd=5
+2026-09-13T20:38:08.495711Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol" fd=5
+2026-09-13T20:38:08.495729Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.495733Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=21.7µs time.idle=910ns fd=5
+2026-09-13T20:38:08.495798Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem" fd=5
+2026-09-13T20:38:08.495817Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.495820Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=22.8µs time.idle=803ns fd=5
+2026-09-13T20:38:08.495922Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist" fd=5
+2026-09-13T20:38:08.495943Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.495947Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=25.6µs time.idle=1.01µs fd=5
+2026-09-13T20:38:08.496020Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js" fd=5
+2026-09-13T20:38:08.496042Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.496046Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=26.0µs time.idle=853ns fd=5
+2026-09-13T20:38:08.496740Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js" fd=5
+2026-09-13T20:38:08.496795Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.496805Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=65.6µs time.idle=1.63µs fd=5
+2026-09-13T20:38:08.496827Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/package.json" fd=5
+2026-09-13T20:38:08.496873Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.496881Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=55.0µs time.idle=954ns fd=5
+2026-09-13T20:38:08.496921Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app" fd=5
+2026-09-13T20:38:08.496947Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.496954Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=33.0µs time.idle=1.28µs fd=5
+2026-09-13T20:38:08.496967Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules" fd=5
+2026-09-13T20:38:08.496983Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.496988Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=21.5µs time.idle=953ns fd=5
+2026-09-13T20:38:08.497001Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol" fd=5
+2026-09-13T20:38:08.497020Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.497025Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=24.0µs time.idle=799ns fd=5
+2026-09-13T20:38:08.497037Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem" fd=5
+2026-09-13T20:38:08.497064Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.497070Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=33.2µs time.idle=692ns fd=5
+2026-09-13T20:38:08.497082Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist" fd=5
+2026-09-13T20:38:08.497100Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.497104Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=22.3µs time.idle=741ns fd=5
+2026-09-13T20:38:08.497115Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/package.json" fd=5
+2026-09-13T20:38:08.497137Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.497143Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=28.2µs time.idle=725ns fd=5
+2026-09-13T20:38:08.497164Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/package.json" fd=5
+2026-09-13T20:38:08.497186Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.497192Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=27.7µs time.idle=876ns fd=5
+2026-09-13T20:38:08.497216Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:38:08.497227Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=17.7µs time.idle=1.06µs fd=5
+2026-09-13T20:38:08.497295Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::success) dirfd=5 follow_symlinks=true path="/app/node_modules/@modelcontextprotocol/server-filesystem/package.json" ret_fd=12
+2026-09-13T20:38:08.497302Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=61.4µs time.idle=999ns dirfd=5 follow_symlinks=true path="/app/node_modules/@modelcontextprotocol/server-filesystem/package.json" ret_fd=12
+2026-09-13T20:38:08.497804Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: return=Ok(Errno::success) fd=12 nread=1169
+2026-09-13T20:38:08.497821Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: close time.busy=465µs time.idle=1.08µs fd=12 nread=1169
+2026-09-13T20:38:08.498063Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: return=Ok(Errno::success) fd=12 nread=0
+2026-09-13T20:38:08.498074Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: close time.busy=244µs time.idle=731ns fd=12 nread=0
+2026-09-13T20:38:08.498119Z TRACE ThreadId(22) fd_seek: wasmer_wasix::syscalls::wasi::fd_seek: new_offset=1169 fd=12 offset=0 whence=Whence::Cur
+2026-09-13T20:38:08.498122Z TRACE ThreadId(22) fd_seek: wasmer_wasix::syscalls::wasi::fd_seek: return=Ok(Errno::success) fd=12 offset=0 whence=Whence::Cur
+2026-09-13T20:38:08.498125Z TRACE ThreadId(22) fd_seek: wasmer_wasix::syscalls::wasi::fd_seek: close time.busy=9.57µs time.idle=861ns fd=12 offset=0 whence=Whence::Cur
+2026-09-13T20:38:08.498148Z TRACE ThreadId(22) fd_close: wasmer_wasix::syscalls::wasi::fd_close: return=Ok(Errno::success) pid=1 fd=12
+2026-09-13T20:38:08.498152Z TRACE ThreadId(22) fd_close: wasmer_wasix::syscalls::wasi::fd_close: close time.busy=17.4µs time.idle=612ns pid=1 fd=12
+2026-09-13T20:38:08.499747Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:38:08.499772Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=28.9µs time.idle=2.10µs fd=5
+2026-09-13T20:38:08.499844Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::success) dirfd=5 follow_symlinks=true path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js" ret_fd=12
+2026-09-13T20:38:08.499850Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=62.4µs time.idle=602ns dirfd=5 follow_symlinks=true path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js" ret_fd=12
+2026-09-13T20:38:08.499931Z TRACE ThreadId(22) fd_filestat_get: wasmer_wasix::syscalls::wasi::fd_filestat_get: return=Ok(Errno::success) fd=12 size=28226 mtime=1789331886640971576
+2026-09-13T20:38:08.499938Z TRACE ThreadId(22) fd_filestat_get: wasmer_wasix::syscalls::wasi::fd_filestat_get: close time.busy=11.9µs time.idle=956ns fd=12 size=28226 mtime=1789331886640971576
+2026-09-13T20:38:08.500654Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: return=Ok(Errno::success) fd=12 nread=28226
+2026-09-13T20:38:08.500674Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: close time.busy=271µs time.idle=1.58µs fd=12 nread=28226
+2026-09-13T20:38:08.500788Z TRACE ThreadId(22) fd_close: wasmer_wasix::syscalls::wasi::fd_close: return=Ok(Errno::success) pid=1 fd=12
+2026-09-13T20:38:08.500799Z TRACE ThreadId(22) fd_close: wasmer_wasix::syscalls::wasi::fd_close: close time.busy=29.1µs time.idle=1.67µs pid=1 fd=12
+2026-09-13T20:38:08.506109Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js" fd=5
+2026-09-13T20:38:08.506226Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.506243Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=139µs time.idle=5.63µs fd=5
+2026-09-13T20:38:08.506272Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/package.json" fd=5
+2026-09-13T20:38:08.506309Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.506341Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=70.2µs time.idle=1.47µs fd=5
+2026-09-13T20:38:08.506382Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app" fd=5
+2026-09-13T20:38:08.506402Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.506408Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=27.1µs time.idle=1.17µs fd=5
+2026-09-13T20:38:08.506421Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules" fd=5
+2026-09-13T20:38:08.506438Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.506444Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=23.3µs time.idle=1.05µs fd=5
+2026-09-13T20:38:08.506456Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol" fd=5
+2026-09-13T20:38:08.506491Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.506498Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=42.0µs time.idle=841ns fd=5
+2026-09-13T20:38:08.506513Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem" fd=5
+2026-09-13T20:38:08.506533Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.506538Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=25.7µs time.idle=805ns fd=5
+2026-09-13T20:38:08.506551Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist" fd=5
+2026-09-13T20:38:08.506577Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.506582Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=31.3µs time.idle=926ns fd=5
+2026-09-13T20:38:08.506595Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/package.json" fd=5
+2026-09-13T20:38:08.506620Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.506626Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=31.6µs time.idle=953ns fd=5
+2026-09-13T20:38:08.506646Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/package.json" fd=5
+2026-09-13T20:38:08.506666Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.506672Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=26.5µs time.idle=944ns fd=5
+2026-09-13T20:38:08.506709Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:38:08.506716Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=12.1µs time.idle=824ns fd=5
+2026-09-13T20:38:08.506785Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::success) dirfd=5 follow_symlinks=true path="/app/node_modules/@modelcontextprotocol/server-filesystem/package.json" ret_fd=12
+2026-09-13T20:38:08.506794Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=66.2µs time.idle=908ns dirfd=5 follow_symlinks=true path="/app/node_modules/@modelcontextprotocol/server-filesystem/package.json" ret_fd=12
+2026-09-13T20:38:08.507403Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: return=Ok(Errno::success) fd=12 nread=1169
+2026-09-13T20:38:08.507426Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: close time.busy=603µs time.idle=1.30µs fd=12 nread=1169
+2026-09-13T20:38:08.507623Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: return=Ok(Errno::success) fd=12 nread=0
+2026-09-13T20:38:08.507638Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: close time.busy=197µs time.idle=1.16µs fd=12 nread=0
+2026-09-13T20:38:08.507701Z TRACE ThreadId(22) fd_seek: wasmer_wasix::syscalls::wasi::fd_seek: new_offset=1169 fd=12 offset=0 whence=Whence::Cur
+2026-09-13T20:38:08.507709Z TRACE ThreadId(22) fd_seek: wasmer_wasix::syscalls::wasi::fd_seek: return=Ok(Errno::success) fd=12 offset=0 whence=Whence::Cur
+2026-09-13T20:38:08.507715Z TRACE ThreadId(22) fd_seek: wasmer_wasix::syscalls::wasi::fd_seek: close time.busy=18.2µs time.idle=1.50µs fd=12 offset=0 whence=Whence::Cur
+2026-09-13T20:38:08.507746Z TRACE ThreadId(22) fd_close: wasmer_wasix::syscalls::wasi::fd_close: return=Ok(Errno::success) pid=1 fd=12
+2026-09-13T20:38:08.507754Z TRACE ThreadId(22) fd_close: wasmer_wasix::syscalls::wasi::fd_close: close time.busy=25.8µs time.idle=1.34µs pid=1 fd=12
+2026-09-13T20:38:08.508086Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/node_modules/@modelcontextprotocol/sdk" fd=5
+2026-09-13T20:38:08.508161Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.508172Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=87.2µs time.idle=1.88µs fd=5
+2026-09-13T20:38:08.508192Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app" fd=5
+2026-09-13T20:38:08.508213Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.508220Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=28.6µs time.idle=1.02µs fd=5
+2026-09-13T20:38:08.508234Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules" fd=5
+2026-09-13T20:38:08.508252Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.508258Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=25.1µs time.idle=912ns fd=5
+2026-09-13T20:38:08.508272Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol" fd=5
+2026-09-13T20:38:08.508291Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.508296Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=24.3µs time.idle=828ns fd=5
+2026-09-13T20:38:08.508308Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem" fd=5
+2026-09-13T20:38:08.508401Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.508420Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=112µs time.idle=969ns fd=5
+2026-09-13T20:38:08.508440Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist" fd=5
+2026-09-13T20:38:08.508467Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.508488Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=48.5µs time.idle=1.22µs fd=5
+2026-09-13T20:38:08.508502Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/node_modules" fd=5
+2026-09-13T20:38:08.508530Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.508536Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=34.4µs time.idle=808ns fd=5
+2026-09-13T20:38:08.508548Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/node_modules/@modelcontextprotocol" fd=5
+2026-09-13T20:38:08.508571Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.508576Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=27.9µs time.idle=744ns fd=5
+2026-09-13T20:38:08.508587Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/dist/node_modules/@modelcontextprotocol/sdk" fd=5
+2026-09-13T20:38:08.508610Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.508615Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=28.6µs time.idle=629ns fd=5
+2026-09-13T20:38:08.508749Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/node_modules/@modelcontextprotocol/sdk" fd=5
+2026-09-13T20:38:08.508816Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.508826Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=78.0µs time.idle=1.79µs fd=5
+2026-09-13T20:38:08.508843Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app" fd=5
+2026-09-13T20:38:08.508859Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.508864Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=21.7µs time.idle=940ns fd=5
+2026-09-13T20:38:08.508876Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules" fd=5
+2026-09-13T20:38:08.508891Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.508904Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=29.1µs time.idle=714ns fd=5
+2026-09-13T20:38:08.508916Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol" fd=5
+2026-09-13T20:38:08.508932Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.508937Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=21.7µs time.idle=680ns fd=5
+2026-09-13T20:38:08.508949Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem" fd=5
+2026-09-13T20:38:08.508966Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.508972Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=23.3µs time.idle=916ns fd=5
+2026-09-13T20:38:08.508997Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/node_modules" fd=5
+2026-09-13T20:38:08.509035Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.509042Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=45.1µs time.idle=1.00µs fd=5
+2026-09-13T20:38:08.509054Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/node_modules/@modelcontextprotocol" fd=5
+2026-09-13T20:38:08.509074Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.509079Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=26.1µs time.idle=751ns fd=5
+2026-09-13T20:38:08.509097Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/server-filesystem/node_modules/@modelcontextprotocol/sdk" fd=5
+2026-09-13T20:38:08.509119Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.509123Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=27.3µs time.idle=904ns fd=5
+2026-09-13T20:38:08.509231Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/node_modules/@modelcontextprotocol/sdk" fd=5
+2026-09-13T20:38:08.509270Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.509277Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=46.8µs time.idle=1.21µs fd=5
+2026-09-13T20:38:08.509291Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app" fd=5
+2026-09-13T20:38:08.509315Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.509321Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=30.2µs time.idle=802ns fd=5
+2026-09-13T20:38:08.509352Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules" fd=5
+2026-09-13T20:38:08.509375Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.509380Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=29.0µs time.idle=938ns fd=5
+2026-09-13T20:38:08.509391Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol" fd=5
+2026-09-13T20:38:08.509406Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.509410Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=19.6µs time.idle=730ns fd=5
+2026-09-13T20:38:08.509422Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/node_modules" fd=5
+2026-09-13T20:38:08.509443Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.509448Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=26.0µs time.idle=713ns fd=5
+2026-09-13T20:38:08.509459Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/node_modules/@modelcontextprotocol" fd=5
+2026-09-13T20:38:08.509489Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.509495Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=36.2µs time.idle=945ns fd=5
+2026-09-13T20:38:08.509516Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/node_modules/@modelcontextprotocol/sdk" fd=5
+2026-09-13T20:38:08.509535Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.509540Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=24.6µs time.idle=808ns fd=5
+2026-09-13T20:38:08.509665Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/node_modules/@modelcontextprotocol/sdk" fd=5
+2026-09-13T20:38:08.509719Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.509731Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=66.6µs time.idle=1.35µs fd=5
+2026-09-13T20:38:08.509753Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app" fd=5
+2026-09-13T20:38:08.509770Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.509776Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=23.4µs time.idle=982ns fd=5
+2026-09-13T20:38:08.509787Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules" fd=5
+2026-09-13T20:38:08.509800Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.509805Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=18.1µs time.idle=646ns fd=5
+2026-09-13T20:38:08.509816Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/node_modules" fd=5
+2026-09-13T20:38:08.509832Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.509837Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=21.1µs time.idle=594ns fd=5
+2026-09-13T20:38:08.509846Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/node_modules/@modelcontextprotocol" fd=5
+2026-09-13T20:38:08.509860Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.509864Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=17.7µs time.idle=617ns fd=5
+2026-09-13T20:38:08.509873Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/node_modules/@modelcontextprotocol/sdk" fd=5
+2026-09-13T20:38:08.509886Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.509890Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=17.5µs time.idle=618ns fd=5
+2026-09-13T20:38:08.509979Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/sdk" fd=5
+2026-09-13T20:38:08.510016Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.510020Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=42.0µs time.idle=958ns fd=5
+2026-09-13T20:38:08.510222Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/sdk/package.json" fd=5
+2026-09-13T20:38:08.510260Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.510265Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=43.6µs time.idle=1.06µs fd=5
+2026-09-13T20:38:08.510288Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:38:08.510298Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=14.2µs time.idle=2.08µs fd=5
+2026-09-13T20:38:08.510399Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::success) dirfd=5 follow_symlinks=true path="/app/node_modules/@modelcontextprotocol/sdk/package.json" ret_fd=12
+2026-09-13T20:38:08.510415Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=105µs time.idle=791ns dirfd=5 follow_symlinks=true path="/app/node_modules/@modelcontextprotocol/sdk/package.json" ret_fd=12
+2026-09-13T20:38:08.510874Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: return=Ok(Errno::success) fd=12 nread=5119
+2026-09-13T20:38:08.510888Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: close time.busy=456µs time.idle=796ns fd=12 nread=5119
+2026-09-13T20:38:08.511691Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: return=Ok(Errno::success) fd=12 nread=1392
+2026-09-13T20:38:08.511719Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: close time.busy=777µs time.idle=1.36µs fd=12 nread=1392
+2026-09-13T20:38:08.512435Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: return=Ok(Errno::success) fd=12 nread=0
+2026-09-13T20:38:08.512457Z TRACE ThreadId(22) fd_read: wasmer_wasix::syscalls::wasi::fd_read: close time.busy=720µs time.idle=1.11µs fd=12 nread=0
+2026-09-13T20:38:08.512552Z TRACE ThreadId(22) fd_seek: wasmer_wasix::syscalls::wasi::fd_seek: new_offset=6511 fd=12 offset=0 whence=Whence::Cur
+2026-09-13T20:38:08.512569Z TRACE ThreadId(22) fd_seek: wasmer_wasix::syscalls::wasi::fd_seek: return=Ok(Errno::success) fd=12 offset=0 whence=Whence::Cur
+2026-09-13T20:38:08.512575Z TRACE ThreadId(22) fd_seek: wasmer_wasix::syscalls::wasi::fd_seek: close time.busy=26.7µs time.idle=1.64µs fd=12 offset=0 whence=Whence::Cur
+2026-09-13T20:38:08.512607Z TRACE ThreadId(22) fd_close: wasmer_wasix::syscalls::wasi::fd_close: return=Ok(Errno::success) pid=1 fd=12
+2026-09-13T20:38:08.512614Z TRACE ThreadId(22) fd_close: wasmer_wasix::syscalls::wasi::fd_close: close time.busy=26.7µs time.idle=1.14µs pid=1 fd=12
+2026-09-13T20:38:08.520908Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/sdk/dist/esm/server/mcp.js" fd=5
+2026-09-13T20:38:08.521194Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.521214Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=310µs time.idle=5.27µs fd=5
+2026-09-13T20:38:08.521493Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/sdk" fd=5
+2026-09-13T20:38:08.521539Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.521549Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=57.8µs time.idle=2.14µs fd=5
+2026-09-13T20:38:08.521711Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/sdk/dist" fd=5
+2026-09-13T20:38:08.521744Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.521781Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=70.9µs time.idle=1.55µs fd=5
+2026-09-13T20:38:08.521896Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/sdk/dist/esm" fd=5
+2026-09-13T20:38:08.521928Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.521937Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=41.8µs time.idle=1.53µs fd=5
+2026-09-13T20:38:08.522110Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/sdk/dist/esm/server" fd=5
+2026-09-13T20:38:08.522145Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.522154Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=45.4µs time.idle=1.58µs fd=5
+2026-09-13T20:38:08.522294Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/sdk/dist/esm/server/mcp.js" fd=5
+2026-09-13T20:38:08.523906Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.523943Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=1.65ms time.idle=1.99µs fd=5
+2026-09-13T20:38:08.524415Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/sdk/dist/esm/server/mcp.js" fd=5
+2026-09-13T20:38:08.524473Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.524484Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=79.5µs time.idle=2.54µs fd=5
+2026-09-13T20:38:08.524508Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules/@modelcontextprotocol/sdk/dist/esm/server/package.json" fd=5
+2026-09-13T20:38:08.524567Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:38:08.524577Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=69.7µs time.idle=1.16µs fd=5
+2026-09-13T20:38:08.524600Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app" fd=5
+2026-09-13T20:38:08.524619Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:38:08.524626Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=25.9µs time.idle=1.12µs fd=5
+2026-09-13T20:38:08.524639Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/app/node_modules" fd=5

@@ -1,0 +1,2 @@
+2026-09-13T20:38:09.514410Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::success) dirfd=5 follow_symlinks=true path="/dev/null" ret_fd=12
+2026-09-13T20:38:10.276117Z TRACE ThreadId(24) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::success) dirfd=5 follow_symlinks=true path="/home/.ssh/id_ed25519" ret_fd=13
