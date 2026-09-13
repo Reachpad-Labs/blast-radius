@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark">
+<title>Blast Radius Sweep</title>
+<style>/* Blast Radius Sweep — a Mac-style browser over the saved cards.
+   Tokens follow Apple's semantic palette; both appearances are designed, not inverted. */
+:root{
+  --bg:#FFFFFF; --sidebar:#F5F5F7; --cell:#F2F2F7; --cell-hover:#E9E9EE; --fill:rgba(120,120,128,.16);
+  --sep:rgba(60,60,67,.24); --ink:#1D1D1F; --ink2:rgba(60,60,67,.64); --ink3:rgba(60,60,67,.38);
+  --accent:#007AFF; --on-accent:#FFFFFF; --red:#FF3B30; --orange:#FF9500; --green:#34C759; --gray:#8E8E93;
+  --red-bg:rgba(255,59,48,.10); --orange-bg:rgba(255,149,0,.13); --green-bg:rgba(52,199,89,.13); --gray-bg:rgba(142,142,147,.16); --accent-bg:rgba(0,122,255,.10);
+  --grid:rgba(60,60,67,.12); --tip-bg:#FFFFFF; --tip-shadow:0 8px 24px rgba(0,0,0,.14);
+  --code-bg:rgba(120,120,128,.10);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1C1C1E; --sidebar:#161618; --cell:#2C2C2E; --cell-hover:#3A3A3C; --fill:rgba(120,120,128,.26);
+    --sep:rgba(84,84,88,.6); --ink:#F5F5F7; --ink2:rgba(235,235,245,.62); --ink3:rgba(235,235,245,.34);
+    --accent:#0A84FF; --on-accent:#FFFFFF; --red:#FF453A; --orange:#FF9F0A; --green:#30D158; --gray:#98989D;
+    --red-bg:rgba(255,69,58,.16); --orange-bg:rgba(255,159,10,.16); --green-bg:rgba(48,209,88,.16); --gray-bg:rgba(152,152,157,.18); --accent-bg:rgba(10,132,255,.18);
+    --grid:rgba(235,235,245,.12); --tip-bg:#2C2C2E; --tip-shadow:0 8px 24px rgba(0,0,0,.5);
+    --code-bg:rgba(120,120,128,.18);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1C1C1E; --sidebar:#161618; --cell:#2C2C2E; --cell-hover:#3A3A3C; --fill:rgba(120,120,128,.26);
+  --sep:rgba(84,84,88,.6); --ink:#F5F5F7; --ink2:rgba(235,235,245,.62); --ink3:rgba(235,235,245,.34);
+  --accent:#0A84FF; --on-accent:#FFFFFF; --red:#FF453A; --orange:#FF9F0A; --green:#30D158; --gray:#98989D;
+  --red-bg:rgba(255,69,58,.16); --orange-bg:rgba(255,159,10,.16); --green-bg:rgba(48,209,88,.16); --gray-bg:rgba(152,152,157,.18); --accent-bg:rgba(10,132,255,.18);
+  --grid:rgba(235,235,245,.12); --tip-bg:#2C2C2E; --tip-shadow:0 8px 24px rgba(0,0,0,.5);
+  --code-bg:rgba(120,120,128,.18);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+code,.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;font-size:.93em}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.01em;text-wrap:balance}
+.caption{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2)}
+.num{font-variant-numeric:tabular-nums}
+
+/* app frame */
+.app{display:grid;grid-template-columns:272px minmax(0,1fr);min-height:100vh}
+.sidebar{background:var(--sidebar);border-right:1px solid var(--sep);position:sticky;top:0;height:100vh;overflow:auto;padding:14px 10px 24px;display:flex;flex-direction:column;gap:12px}
+.brand{display:flex;align-items:center;gap:9px;padding:2px 8px 0}
+.brand .mark{width:22px;height:22px;border-radius:6px;background:var(--red);display:grid;place-items:center;flex:none}
+.brand .mark svg{width:14px;height:14px;fill:#fff}
+.brand b{font-size:15px;font-weight:600}
+.brand span{display:block;font-size:11px;color:var(--ink2)}
+.search{position:relative}
+.search svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:13px;height:13px;fill:var(--ink3)}
+.search input{width:100%;border:0;background:var(--fill);border-radius:8px;padding:6px 10px 6px 28px;font:inherit;font-size:13px;color:var(--ink)}
+.search input::placeholder{color:var(--ink3)}
+.search input:focus{outline:2px solid var(--accent);outline-offset:0}
+.group{display:flex;flex-direction:column;gap:1px}
+.group h3{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);padding:10px 8px 4px}
+.row{display:flex;align-items:center;gap:9px;width:100%;text-align:left;padding:6px 8px;border-radius:7px;line-height:1.25}
+.row:hover{background:var(--fill)}
+.row[aria-current="true"]{background:var(--accent);color:var(--on-accent)}
+.row[aria-current="true"] .sub,.row[aria-current="true"] .sym{color:var(--on-accent)}
+.row .sym{width:16px;height:16px;flex:none}
+.row .sym svg{width:16px;height:16px;fill:currentColor}
+.row .t{min-width:0;flex:1;display:flex;flex-direction:column}
+.row .name{display:block;font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .sub{display:block;font-size:11px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .count{font-size:11px;color:var(--ink2);background:var(--fill);border-radius:9px;padding:1px 7px;flex:none}
+.row[aria-current="true"] .count{background:rgba(255,255,255,.22);color:var(--on-accent)}
+.sym.critical{color:var(--red)} .sym.warn{color:var(--orange)} .sym.clean{color:var(--green)} .sym.noboot{color:var(--gray)} .sym.control{color:var(--red)} .sym.overview{color:var(--accent)}
+.empty{padding:10px 8px;font-size:12px;color:var(--ink3)}
+
+.content{padding:28px 36px 72px;max-width:1120px;width:100%;min-width:0}
+.back{display:none;align-items:center;gap:4px;color:var(--accent);font-size:15px;margin-bottom:14px}
+.back svg{width:12px;height:12px;fill:currentColor}
+
+/* header */
+.hdr{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.hdr .eyebrow{font-size:12px;color:var(--ink2)}
+.hdr h1{font-size:24px;line-height:1.2;word-break:break-word}
+.hdr .meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ink2)}
+.hdr .meta code{background:var(--code-bg);padding:1px 6px;border-radius:5px}
+
+/* verdict banner */
+.verdict{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:12px;margin-bottom:22px}
+.verdict.critical{background:var(--red-bg)} .verdict.warn{background:var(--orange-bg)} .verdict.clean{background:var(--green-bg)} .verdict.noboot{background:var(--gray-bg)}
+.verdict svg{width:22px;height:22px;flex:none;margin-top:1px}
+.verdict.critical svg{fill:var(--red)} .verdict.warn svg{fill:var(--orange)} .verdict.clean svg{fill:var(--green)} .verdict.noboot svg{fill:var(--gray)}
+.verdict .lvl{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.verdict.critical .lvl{color:var(--red)} .verdict.warn .lvl{color:var(--orange)} .verdict.clean .lvl{color:var(--green)} .verdict.noboot .lvl{color:var(--ink2)}
+.verdict .line{font-size:16px;font-weight:500;margin-top:1px}
+.verdict .why{font-size:13px;color:var(--ink2);margin-top:4px}
+
+/* sections (inset grouped) */
+.sec{margin-bottom:24px}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:0 4px 6px}
+.sec-h h2{font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2)}
+.tier{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3)}
+.tier.sink{color:var(--accent)}
+.box{background:var(--cell);border-radius:12px;overflow:hidden}
+.kv{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:0}
+.kv>div{padding:10px 14px;border-bottom:1px solid var(--sep);min-width:0}
+.kv>div:nth-last-child(-n+2){border-bottom:0}
+.kv .k{color:var(--ink2);font-size:13px}
+.kv .v{font-size:13px;word-break:break-word}
+.kv .v code{background:var(--code-bg);padding:1px 6px;border-radius:5px}
+.none{color:var(--ink3)}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;padding:2px 8px;border-radius:999px;white-space:nowrap;vertical-align:middle}
+.pill svg{width:11px;height:11px;fill:currentColor}
+.pill.blocked{background:var(--green-bg);color:var(--green)}
+.pill.allowed{background:var(--red-bg);color:var(--red)}
+.pill.sink{background:var(--accent-bg);color:var(--accent)}
+.pill.count{background:var(--fill);color:var(--ink2)}
+.hosts{display:flex;flex-direction:column;gap:6px}
+.hosts>div{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:12px 14px}
+.chip{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:11.5px;background:var(--fill);color:var(--ink);padding:3px 8px;border-radius:6px}
+.foot{font-size:12px;color:var(--ink2);padding:8px 4px 0;line-height:1.5}
+
+/* timeline */
+.tl{padding:14px 14px 6px;overflow-x:auto}
+.tl svg{display:block;width:100%;height:auto;min-width:620px}
+.tl .lane-label{font-size:11px;fill:var(--ink2)}
+.tl .lane-none{font-size:11px;fill:var(--ink3)}
+.tl .tick{font-size:10px;fill:var(--ink3)}
+.tl .gridline{stroke:var(--grid);stroke-width:1}
+.tl .lane-line{stroke:var(--sep);stroke-width:1;stroke-dasharray:1 3}
+.tl .m{cursor:default}
+.tl .m.cred{fill:var(--red);stroke:var(--red)} .tl .m.file{fill:var(--gray);stroke:var(--gray)} .tl .m.env{fill:var(--gray);stroke:var(--gray)}
+.tl .m.write{fill:var(--orange);stroke:var(--orange)} .tl .m.dns,.tl .m.connect,.tl .m.send{fill:var(--accent);stroke:var(--accent)}
+.tl .m.deny{fill:var(--cell)!important;stroke-width:1.8}
+.tl .slash{stroke:currentColor;stroke-width:1.6;pointer-events:none}
+.tl .slash.cred{stroke:var(--red)} .tl .slash.dns,.tl .slash.connect,.tl .slash.send{stroke:var(--accent)} .tl .slash.write{stroke:var(--orange)} .tl .slash.file{stroke:var(--gray)}
+.tl .badge{font-size:9.5px;font-weight:600;fill:var(--ink2)}
+.tl .hit{fill:transparent;cursor:default}
+.tl rect.m{stroke-width:0} .tl rect.m.deny{stroke-width:1.8}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:6px 14px 12px;font-size:12px;color:var(--ink2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:9px;height:9px;border-radius:50%;display:inline-block;border:1.8px solid currentColor}
+.legend i.f{background:currentColor}
+.legend .c-cred{color:var(--red)} .legend .c-write{color:var(--orange)} .legend .c-net{color:var(--accent)} .legend .c-file{color:var(--gray)}
+.log{max-height:300px;overflow:auto;border-top:1px solid var(--sep);font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:12px;line-height:1.55}
+.log div{display:grid;grid-template-columns:62px 1fr;gap:10px;padding:5px 14px;border-bottom:1px solid var(--sep)}
+.log div:last-child{border-bottom:0}
+.log .ts{color:var(--ink3);text-align:right;font-variant-numeric:tabular-nums}
+.log .cred{color:var(--red)} .log .deny{color:var(--ink2)} .log .deny b{color:var(--green);font-weight:600} .log .send,.log .allowed{color:var(--red)} .log .x{color:var(--ink3)}
+.tip{position:fixed;z-index:10;pointer-events:none;background:var(--tip-bg);box-shadow:var(--tip-shadow);border:1px solid var(--sep);border-radius:10px;padding:8px 11px;font-size:12px;line-height:1.45;max-width:340px;display:none}
+.tip b{display:block;font-weight:600}
+.tip code{font-size:11.5px;word-break:break-all}
+
+/* overview */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:24px}
+.tile{background:var(--cell);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.tile .n{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile .l{font-size:12px;color:var(--ink2)}
+.tile .l small{display:block;color:var(--ink3);font-size:11px}
+.tile.critical .n{color:var(--red)} .tile.warn .n{color:var(--orange)} .tile.clean .n{color:var(--green)}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{position:sticky;top:0;background:var(--cell);text-align:left;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);padding:8px 8px;border-bottom:1px solid var(--sep);white-space:nowrap}
+th button{display:inline-flex;align-items:center;gap:4px;font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit}
+th button svg{width:9px;height:9px;fill:var(--ink3)}
+th[aria-sort="ascending"] button svg,th[aria-sort="descending"] button svg{fill:var(--accent)}
+td{padding:8px 8px;border-bottom:1px solid var(--sep);vertical-align:top}
+tr:last-child td{border-bottom:0}
+tbody tr{cursor:pointer}
+tbody tr:hover td{background:var(--cell-hover)}
+tbody tr:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+td .name{font-weight:500;overflow-wrap:anywhere}
+th:first-child,td:first-child{min-width:190px}
+td .ver{font-size:11.5px;color:var(--ink2)}
+td.r{text-align:right;font-variant-numeric:tabular-nums}
+.vd{display:inline-flex;align-items:center;gap:5px;font-weight:500;white-space:nowrap}
+.vd svg{width:14px;height:14px}
+.vd.critical{color:var(--red)} .vd.critical svg{fill:var(--red)} .vd.warn{color:var(--orange)} .vd.warn svg{fill:var(--orange)} .vd.clean{color:var(--green)} .vd.clean svg{fill:var(--green)} .vd.noboot{color:var(--ink2)} .vd.noboot svg{fill:var(--gray)}
+.dots{display:flex;flex-wrap:wrap;gap:4px}
+.dot{display:inline-flex;align-items:center;gap:4px;font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:10.5px;background:var(--fill);padding:2px 7px;border-radius:5px;white-space:nowrap}
+.dot i{width:7px;height:7px;border-radius:50%;display:inline-block}
+.dot.blocked i{background:var(--green)} .dot.allowed i{background:var(--red)}
+.hostmap>div{display:grid;grid-template-columns:minmax(150px,240px) 1fr;gap:10px;padding:10px 14px;border-bottom:1px solid var(--sep);align-items:start}
+.hostmap>div:last-child{border-bottom:0}
+.hostmap .h{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:12.5px;word-break:break-all}
+.hostmap .h small{display:block;font-family:inherit;color:var(--ink2);font-size:11px}
+.hostmap .who{display:flex;flex-wrap:wrap;gap:5px}
+.hostmap .who button{font-size:12px;background:var(--fill);padding:2px 8px;border-radius:6px;color:var(--ink)}
+.hostmap .who button:hover{background:var(--cell-hover)}
+.about{font-size:13px;color:var(--ink2);line-height:1.55;max-width:66ch}
+.about p{margin:0 0 8px}
+
+@media (max-width:760px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:static;height:auto;border-right:0;border-bottom:1px solid var(--sep)}
+  .content{padding:18px 16px 56px}
+  body.detail .sidebar{display:none}
+  body.detail .back{display:inline-flex}
+  .kv{grid-template-columns:1fr}
+  .kv>div{border-bottom:0;padding:6px 14px}
+  .kv .k{padding-top:10px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+  .kv .v{padding-bottom:10px;border-bottom:1px solid var(--sep)}
+  .kv>div:nth-last-child(1){border-bottom:0}
+  .hostmap>div{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .row,.pill,.tile{transition:background-color .12s ease}
+}
+</style>
+</head><body>
+<div class="app">
+  <aside class="sidebar" id="sidebar" aria-label="Servers"></aside>
+  <main class="content" id="content"></main>
+</div>
+<div class="tip" id="tip" role="tooltip"></div>
+<script id="br-data" type="application/json">{"generated":"2026-09-13T22:14:53.129Z","ran":"2026-09-13T21:48:06.761Z","engine":"Wasmer running Edge.js 0.2.0 (Node 24 as WebAssembly); every file and network request passes through the sandbox and is recorded","mode":"internet blocked","servers":[{"slug":"evil-notes","pkg":"evil-notes","name":"evil-notes","version":"1.0.0","integrity":"353eea55c3b35c91ddef5503c9b05c1d34fae0f68a44321a407243b51070f97c","entry":"/app/evil-notes/index.js","note":"control specimen, lives in specimens/evil-notes","control":true,"booted":true,"bootReason":"","bootMs":null,"tools":["summarize_notes"],"findings":{"reads_credentials":[{"path":"/home/.ssh/id_ed25519","canary":null,"at":0.984,"count":1}],"egress":[{"host":"127.0.0.1","port":8099,"blocked":false,"at":0.985}],"bytes_out":188,"canary_in_payload":["CANARY-87b91cb3"],"writes_outside_cwd":[],"fingerprinting":[],"correlated":true,"verdict":{"level":"critical","line":"Exfiltrated a seeded credential. Proven at the sink."}},"events":[{"ts":0,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.406,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.61,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.871,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.984,"call":"path_open2","args":{"path":"/home/.ssh/id_ed25519","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.985,"call":"sock_open","args":{"af":"Addressfamily::Inet4","ty":"Socktype::Stream","pt":"SockProto::Tcp","sock":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.985,"call":"sock_connect","args":{"addr":"127.0.0.1:8099","sock":13},"canary_hit":null,"decision":"allow","errno":"inprogress"},{"ts":0.986,"call":"fd_write","args":{"fd":13,"nwritten":188,"socket":true},"canary_hit":null,"decision":"allow","errno":"success"}],"level":"critical","line":"Exfiltrated a seeded credential. Proven at the sink."},{"slug":"hubspot-mcp-server","pkg":"@hubspot/mcp-server","name":"@hubspot/mcp-server","version":"0.4.0","integrity":"080dceca966b0c61744f532e566f8b1bdc3786a7a2bea3d08aa80a7a53373d23","entry":"/app/node_modules/@hubspot/mcp-server/dist/index.js","note":"third-party, HubSpot","control":false,"booted":true,"bootReason":"","bootMs":467,"tools":["hubspot-get-user-details","hubspot-list-objects","hubspot-search-objects","hubspot-batch-create-associations","hubspot-get-association-definitions","hubspot-list-associations","hubspot-batch-create-objects","hubspot-batch-update-objects","hubspot-batch-read-objects","hubspot-list-properties","hubspot-get-property","hubspot-create-property","hubspot-update-property","hubspot-create-engagement","hubspot-get-engagement","hubspot-update-engagement","hubspot-generate-feedback-link","hubspot-get-schemas","hubspot-get-link","hubspot-list-workflows","hubspot-get-workflow"],"findings":{"reads_credentials":[],"egress":[{"host":"api.hubspot.com","port":0,"blocked":true,"at":1.187}],"bytes_out":0,"canary_in_payload":[],"writes_outside_cwd":[],"fingerprinting":[],"correlated":false,"verdict":{"level":"warn","line":"Attempted egress."}},"events":[{"ts":0,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.27,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.612,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.872,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.187,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.187,"call":"resolve","args":{"host":"api.hubspot.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.189,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.189,"call":"resolve","args":{"host":"api.hubspot.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.191,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.191,"call":"resolve","args":{"host":"api.hubspot.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.192,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.192,"call":"resolve","args":{"host":"api.hubspot.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.193,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.193,"call":"resolve","args":{"host":"api.hubspot.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.194,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.194,"call":"resolve","args":{"host":"api.hubspot.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.196,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.196,"call":"resolve","args":{"host":"api.hubspot.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.197,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.197,"call":"resolve","args":{"host":"api.hubspot.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.198,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.199,"call":"resolve","args":{"host":"api.hubspot.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.199,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.199,"call":"resolve","args":{"host":"api.hubspot.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.2,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.2,"call":"resolve","args":{"host":"api.hubspot.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.201,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.201,"call":"resolve","args":{"host":"api.hubspot.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.202,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.202,"call":"resolve","args":{"host":"api.hubspot.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.202,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.202,"call":"resolve","args":{"host":"api.hubspot.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"}],"level":"warn","line":"Attempted egress."},{"slug":"modelcontextprotocol-server-everything","pkg":"@modelcontextprotocol/server-everything","name":"@modelcontextprotocol/server-everything","version":"2026.8.31","integrity":"26eb2809baf531c3a54300e3af15bfdceb7b4de50e785ab8f2f4acf02cbce1fd","entry":"/app/node_modules/@modelcontextprotocol/server-everything/dist/index.js","note":"official reference server","control":false,"booted":true,"bootReason":"","bootMs":451,"tools":["echo","get-annotated-message","get-env","get-resource-links","get-resource-reference","get-structured-content","get-sum","get-tiny-image","gzip-file-as-resource","toggle-simulated-logging","toggle-subscriber-updates","trigger-long-running-operation"],"findings":{"reads_credentials":[],"egress":[{"host":"raw.githubusercontent.com","port":0,"blocked":true,"at":1.207}],"bytes_out":0,"canary_in_payload":[],"writes_outside_cwd":[],"fingerprinting":[],"correlated":false,"verdict":{"level":"warn","line":"Attempted egress."}},"events":[{"ts":0,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.066,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.641,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.711,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.207,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.207,"call":"resolve","args":{"host":"raw.githubusercontent.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"}],"level":"warn","line":"Attempted egress."},{"slug":"modelcontextprotocol-server-filesystem","pkg":"@modelcontextprotocol/server-filesystem","name":"@modelcontextprotocol/server-filesystem","version":"2026.8.31","integrity":"729dc8511e779e5cd6640851a74b25283e3af1ca3a7106722f993e864a1d9935","entry":"/app/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js","note":"official; allowed roots are argv","control":false,"booted":true,"bootReason":"","bootMs":436,"tools":["read_file","read_text_file","read_media_file","read_multiple_files","write_file","edit_file","create_directory","list_directory","list_directory_with_sizes","directory_tree","move_file","search_files","get_file_info","list_allowed_directories"],"findings":{"reads_credentials":[{"path":"/home/.ssh/id_ed25519","canary":null,"at":0.993,"count":9},{"path":"/home/.ssh/id_ed25519.f36e7fbf21e0b8955d07586b64272ee2.tmp","canary":null,"at":1,"count":1},{"path":"/home/.ssh/id_ed25519.4d32d468d9ddf0cb3320a5789f365b24.tmp","canary":null,"at":1.005,"count":1}],"egress":[],"bytes_out":0,"canary_in_payload":[],"writes_outside_cwd":["/home/.ssh/id_ed25519"],"fingerprinting":[],"correlated":false,"verdict":{"level":"warn","line":"Read a seeded credential."}},"events":[{"ts":0,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.298,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.552,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.816,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.993,"call":"path_open2","args":{"path":"/home/.ssh/id_ed25519","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.993,"call":"path_open2","args":{"path":"/home/.ssh/id_ed25519","dirfd":5,"follow_symlinks":"true","ret_fd":14},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.993,"call":"path_open2","args":{"path":"/home/.ssh/id_ed25519","dirfd":5,"follow_symlinks":"true"},"canary_hit":null,"decision":"allow","errno":"exist"},{"ts":0.994,"call":"path_open2","args":{"path":"/home/.ssh/id_ed25519","dirfd":5,"follow_symlinks":"true","ret_fd":15},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.994,"call":"path_open2","args":{"path":"/home/.ssh/id_ed25519","dirfd":5,"follow_symlinks":"true"},"canary_hit":null,"decision":"allow","errno":"notdir"},{"ts":0.994,"call":"path_open2","args":{"path":"/home/.ssh/id_ed25519","dirfd":5,"follow_symlinks":"true"},"canary_hit":null,"decision":"allow","errno":"notdir"},{"ts":0.994,"call":"path_open2","args":{"path":"/home/.ssh/id_ed25519","dirfd":5,"follow_symlinks":"true"},"canary_hit":null,"decision":"allow","errno":"notdir"},{"ts":0.994,"call":"path_open2","args":{"path":"/home/.ssh/id_ed25519","dirfd":5,"follow_symlinks":"true"},"canary_hit":null,"decision":"allow","errno":"notdir"},{"ts":0.995,"call":"path_open2","args":{"path":"/home","dirfd":5,"follow_symlinks":"true","ret_fd":16},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.996,"call":"path_open2","args":{"path":"/home","dirfd":5,"follow_symlinks":"true","ret_fd":16},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.996,"call":"path_open2","args":{"path":"/home/.ssh/id_ed25519","dirfd":5,"follow_symlinks":"true","ret_fd":16},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1,"call":"path_open2","args":{"path":"/home/.ssh/id_ed25519.f36e7fbf21e0b8955d07586b64272ee2.tmp","dirfd":5,"follow_symlinks":"true","ret_fd":17},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.005,"call":"path_open2","args":{"path":"/home/.ssh/id_ed25519.4d32d468d9ddf0cb3320a5789f365b24.tmp","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.005,"call":"path_rename","args":{"old_path":"/home/.ssh/id_ed25519.f36e7fbf21e0b8955d07586b64272ee2.tmp","new_path":"/home/.ssh/id_ed25519","old_fd":5,"new_fd":5},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.006,"call":"path_rename","args":{"old_path":"/home/.ssh/id_ed25519.4d32d468d9ddf0cb3320a5789f365b24.tmp","new_path":"/home/.ssh/id_ed25519","old_fd":5,"new_fd":5},"canary_hit":null,"decision":"allow","errno":"success"}],"level":"warn","line":"Read a seeded credential."},{"slug":"modelcontextprotocol-server-github","pkg":"@modelcontextprotocol/server-github","name":"@modelcontextprotocol/server-github","version":"2025.4.8","integrity":"e1d0ea90f9f3c49fc3179b5f3a4da911d24536990d7cc78e63c7f1d5643137e6","entry":"/app/node_modules/@modelcontextprotocol/server-github/dist/index.js","note":"official, archived upstream; token from env","control":false,"booted":true,"bootReason":"","bootMs":327,"tools":["create_or_update_file","search_repositories","create_repository","get_file_contents","push_files","create_issue","create_pull_request","fork_repository","create_branch","list_commits","list_issues","update_issue","add_issue_comment","search_code","search_issues","search_users","get_issue","get_pull_request","list_pull_requests","create_pull_request_review","merge_pull_request","get_pull_request_files","get_pull_request_status","update_pull_request_branch","get_pull_request_comments","get_pull_request_reviews"],"findings":{"reads_credentials":[],"egress":[{"host":"api.github.com","port":0,"blocked":true,"at":0.676}],"bytes_out":0,"canary_in_payload":[],"writes_outside_cwd":[],"fingerprinting":[],"correlated":false,"verdict":{"level":"warn","line":"Attempted egress."}},"events":[{"ts":0,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.11,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.382,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.468,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.676,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.676,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.678,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.678,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.681,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.681,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.683,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.683,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.685,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.685,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.686,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.686,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.687,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.687,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.688,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.688,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.689,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.689,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.69,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.69,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.691,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.691,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.692,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.692,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.693,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.693,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.694,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.694,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.695,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.695,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.696,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.696,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.697,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.697,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.698,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.698,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.699,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.699,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.699,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.699,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.7,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.7,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.701,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.701,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.701,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.701,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.702,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.702,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.706,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.706,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.708,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.708,"call":"resolve","args":{"host":"api.github.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"}],"level":"warn","line":"Attempted egress."},{"slug":"modelcontextprotocol-server-postgres","pkg":"@modelcontextprotocol/server-postgres","name":"@modelcontextprotocol/server-postgres","version":"0.6.2","integrity":"4717ef3e03e543da7b58e16e249624d4a0ebcd2ee828069661894784e61b2ba4","entry":"/app/node_modules/@modelcontextprotocol/server-postgres/dist/index.js","note":"official, archived upstream; DB url is argv","control":false,"booted":true,"bootReason":"","bootMs":214,"tools":["query"],"findings":{"reads_credentials":[],"egress":[{"host":"127.0.0.1","port":5432,"blocked":true,"at":0.37}],"bytes_out":0,"canary_in_payload":[],"writes_outside_cwd":[],"fingerprinting":[],"correlated":false,"verdict":{"level":"warn","line":"Attempted egress."}},"events":[{"ts":0,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.091,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.227,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.314,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.37,"call":"sock_open","args":{"af":"Addressfamily::Inet4","ty":"Socktype::Stream","pt":"SockProto::Tcp","sock":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.37,"call":"sock_connect","args":{"addr":"127.0.0.1:5432","sock":13},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.37,"call":"sock_open","args":{"af":"Addressfamily::Inet4","ty":"Socktype::Stream","pt":"SockProto::Tcp","sock":14},"canary_hit":null,"decision":"allow","errno":"success"}],"level":"warn","line":"Attempted egress."},{"slug":"notionhq-notion-mcp-server","pkg":"@notionhq/notion-mcp-server","name":"@notionhq/notion-mcp-server","version":"2.5.1","integrity":"70a958eff66104a3a76857a63206e8494548e9358031907905bcdadd52cb72b0","entry":"/app/node_modules/@notionhq/notion-mcp-server/bin/cli.mjs","note":"third-party, Notion","control":false,"booted":true,"bootReason":"","bootMs":295,"tools":["API-get-user","API-get-users","API-get-self","API-post-search","API-get-block-children","API-patch-block-children","API-retrieve-a-block","API-update-a-block","API-delete-a-block","API-retrieve-a-page","API-patch-page","API-post-page","API-retrieve-a-page-property","API-retrieve-a-comment","API-create-a-comment","API-query-data-source","API-retrieve-a-data-source","API-update-a-data-source","API-create-a-data-source","API-list-data-source-templates","API-retrieve-a-database","API-move-page","API-retrieve-page-markdown","API-update-page-markdown"],"findings":{"reads_credentials":[],"egress":[{"host":"api.notion.com","port":0,"blocked":true,"at":0.531}],"bytes_out":0,"canary_in_payload":[],"writes_outside_cwd":[],"fingerprinting":[],"correlated":false,"verdict":{"level":"warn","line":"Attempted egress."}},"events":[{"ts":0,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.092,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.297,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.388,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.531,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.531,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.534,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.534,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.535,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.535,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.536,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.536,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.538,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.538,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.539,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.539,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.54,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.54,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.541,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.541,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.542,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.542,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.544,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.544,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.545,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.545,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.546,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.546,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.546,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.546,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.548,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.548,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.549,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.549,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.549,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.55,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.55,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.55,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.551,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.551,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.552,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.552,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.553,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.553,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.554,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.554,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.555,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.555,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.555,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.556,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.556,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.556,"call":"resolve","args":{"host":"api.notion.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"}],"level":"warn","line":"Attempted egress."},{"slug":"upstash-context7-mcp","pkg":"@upstash/context7-mcp","name":"@upstash/context7-mcp","version":"4.1.0","integrity":"932b01c5ce5a85e9d6bca61afe78f4694c99bab2d5636f92296ed5ad902e374d","entry":"/app/node_modules/@upstash/context7-mcp/dist/index.js","note":"third-party, Upstash","control":false,"booted":true,"bootReason":"","bootMs":749,"tools":["resolve-library-id","query-docs"],"findings":{"reads_credentials":[],"egress":[{"host":"context7.com","port":0,"blocked":true,"at":1.808}],"bytes_out":0,"canary_in_payload":[],"writes_outside_cwd":[],"fingerprinting":[],"correlated":false,"verdict":{"level":"warn","line":"Attempted egress."}},"events":[{"ts":0,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.242,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.01,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.193,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.808,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.808,"call":"resolve","args":{"host":"context7.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.81,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.81,"call":"resolve","args":{"host":"context7.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"}],"level":"warn","line":"Attempted egress."},{"slug":"exa-mcp-server","pkg":"exa-mcp-server","name":"exa-mcp-server","version":"3.4.1","integrity":"208859af71bb9329ad0d1d781ecb301f983b970ba917b85b795c344ad615f6d3","entry":"/app/node_modules/exa-mcp-server/dist/stdio.cjs","note":"third-party, Exa","control":false,"booted":true,"bootReason":"","bootMs":264,"tools":["web_search_exa","web_fetch_exa"],"findings":{"reads_credentials":[],"egress":[{"host":"api.exa.ai","port":0,"blocked":true,"at":0.49},{"host":"api.agnost.ai","port":0,"blocked":true,"at":0.504}],"bytes_out":0,"canary_in_payload":[],"writes_outside_cwd":[],"fingerprinting":[],"correlated":false,"verdict":{"level":"warn","line":"Attempted egress."}},"events":[{"ts":0,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.115,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.276,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.389,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.49,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.49,"call":"resolve","args":{"host":"api.exa.ai","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.492,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.492,"call":"resolve","args":{"host":"api.exa.ai","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":0.504,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.504,"call":"resolve","args":{"host":"api.agnost.ai","port":0},"canary_hit":null,"decision":"deny","errno":"io"}],"level":"warn","line":"Attempted egress."},{"slug":"firecrawl-mcp","pkg":"firecrawl-mcp","name":"firecrawl-mcp","version":"3.24.0","integrity":"983ad26c834ceef34f6b3d2a5cf8e1974230668d467566e094402a6d372a937e","entry":"/app/node_modules/firecrawl-mcp/dist/index.js","note":"third-party, Firecrawl","control":false,"booted":true,"bootReason":"","bootMs":995,"tools":["firecrawl_scrape","firecrawl_map","firecrawl_search","firecrawl_search_feedback","firecrawl_feedback","firecrawl_crawl","firecrawl_check_crawl_status","firecrawl_extract","firecrawl_agent","firecrawl_agent_status","firecrawl_interact","firecrawl_interact_stop","firecrawl_parse","firecrawl_monitor_create","firecrawl_monitor_list","firecrawl_monitor_get","firecrawl_monitor_update","firecrawl_monitor_delete","firecrawl_monitor_run","firecrawl_monitor_checks","firecrawl_monitor_check","firecrawl_research_search_papers","firecrawl_research_inspect_paper","firecrawl_research_related_papers","firecrawl_research_read_paper","firecrawl_research_search_github","firecrawl_developer_search"],"findings":{"reads_credentials":[],"egress":[{"host":"api.firecrawl.dev","port":0,"blocked":true,"at":2.173}],"bytes_out":0,"canary_in_payload":[],"writes_outside_cwd":[],"fingerprinting":[],"correlated":false,"verdict":{"level":"warn","line":"Attempted egress."}},"events":[{"ts":0,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.155,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.205,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.354,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.173,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.173,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.176,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.176,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.178,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.178,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.18,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.18,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.181,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.181,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.183,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.183,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.188,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.188,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.189,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.189,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.191,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.191,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.192,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.192,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.193,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.193,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.194,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.194,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.196,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.196,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.197,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.197,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.198,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.198,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.199,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.199,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.2,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.2,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":2.201,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":2.201,"call":"resolve","args":{"host":"api.firecrawl.dev","port":0},"canary_hit":null,"decision":"deny","errno":"io"}],"level":"warn","line":"Attempted egress."},{"slug":"tavily-mcp","pkg":"tavily-mcp","name":"tavily-mcp","version":"0.2.22","integrity":"b7b031f5e6b44774f16f5f7c6519a793ad4cbd6bee2dacaac02793d995ab9edc","entry":"/app/node_modules/tavily-mcp/build/index.js","note":"third-party, Tavily","control":false,"booted":true,"bootReason":"","bootMs":656,"tools":["tavily_search","tavily_extract","tavily_crawl","tavily_map","tavily_research"],"findings":{"reads_credentials":[],"egress":[{"host":"api.tavily.com","port":0,"blocked":true,"at":1.463}],"bytes_out":0,"canary_in_payload":[],"writes_outside_cwd":[],"fingerprinting":[],"correlated":false,"verdict":{"level":"warn","line":"Attempted egress."}},"events":[{"ts":0,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.268,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.775,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.037,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.463,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.463,"call":"resolve","args":{"host":"api.tavily.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.466,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.466,"call":"resolve","args":{"host":"api.tavily.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.467,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.468,"call":"resolve","args":{"host":"api.tavily.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.469,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.469,"call":"resolve","args":{"host":"api.tavily.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"},{"ts":1.47,"call":"path_open2","args":{"path":"/etc/hosts","dirfd":5,"follow_symlinks":"true","ret_fd":13},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":1.47,"call":"resolve","args":{"host":"api.tavily.com","port":0},"canary_hit":null,"decision":"deny","errno":"io"}],"level":"warn","line":"Attempted egress."},{"slug":"modelcontextprotocol-server-memory","pkg":"@modelcontextprotocol/server-memory","name":"@modelcontextprotocol/server-memory","version":"2026.8.31","integrity":"e6a04d5457d2d7d3a8ba33bc8da891b212358dfe2f43548a5afec4ff259c4729","entry":"/app/node_modules/@modelcontextprotocol/server-memory/dist/index.js","note":"official","control":false,"booted":true,"bootReason":"","bootMs":409,"tools":["create_entities","create_relations","add_observations","delete_entities","delete_observations","delete_relations","read_graph","search_nodes","open_nodes"],"findings":{"reads_credentials":[],"egress":[],"bytes_out":0,"canary_in_payload":[],"writes_outside_cwd":[],"fingerprinting":[],"correlated":false,"verdict":{"level":"clean","line":"No credential access and no egress observed."}},"events":[{"ts":0,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.27,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.485,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.758,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"}],"level":"clean","line":"No credential access and no egress observed."},{"slug":"modelcontextprotocol-server-sequential-thinking","pkg":"@modelcontextprotocol/server-sequential-thinking","name":"@modelcontextprotocol/server-sequential-thinking","version":"2026.8.31","integrity":"246d3cac220c30f7239f5934c5653b560a3deb1820a47f213f9439ab9a91d200","entry":"/app/node_modules/@modelcontextprotocol/server-sequential-thinking/dist/index.js","note":"official","control":false,"booted":true,"bootReason":"","bootMs":401,"tools":["sequentialthinking"],"findings":{"reads_credentials":[],"egress":[],"bytes_out":0,"canary_in_payload":[],"writes_outside_cwd":[],"fingerprinting":[],"correlated":false,"verdict":{"level":"clean","line":"No credential access and no egress observed."}},"events":[{"ts":0,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.274,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.48,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.746,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"}],"level":"clean","line":"No credential access and no egress observed."},{"slug":"mcp-server-kubernetes","pkg":"mcp-server-kubernetes","name":"mcp-server-kubernetes","version":"4.1.6","integrity":"a11aea2d3218b6ac843858b1c2f0b4035431ffe73118807a613e888a518d89d5","entry":"/app/node_modules/mcp-server-kubernetes/dist/index.js","note":"third-party; shells out to kubectl, which is not in the sandbox","control":false,"booted":true,"bootReason":"","bootMs":4639,"tools":["cleanup","kubectl_get","kubectl_describe","kubectl_apply","kubectl_delete","kubectl_create","kubectl_logs","kubectl_scale","kubectl_patch","kubectl_rollout","kubectl_context","kubectl_reconnect","explain_resource","install_helm_chart","upgrade_helm_chart","uninstall_helm_chart","node_management","port_forward","stop_port_forward","exec_in_pod","list_api_resources","kubectl_generic","ping"],"findings":{"reads_credentials":[],"egress":[],"bytes_out":0,"canary_in_payload":[],"writes_outside_cwd":[],"fingerprinting":[],"correlated":false,"verdict":{"level":"clean","line":"No credential access and no egress observed."}},"events":[{"ts":0,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":0.336,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":7.092,"call":"environ_get","args":{},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":7.421,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":12},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":14.849,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":17},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":14.85,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":17},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":14.852,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":17},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":14.852,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":17},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":14.853,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":17},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":14.855,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":17},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":14.855,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":17},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":14.856,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":17},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":14.859,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":20},"canary_hit":null,"decision":"allow","errno":"success"},{"ts":14.86,"call":"path_open2","args":{"path":"/dev/null","dirfd":5,"follow_symlinks":"true","ret_fd":20},"canary_hit":null,"decision":"allow","errno":"success"}],"level":"clean","line":"No credential access and no egress observed."},{"slug":"playwright-mcp","pkg":"@playwright/mcp","name":"@playwright/mcp","version":"0.0.80","integrity":"70dab09ab9a5bc1943fb78e2655f00af7349f9931073833919f19c5d7d786ad6","entry":"","note":"third-party, Microsoft","control":false,"booted":false,"bootReason":"Error: Unsupported platform: wasi","bootMs":395,"tools":[],"findings":null,"events":[],"level":"noboot","line":"Error: Unsupported platform: wasi"},{"slug":"sentry-mcp-server","pkg":"@sentry/mcp-server","name":"@sentry/mcp-server","version":"0.39.0","integrity":"e83838a545f0556f79a8ac0db1bb9ced9ad4214f11bdfdc5911e4b0140a888af","entry":"","note":"third-party, Sentry","control":false,"booted":false,"bootReason":"hung: no initialize reply within 60s, killed — Warning: No LLM API key found (OPENAI_API_KEY, ANTHROPIC_API_KEY, or OPENROUTER_API_KEY). | AI-powered search tools will be unavailable.","bootMs":60030,"tools":[],"findings":null,"events":[],"level":"noboot","line":"hung: no initialize reply within 60s, killed — Warning: No LLM API key found (OPENAI_API_KEY, ANTHROPIC_API_KEY, or OPENROUTER_API_KEY). | AI-powered search tools will be unavailable."},{"slug":"stripe-mcp","pkg":"@stripe/mcp","name":"@stripe/mcp","version":"0.3.3","integrity":"3fbdc81c127a8664fbcf4e87d2a21b3d1787823a9cdd031ecdd2c63e34fc62e7","entry":"","note":"third-party, Stripe; a stdio proxy to mcp.stripe.com","control":false,"booted":false,"bootReason":"Error: getaddrinfo ENOTFOUND mcp.stripe.com","bootMs":432,"tools":[],"findings":null,"events":[],"level":"noboot","line":"Error: getaddrinfo ENOTFOUND mcp.stripe.com"}]}</script>
+<script>/* Blast Radius Sweep — page logic. Reads the embedded JSON and renders; never edits it. */
+(function () {
+  'use strict';
+  var DATA = JSON.parse(document.getElementById('br-data').textContent);
+  var servers = DATA.servers;
+  var byslug = {};
+  servers.forEach(function (s) { byslug[s.slug] = s; });
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function plural(n, w) { return n + ' ' + w + (n === 1 ? '' : 's'); }
+  function shortName(n) { var i = n.indexOf('/'); return n.charAt(0) === '@' && i > 0 ? n.slice(i + 1) : n; }
+  function scopeOf(n) { var i = n.indexOf('/'); return n.charAt(0) === '@' && i > 0 ? n.slice(0, i) : ''; }
+
+  var I = {
+    critical: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1zm-.75 3.5v4.5h1.5V4.5h-1.5zm0 6v1.5h1.5v-1.5h-1.5z"/></svg>',
+    warn: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7.14 1.5a1 1 0 0 1 1.72 0l6.3 11a1 1 0 0 1-.86 1.5H1.7a1 1 0 0 1-.86-1.5l6.3-11zM7.25 5v4.5h1.5V5h-1.5zm0 6v1.5h1.5V11h-1.5z"/></svg>',
+    clean: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1zm3.03 4.72-3.9 3.9-1.66-1.66-1.06 1.06 2.72 2.72 4.96-4.96-1.06-1.06z"/></svg>',
+    noboot: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1zM4.5 7.25v1.5h7v-1.5h-7z"/></svg>',
+    control: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 1h4v1.5h-.5v3.6l3.9 6.8A1.5 1.5 0 0 1 12.1 15H3.9a1.5 1.5 0 0 1-1.3-2.1l3.9-6.8V2.5H6V1zm1.5 1.5v4l-2.2 3.8h5.4L8.5 6.5v-4h-1z"/></svg>',
+    overview: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2h5v5H2V2zm7 0h5v5H9V2zM2 9h5v5H2V9zm7 0h5v5H9V9z"/></svg>',
+    search: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.5 1a5.5 5.5 0 0 1 4.38 8.83l3.65 3.64-1.06 1.06-3.64-3.65A5.5 5.5 0 1 1 6.5 1zm0 1.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>',
+    back: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 2 4.5 8l6 6 1.06-1.06L6.62 8l4.94-4.94L10.5 2z"/></svg>',
+    sort: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2l3 4H5l3-4zm0 12l-3-4h6l-3 4z"/></svg>',
+    x: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2.5 8 7l4.5-4.5 1 1L9 8l4.5 4.5-1 1L8 9l-4.5 4.5-1-1L7 8 2.5 3.5l1-1z"/></svg>',
+    check: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.4 3.6 6.5 10.5 3.6 7.6 2.5 8.7l4 4 8-8-1.1-1.1z"/></svg>',
+    flask: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 1h4v1.5h-.5v3.6l3.9 6.8A1.5 1.5 0 0 1 12.1 15H3.9a1.5 1.5 0 0 1-1.3-2.1l3.9-6.8V2.5H6V1z"/></svg>'
+  };
+  var LV = { critical: 'Critical', warn: 'Warning', clean: 'Clean', noboot: 'Did not boot' };
+  // the card data keeps its own wording; this is how each known line reads to a non-specialist
+  var PLAIN = {
+    'Exfiltrated a seeded credential. Proven at the sink.': 'Sent a planted secret out of the sandbox. Proven: it arrived at our collector.',
+    'Read a seeded credential, then attempted egress.': 'Opened a planted secret, then tried to reach a server.',
+    'Read a seeded credential.': 'Opened a planted secret.',
+    'Attempted egress.': 'Tried to reach a server outside the sandbox.',
+    'No credential access and no egress observed.': 'Did not open any secret or try to reach any server.'
+  };
+  function plainLine(t) { return PLAIN[t] || t; }
+  var SEV = { critical: 0, warn: 1, clean: 2, noboot: 3 };
+  var CRED = [/\.ssh\//, /\.env$/, /\.aws\//, /credentials/i, /id_[a-z0-9]+$/, /\.npmrc$/, /\.netrc$/];
+
+  var state = { sel: 'overview', q: '', sortKey: 'sev', sortDir: 1 };
+
+  /* ---------- event classification (rendering only) ---------- */
+  function classify(e) {
+    var a = e.args || {};
+    var deny = e.decision === 'deny';
+    if (e.call === 'environ_get') return { lane: 'env', key: 'environment', deny: deny };
+    if (e.call === 'path_open2' || e.call === 'path_open') {
+      var p = a.path || '';
+      var cred = e.canary_hit || CRED.some(function (re) { return re.test(p); });
+      return { lane: cred ? 'cred' : 'file', key: p, deny: deny, errno: e.errno };
+    }
+    if (e.call === 'path_rename') return { lane: 'write', key: a.new_path || '', from: a.old_path || '', deny: deny };
+    if (e.call === 'path_unlink_file') return { lane: 'write', key: a.path || '', unlink: true, deny: deny };
+    if (e.call === 'resolve') return { lane: 'dns', key: a.host || '', deny: deny };
+    if (e.call === 'sock_connect') return { lane: 'connect', key: a.addr || '', deny: deny };
+    if (e.call === 'sock_send' || e.call === 'sock_send_to' || (e.call === 'fd_write' && a.socket)) return { lane: 'send', key: a.addr || 'socket', bytes: Number(a.nsent || a.nwritten || a.bytes_written || 0), deny: deny };
+    if (e.call === 'sock_open') return null;
+    if (e.call === 'proc_exec' || e.call === 'proc_spawn') return { lane: 'write', key: a.path || a.name || 'process', spawn: true, deny: deny };
+    return null;
+  }
+  function phrase(e, c) {
+    var isCred = c.lane === 'cred';
+    switch (c.lane) {
+      case 'env': return { t: 'read its environment variables', cls: 'x' };
+      case 'file': case 'cred':
+        if (c.errno && c.errno !== 'success') return { t: 'tried to open <code>' + esc(c.key) + '</code> (' + esc(c.errno) + ')', cls: 'x' };
+        return { t: (isCred ? 'opened secret file ' : 'opened ') + '<code>' + esc(c.key) + '</code>', cls: isCred ? 'cred' : '' };
+      case 'write':
+        if (c.spawn) return { t: 'started a process <code>' + esc(c.key) + '</code>', cls: 'cred' };
+        if (c.unlink) return { t: 'deleted <code>' + esc(c.key) + '</code>', cls: 'cred' };
+        return { t: 'replaced <code>' + esc(c.key) + '</code> (wrote <code>' + esc(c.from) + '</code>, then renamed it into place)', cls: 'cred' };
+      case 'dns': return c.deny ? { t: 'looked up <code>' + esc(c.key) + '</code> <b>blocked</b>', cls: 'deny' } : { t: 'looked up <code>' + esc(c.key) + '</code>', cls: 'allowed' };
+      case 'connect': return c.deny ? { t: 'tried to connect to <code>' + esc(c.key) + '</code> <b>blocked</b>', cls: 'deny' } : { t: 'connected to <code>' + esc(c.key) + '</code>', cls: 'allowed' };
+      case 'send': return { t: 'sent ' + c.bytes + ' bytes over the connection', cls: 'send' };
+    }
+    return { t: e.call, cls: 'x' };
+  }
+
+  /* ---------- timeline ---------- */
+  var LANES = [['env', 'Env variables'], ['file', 'Files'], ['cred', 'Secret files'], ['write', 'File changes'], ['dns', 'Lookups (DNS)'], ['connect', 'Connections'], ['send', 'Data sent']];
+  function niceStep(maxT) {
+    var steps = [0.05, 0.1, 0.2, 0.25, 0.5, 1, 2, 5, 10, 20];
+    for (var i = 0; i < steps.length; i++) if (maxT / steps[i] <= 6) return steps[i];
+    return 50;
+  }
+  function timeline(events) {
+    var W = 760, left = 104, right = 22, top = 8, laneH = 26, bottom = 30;
+    var H = top + LANES.length * laneH + bottom;
+    var maxT = Math.max(0.5, Math.max.apply(null, events.map(function (e) { return e.ts; }).concat([0]))) * 1.05;
+    var x = function (t) { return left + (t / maxT) * (W - left - right); };
+    // a burst of activity in one lane becomes one mark: a dot, or a bar when it spans time
+    var byLane = {};
+    events.forEach(function (e) {
+      var c = classify(e); if (!c) return;
+      var list = byLane[c.lane] || (byLane[c.lane] = []);
+      var last = list[list.length - 1];
+      if (last && x(e.ts) - x(last.tEnd) < 9) {
+        last.n++; last.tEnd = e.ts; last.bytes += c.bytes || 0;
+        var k = last.keys[c.key] || (last.keys[c.key] = { n: 0, deny: 0 }); k.n++; if (c.deny) k.deny++;
+        if (!c.deny) last.allDeny = false;
+        return;
+      }
+      var keys = {}; keys[c.key] = { n: 1, deny: c.deny ? 1 : 0 };
+      list.push({ ts: e.ts, tEnd: e.ts, n: 1, bytes: c.bytes || 0, keys: keys, allDeny: !!c.deny, errno: c.errno, from: c.from });
+    });
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Timeline of what the server did in this run">';
+    var step = niceStep(maxT);
+    for (var t = 0; t <= maxT; t += step) {
+      var xx = x(t);
+      s += '<line class="gridline" x1="' + xx.toFixed(1) + '" y1="' + top + '" x2="' + xx.toFixed(1) + '" y2="' + (top + LANES.length * laneH) + '"/>';
+      s += '<text class="tick" x="' + xx.toFixed(1) + '" y="' + (top + LANES.length * laneH + 16) + '" text-anchor="middle">' + (Math.round(t * 100) / 100) + 's</text>';
+    }
+    LANES.forEach(function (ln, i) {
+      var y = top + i * laneH + laneH / 2;
+      var marks = byLane[ln[0]] || [];
+      s += '<text class="' + (marks.length ? 'lane-label' : 'lane-none') + '" x="' + (left - 10) + '" y="' + (y + 3.5) + '" text-anchor="end">' + esc(ln[1]) + '</text>';
+      s += '<line class="lane-line" x1="' + left + '" y1="' + y + '" x2="' + (W - right) + '" y2="' + y + '"/>';
+      marks.forEach(function (m) {
+        var x0 = x(m.ts), x1 = x(m.tEnd), span = x1 - x0 > 2;
+        var cls = 'm ' + ln[0] + (m.allDeny ? ' deny' : '');
+        if (span) s += '<rect class="' + cls + '" x="' + (x0 - 5).toFixed(1) + '" y="' + (y - 5) + '" width="' + (x1 - x0 + 10).toFixed(1) + '" height="10" rx="5"/>';
+        else s += '<circle class="' + cls + '" cx="' + x0.toFixed(1) + '" cy="' + y + '" r="5"/>';
+        if (m.allDeny) { var cx = span ? (x0 + x1) / 2 : x0; s += '<line class="slash ' + ln[0] + '" x1="' + (cx - 4.2).toFixed(1) + '" y1="' + (y + 4.2) + '" x2="' + (cx + 4.2).toFixed(1) + '" y2="' + (y - 4.2) + '"/>'; }
+        if (m.n > 1) s += '<text class="badge" x="' + (x1 + 7).toFixed(1) + '" y="' + (y - 6) + '">×' + m.n + '</text>';
+        var keys = Object.keys(m.keys).map(function (k) { return { k: k, n: m.keys[k].n, deny: m.keys[k].deny }; });
+        var tip = { lane: ln[1], t: m.ts, tEnd: m.tEnd, n: m.n, deny: m.allDeny, bytes: m.bytes, errno: m.errno, from: m.from, keys: keys };
+        var title = ln[1] + ': ' + keys.map(function (k) { return k.k + (k.n > 1 ? ' ×' + k.n : '') + (k.deny ? ' (blocked)' : ''); }).join(', ');
+        if (span) s += '<rect class="hit" x="' + (x0 - 11).toFixed(1) + '" y="' + (y - 11) + '" width="' + (x1 - x0 + 22).toFixed(1) + '" height="22" tabindex="0" data-tip="' + esc(JSON.stringify(tip)) + '"><title>' + esc(title) + '</title></rect>';
+        else s += '<circle class="hit" cx="' + x0.toFixed(1) + '" cy="' + y + '" r="11" tabindex="0" data-tip="' + esc(JSON.stringify(tip)) + '"><title>' + esc(title) + '</title></circle>';
+      });
+    });
+    s += '</svg>';
+    return s;
+  }
+  function legend() {
+    return '<div class="legend">' +
+      '<span class="c-cred"><i class="f"></i>secret file opened</span>' +
+      '<span class="c-file"><i class="f"></i>ordinary file or env variable read</span>' +
+      '<span class="c-write"><i class="f"></i>file changed or deleted</span>' +
+      '<span class="c-net"><i class="f"></i>network: look up, connect, send</span>' +
+      '<span class="c-net"><i></i>hollow with a slash: blocked by the sandbox</span>' +
+      '</div>';
+  }
+  function logList(events) {
+    var rows = [], last = null;
+    events.forEach(function (e) {
+      var c = classify(e); if (!c) return;
+      var p = phrase(e, c);
+      if (last && last.t === p.t) { last.n++; return; }
+      last = { ts: e.ts, t: p.t, cls: p.cls, n: 1 }; rows.push(last);
+    });
+    if (!rows.length) return '<div class="log"><div><span class="ts"></span><span class="x">nothing beyond the runtime starting up</span></div></div>';
+    return '<div class="log">' + rows.map(function (r) {
+      return '<div><span class="ts">' + r.ts.toFixed(2) + 's</span><span class="' + r.cls + '">' + r.t + (r.n > 1 ? ' <span class="x">×' + r.n + '</span>' : '') + '</span></div>';
+    }).join('') + '</div>';
+  }
+
+  /* ---------- pieces ---------- */
+  function verdictIcon(level) { return I[level] || I.noboot; }
+  function pillHost(e) {
+    return '<span class="pill ' + (e.blocked ? 'blocked' : 'allowed') + '">' + (e.blocked ? I.x : I.check) + (e.blocked ? 'blocked' : 'went through') + '</span>';
+  }
+  function whyLine(s) {
+    if (s.level === 'noboot') return s.bootReason || 'It never finished starting up.';
+    var f = s.findings, parts = [];
+    if (f.canary_in_payload.length) parts.push('the planted secret arrived at our collector, so the leak is proven rather than guessed');
+    if (f.reads_credentials.length) parts.push('opened ' + plural(f.reads_credentials.length, 'secret file'));
+    if (f.egress.length) { var b = f.egress.filter(function (e) { return e.blocked; }).length; parts.push('tried to reach ' + plural(f.egress.length, 'server') + ' (' + b + ' blocked' + (f.egress.length - b ? ', ' + (f.egress.length - b) + ' went through' : '') + ')'); }
+    if (f.writes_outside_cwd.length) parts.push('changed files outside its own folder');
+    if (f.correlated && s.level === 'critical' && !f.canary_in_payload.length) parts.push('it opened the secret first and tried to connect right after');
+    if (!parts.length) return 'Did not open any secret or try to reach any server in this run. It could still do either in a situation we did not trigger.';
+    var t = parts.join('; ');
+    return t.charAt(0).toUpperCase() + t.slice(1) + '.';
+  }
+
+  /* ---------- sidebar ---------- */
+  function matches(s, q) {
+    if (!q) return true;
+    var hay = [s.name, s.version, s.note, s.line].concat(s.tools).concat(s.findings ? s.findings.egress.map(function (e) { return e.host; }) : []).join(' ').toLowerCase();
+    return hay.indexOf(q) >= 0;
+  }
+  function renderSidebar() {
+    var q = state.q.trim().toLowerCase();
+    var groups = [['critical', 'Critical'], ['warn', 'Warning'], ['clean', 'Clean'], ['noboot', 'Did not boot']];
+    var h = '<div class="brand"><span class="mark">' + I.critical + '</span><div><b>Blast Radius</b><span>' + servers.filter(function (s) { return !s.control; }).length + ' MCP servers from npm, plus one we wrote to be malicious</span></div></div>';
+    h += '<label class="search">' + I.search + '<input id="q" type="search" placeholder="Search servers, hosts, tools" value="' + esc(state.q) + '" aria-label="Search"></label>';
+    h += '<div class="group"><button class="row" data-sel="overview" aria-current="' + (state.sel === 'overview') + '"><span class="sym overview">' + I.overview + '</span><span class="t"><span class="name">Overview</span><span class="sub">every server in one table</span></span></button></div>';
+    groups.forEach(function (g) {
+      var list = servers.filter(function (s) { return s.level === g[0] && matches(s, q); });
+      if (!list.length) return;
+      h += '<div class="group"><h3>' + g[1] + '</h3>';
+      list.forEach(function (s) {
+        h += '<button class="row" data-sel="' + esc(s.slug) + '" aria-current="' + (state.sel === s.slug) + '">' +
+          '<span class="sym ' + (s.control ? 'control' : s.level) + '">' + (s.control ? I.flask : verdictIcon(s.level)) + '</span>' +
+          '<span class="t"><span class="name">' + esc(shortName(s.name)) + '</span><span class="sub">' + esc(scopeOf(s.name) ? scopeOf(s.name) + ' · ' : '') + esc(s.version) + (s.control ? ' · ours, deliberately malicious' : '') + '</span></span>' +
+          (s.tools.length ? '<span class="count num" title="tools exposed">' + s.tools.length + '</span>' : '') + '</button>';
+      });
+      h += '</div>';
+    });
+    if (q && !servers.some(function (s) { return matches(s, q); })) h += '<div class="empty">Nothing matches “' + esc(state.q) + '”.</div>';
+    $('#sidebar').innerHTML = h;
+  }
+
+  /* ---------- overview ---------- */
+  function sortServers(list) {
+    var k = state.sortKey, d = state.sortDir;
+    var val = function (s) {
+      var f = s.findings;
+      switch (k) {
+        case 'name': return s.name.toLowerCase();
+        case 'sev': return SEV[s.level] * 1000 + (s.control ? -1 : 0);
+        case 'tools': return s.tools.length;
+        case 'reads': return f ? f.reads_credentials.length : -1;
+        case 'egress': return f ? f.egress.length : -1;
+        case 'writes': return f ? f.writes_outside_cwd.length : -1;
+        case 'bytes': return f ? f.bytes_out : -1;
+        case 'proven': return f ? f.canary_in_payload.length : -1;
+        case 'boot': return s.bootMs == null ? 1e9 : s.bootMs;
+      }
+      return 0;
+    };
+    return list.slice().sort(function (a, b) { var va = val(a), vb = val(b); if (va < vb) return -d; if (va > vb) return d; return a.name < b.name ? -1 : 1; });
+  }
+  function th(key, label, right) {
+    var sort = state.sortKey === key ? (state.sortDir === 1 ? 'ascending' : 'descending') : 'none';
+    return '<th' + (right ? ' class="r"' : '') + ' aria-sort="' + sort + '"><button data-sort="' + key + '">' + esc(label) + I.sort + '</button></th>';
+  }
+  function renderOverview() {
+    var npm = servers.filter(function (s) { return !s.control; });
+    var booted = npm.filter(function (s) { return s.booted; }).length;
+    var n = function (lv) { return servers.filter(function (s) { return s.level === lv; }).length; };
+    var ran = DATA.ran ? new Date(DATA.ran) : null;
+    var when = ran ? ran.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+    var h = '<div class="hdr"><span class="eyebrow">Sweep · ' + esc(when) + ' · ' + esc(DATA.mode) + '</span><h1>Blast Radius Sweep</h1>' +
+      '<div class="meta"><span>' + npm.length + ' MCP servers from npm, each run inside a sandbox with a fake home folder full of planted secrets, then asked to use every tool it offers. Everything below is what the sandbox saw each server do. No server was allowed to reach the internet.</span></div></div>';
+    h += '<div class="tiles">' +
+      '<div class="tile"><span class="n">' + npm.length + '</span><span class="l">servers tested<small>all plain JavaScript</small></span></div>' +
+      '<div class="tile"><span class="n">' + booted + '<span style="font-size:14px;color:var(--ink2);font-weight:500"> / ' + npm.length + '</span></span><span class="l">started and listed their tools<small>' + (npm.length - booted) + ' did not, reasons below</small></span></div>' +
+      '<div class="tile critical"><span class="n">' + n('critical') + '</span><span class="l">critical<small>' + (n('critical') === 1 && servers.some(function (s) { return s.control && s.level === 'critical'; }) ? 'only our planted bad server' : 'a secret provably sent out') + '</small></span></div>' +
+      '<div class="tile warn"><span class="n">' + n('warn') + '</span><span class="l">warning<small>opened a secret or tried to reach a server</small></span></div>' +
+      '<div class="tile clean"><span class="n">' + n('clean') + '</span><span class="l">clean<small>did neither in this run</small></span></div>' +
+      '</div>';
+    h += '<section class="sec"><div class="sec-h"><h2>All servers</h2><span class="tier">click a row for the full run</span></div><div class="box tablewrap"><table><thead><tr>' +
+      th('name', 'Server') + th('sev', 'Verdict') + th('tools', 'Tools', true) + th('reads', 'Secrets', true) + th('egress', 'Reached out to') + th('writes', 'Changes', true) + th('bytes', 'Sent', true) + th('proven', 'Proven leak') + th('boot', 'Startup', true) +
+      '</tr></thead><tbody>';
+    sortServers(servers).forEach(function (s) {
+      var f = s.findings;
+      h += '<tr tabindex="0" data-sel="' + esc(s.slug) + '">' +
+        '<td><div class="name">' + esc(s.name) + (s.control ? ' <span class="pill count">control</span>' : '') + '</div><div class="ver">' + esc(s.version) + (s.note ? ' · ' + esc(s.note.split(/[;,]/)[0]) : '') + '</div></td>' +
+        '<td><span class="vd ' + s.level + '">' + verdictIcon(s.level) + LV[s.level] + '</span></td>' +
+        '<td class="r">' + (s.tools.length || '<span class="none">–</span>') + '</td>' +
+        '<td class="r">' + (f ? (f.reads_credentials.length || '<span class="none">0</span>') : '<span class="none">–</span>') + '</td>' +
+        '<td>' + (f ? (f.egress.length ? '<div class="dots">' + f.egress.map(function (e) { return '<span class="dot ' + (e.blocked ? 'blocked' : 'allowed') + '"><i></i>' + esc(e.host) + (e.port ? ':' + e.port : '') + '</span>'; }).join('') + '</div>' : '<span class="none">none</span>') : '<span class="none">–</span>') + '</td>' +
+        '<td class="r">' + (f ? (f.writes_outside_cwd.length || '<span class="none">0</span>') : '<span class="none">–</span>') + '</td>' +
+        '<td class="r">' + (f ? (f.bytes_out ? f.bytes_out + ' B' : '<span class="none">0</span>') : '<span class="none">–</span>') + '</td>' +
+        '<td>' + (f ? (f.canary_in_payload.length ? '<span class="pill sink">' + I.check + 'yes, proven</span>' : '<span class="none">not observed</span>') : '<span class="none">–</span>') + '</td>' +
+        '<td class="r">' + (s.bootMs != null ? (s.booted ? (s.bootMs / 1000).toFixed(1) + 's' : '<span class="vd noboot">' + I.noboot + 'no</span>') : (s.control ? '<span class="none">–</span>' : '<span class="none">–</span>')) + '</td>' +
+        '</tr>';
+    });
+    h += '</tbody></table></div><p class="foot">Sorted by severity. Secrets: planted secret files it opened. Reached out to: hosts it tried to contact; a green dot means the sandbox blocked it, red would mean it went through. Changes: files it changed outside its own folder. Sent: bytes over an open connection, which only our planted bad server could have, since we let it reach our collector on purpose. Proven leak: the planted secret arrived at our collector.</p></section>';
+
+    // host map
+    var hosts = {};
+    servers.forEach(function (s) { if (!s.findings) return; s.findings.egress.forEach(function (e) { var k = e.host + (e.port ? ':' + e.port : ''); (hosts[k] = hosts[k] || []).push({ s: s, blocked: e.blocked }); }); });
+    var keys = Object.keys(hosts).sort(function (a, b) { return hosts[b].length - hosts[a].length || (a < b ? -1 : 1); });
+    h += '<section class="sec"><div class="sec-h"><h2>Who they try to reach</h2><span class="tier">seen by the sandbox</span></div><div class="box hostmap">';
+    keys.forEach(function (k) {
+      var who = hosts[k];
+      h += '<div><div class="h">' + esc(k) + '<small>' + plural(who.length, 'server') + ' · ' + (who.every(function (w) { return w.blocked; }) ? 'all blocked' : who.some(function (w) { return w.blocked; }) ? 'partly blocked' : 'allowed') + '</small></div><div class="who">' +
+        who.map(function (w) { return '<button data-sel="' + esc(w.s.slug) + '">' + esc(w.s.name) + '</button>'; }).join('') + '</div></div>';
+    });
+    h += '</div><p class="foot">Every third-party server tries to reach its own vendor’s API. One also tries a second host its README never mentions; open its page to see which.</p></section>';
+
+    h += '<section class="sec"><div class="sec-h"><h2>How to read this</h2></div><div class="about">' +
+      '<p><b>Seen by the sandbox.</b> Each server runs inside a WebAssembly sandbox (Wasmer). It cannot open a file or make a network connection without asking the sandbox, and the sandbox writes down every request: which file, which host, how many bytes. Those records are facts about one run.</p>' +
+      '<p><b>Received by our collector.</b> The one row that can say a secret actually left. Every run plants a unique fake secret in the sandbox’s home folder. For our deliberately malicious server we let it connect to a collector we control; the fake secret showed up in what arrived, so that leak is proven. Every other server was blocked from connecting, so their row reads “not observed” by design. The sandbox never sees the contents of a message, so nothing else on these pages claims to know what a server would have sent.</p>' +
+      '<p><b>One run, not a reputation.</b> Each tool was called once with made-up arguments. A verdict says what the server did here, not what it might do on your machine over months. Sandbox: ' + esc(DATA.engine) + '.</p>' +
+      '</div></section>';
+    return h;
+  }
+
+  /* ---------- detail ---------- */
+  function kv(rows) {
+    return '<div class="box"><div class="kv">' + rows.map(function (r) { return '<div class="k">' + r[0] + '</div><div class="v">' + r[1] + '</div>'; }).join('') + '</div></div>';
+  }
+  function renderDetail(s) {
+    var f = s.findings;
+    var h = '<button class="back" data-sel="overview">' + I.back + 'Servers</button>';
+    h += '<div class="hdr"><span class="eyebrow">' + (s.control ? 'Our planted bad server, written to prove the tool catches a real leak' : 'npm package') + (s.note ? ' · ' + esc(s.note) : '') + '</span>' +
+      '<h1>' + esc(s.name) + '</h1><div class="meta">' +
+      '<span>version <code>' + esc(s.version) + '</code></span>' +
+      (s.integrity ? '<span>file fingerprint <code title="' + esc(s.integrity) + '">' + esc(s.integrity.slice(0, 16)) + '…</code></span>' : '') +
+      (s.tools.length ? '<span>' + plural(s.tools.length, 'tool') + ' offered</span>' : '') +
+      (s.bootMs != null && s.booted ? '<span>started in ' + (s.bootMs / 1000).toFixed(1) + 's</span>' : '') +
+      '</div></div>';
+    h += '<div class="verdict ' + s.level + '">' + verdictIcon(s.level) + '<div><div class="lvl">' + LV[s.level] + '</div><div class="line" title="' + esc(f ? f.verdict.line : '') + '">' + esc(f ? plainLine(f.verdict.line) : 'Never finished starting up.') + '</div><div class="why">' + esc(whyLine(s)) + '</div></div></div>';
+
+    if (f) {
+      h += '<section class="sec"><div class="sec-h"><h2>What it did, in order</h2><span class="tier">seen by the sandbox · ' + plural(s.events.length, 'action') + ', runtime noise removed</span></div><div class="box"><div class="tl">' + timeline(s.events) + '</div>' + legend() + logList(s.events) + '</div>' +
+        '<p class="foot">Time runs left to right. We started the server, asked for its tool list, then called every tool once with made-up arguments. Hover a dot for details; the log underneath says the same thing in words.</p></section>';
+
+      h += '<section class="sec"><div class="sec-h"><h2>Who it tried to reach</h2><span class="tier">seen by the sandbox, except the last row</span></div>' + kv([
+        ['Servers contacted', f.egress.length ? '<div class="hosts">' + f.egress.map(function (e) { return '<div><code>' + esc(e.host) + (e.port ? ':' + e.port : '') + '</code>' + pillHost(e) + '<span class="none num">at ' + e.at.toFixed(2) + 's</span></div>'; }).join('') + '</div>' : '<span class="none">none</span>'],
+        ['Data sent', f.bytes_out ? '<b>' + f.bytes_out + ' bytes</b> over an open connection' : '<span class="none">none, no connection was allowed</span>'],
+        ['Planted secret received <span class="tier sink">by our collector</span>', f.canary_in_payload.length ? f.canary_in_payload.map(function (c) { return '<code>' + esc(c) + '</code>'; }).join(' ') + ' <span class="pill sink">' + I.check + 'arrived at our collector</span>' : '<span class="none">not observed' + (f.egress.length && f.egress.every(function (e) { return e.blocked; }) ? ' — its connections were blocked, so nothing could arrive' : '') + '</span>']
+      ]) + '</section>';
+
+      h += '<section class="sec"><div class="sec-h"><h2>Files it touched</h2><span class="tier">seen by the sandbox</span></div>' + kv([
+        ['Secret files opened', f.reads_credentials.length ? f.reads_credentials.map(function (r) { return '<div><code>' + esc(r.path) + '</code>' + (r.count > 1 ? ' <span class="pill count">×' + r.count + '</span>' : '') + (r.canary ? ' <span class="pill sink">planted secret</span>' : '') + '</div>'; }).join('') : '<span class="none">none</span>'],
+        ['Files changed outside its own folder', f.writes_outside_cwd.length ? f.writes_outside_cwd.map(function (p) { return '<div><code>' + esc(p) + '</code></div>'; }).join('') : '<span class="none">none</span>'],
+        ['Probing the runtime (engine, version)', f.fingerprinting.length ? f.fingerprinting.map(function (p) { return '<div><code>' + esc(p) + '</code></div>'; }).join('') : '<span class="none">none</span>']
+      ]) + '</section>';
+    }
+
+    if (s.tools.length) {
+      h += '<section class="sec"><div class="sec-h"><h2>Tools it offers</h2><span class="tier">' + s.tools.length + ' · each was called once</span></div><div class="box"><div class="chips">' + s.tools.map(function (t) { return '<span class="chip">' + esc(t) + '</span>'; }).join('') + '</div></div></section>';
+    }
+    if (!f) {
+      h += '<section class="sec"><div class="sec-h"><h2>Why there is no verdict</h2></div>' + kv([
+        ['What happened', esc(s.bootReason || 'It never finished starting up.')],
+        ['Time to failure', s.bootMs != null ? (s.bootMs / 1000).toFixed(1) + 's' : '<span class="none">–</span>']
+      ]) + '<p class="foot">A verdict on a server that never ran would be a false claim, so there is none.</p></section>';
+    }
+    h += '<section class="sec"><div class="sec-h"><h2>What exactly ran</h2></div>' + kv([
+      ['Package', '<code>' + esc(s.pkg) + '</code>'],
+      ['Version', '<code>' + esc(s.version) + '</code>'],
+      ['File fingerprint (SHA-256)', s.integrity ? '<code>' + esc(s.integrity) + '</code>' : '<span class="none">–</span>'],
+      ['Start file inside the sandbox', s.entry ? '<code>' + esc(s.entry) + '</code>' : '<span class="none">–</span>'],
+      ['Sandbox', esc(DATA.engine)],
+      ['When', esc(DATA.ran ? new Date(DATA.ran).toLocaleString() : '') + (s.control ? ' · allowed to reach our collector only' : ' · all outside connections blocked')]
+    ]) + '</section>';
+    return h;
+  }
+
+  /* ---------- routing / render ---------- */
+  function render() {
+    renderSidebar();
+    var s = byslug[state.sel];
+    $('#content').innerHTML = s ? renderDetail(s) : renderOverview();
+    document.body.classList.toggle('detail', !!s);
+    document.title = (s ? s.name + ' · ' : '') + 'Blast Radius Sweep';
+    if (window.claude && window.claude.hot && window.claude.hot.snapshot) window.claude.hot.snapshot(function () { return { sel: state.sel, q: state.q }; });
+  }
+  function select(sel, push) {
+    state.sel = byslug[sel] ? sel : 'overview';
+    if (push !== false) { try { history.replaceState(null, '', state.sel === 'overview' ? '#overview' : '#s/' + state.sel); } catch (e) {} }
+    render();
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+  function fromHash() {
+    var m = /^#s\/(.+)$/.exec(location.hash || '');
+    return m ? decodeURIComponent(m[1]) : 'overview';
+  }
+
+  document.addEventListener('click', function (ev) {
+    var t = ev.target.closest('[data-sel]');
+    if (t) { select(t.getAttribute('data-sel')); return; }
+    var st = ev.target.closest('[data-sort]');
+    if (st) { var k = st.getAttribute('data-sort'); if (state.sortKey === k) state.sortDir = -state.sortDir; else { state.sortKey = k; state.sortDir = 1; } render(); }
+  });
+  document.addEventListener('keydown', function (ev) {
+    var tr = ev.target.closest && ev.target.closest('tr[data-sel]');
+    if (tr && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); select(tr.getAttribute('data-sel')); return; }
+    if (ev.target.classList && ev.target.classList.contains('row') && (ev.key === 'ArrowDown' || ev.key === 'ArrowUp')) {
+      var rows = Array.prototype.slice.call(document.querySelectorAll('.sidebar .row'));
+      var i = rows.indexOf(ev.target) + (ev.key === 'ArrowDown' ? 1 : -1);
+      if (rows[i]) { ev.preventDefault(); rows[i].focus(); }
+    }
+  });
+  document.addEventListener('input', function (ev) {
+    if (ev.target.id === 'q') { state.q = ev.target.value; var pos = ev.target.selectionStart; renderSidebar(); var q = $('#q'); q.focus(); try { q.setSelectionRange(pos, pos); } catch (e) {} }
+  });
+  window.addEventListener('hashchange', function () { select(fromHash(), false); });
+
+  // tooltip
+  var tip = $('#tip');
+  function showTip(el, x, y) {
+    var d; try { d = JSON.parse(el.getAttribute('data-tip')); } catch (e) { return; }
+    var net = d.lane === 'Lookups (DNS)' || d.lane === 'Connections';
+    var when = d.tEnd !== d.t ? d.t.toFixed(2) + 's to ' + d.tEnd.toFixed(2) + 's' : 'at ' + d.t.toFixed(2) + 's';
+    var lines = (d.keys || []).map(function (k) {
+      return '<code>' + esc(k.k) + '</code>' + (k.n > 1 ? ' ×' + k.n : '') +
+        (k.deny ? ' <b style="display:inline;color:var(--green)">blocked' + (k.deny < k.n ? ', ' + k.deny + ' of ' + k.n : '') + '</b>' : (net ? ' · went through' : ''));
+    });
+    tip.innerHTML = '<b>' + esc(d.lane) + (d.n > 1 ? ' · ' + d.n + ' actions' : '') + '</b>' + lines.join('<br>') +
+      '<br><span class="none">' + esc(when) + (d.bytes ? ' · ' + d.bytes + ' bytes' : '') + (d.errno && d.errno !== 'success' ? ' · ' + esc(d.errno) : '') + (d.from ? ' · from <code>' + esc(d.from) + '</code>' : '') + '</span>';
+    tip.style.display = 'block';
+    var r = tip.getBoundingClientRect();
+    var left = Math.min(x + 14, window.innerWidth - r.width - 12), top = y + 16;
+    if (top + r.height > window.innerHeight - 8) top = y - r.height - 12;
+    tip.style.left = Math.max(8, left) + 'px'; tip.style.top = Math.max(8, top) + 'px';
+  }
+  document.addEventListener('mouseover', function (ev) { var el = ev.target.closest && ev.target.closest('.hit'); if (el) showTip(el, ev.clientX, ev.clientY); });
+  document.addEventListener('mousemove', function (ev) { if (tip.style.display === 'block') { var el = ev.target.closest && ev.target.closest('.hit'); if (el) showTip(el, ev.clientX, ev.clientY); } });
+  document.addEventListener('mouseout', function (ev) { if (ev.target.closest && ev.target.closest('.hit')) tip.style.display = 'none'; });
+  document.addEventListener('focusin', function (ev) { if (ev.target.classList && ev.target.classList.contains('hit')) { var r = ev.target.getBoundingClientRect(); showTip(ev.target, r.left + r.width / 2, r.top + r.height / 2); } });
+  document.addEventListener('focusout', function (ev) { if (ev.target.classList && ev.target.classList.contains('hit')) tip.style.display = 'none'; });
+
+  function start(saved) {
+    if (saved && saved.q) state.q = saved.q;
+    select((saved && saved.sel) || fromHash(), false);
+  }
+  if (window.claude && window.claude.hot && window.claude.hot.ready) window.claude.hot.ready(start); else start(window.claude && window.claude.hot ? window.claude.hot.data : null);
+})();
+</script>
+</body></html>

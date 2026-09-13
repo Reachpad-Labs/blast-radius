@@ -1,0 +1,187 @@
+{
+  "spec": {
+    "name": "@modelcontextprotocol/server-everything",
+    "version": "2026.8.31",
+    "integrity": "26eb2809baf531c3a54300e3af15bfdceb7b4de50e785ab8f2f4acf02cbce1fd",
+    "entry": "/app/node_modules/@modelcontextprotocol/server-everything/dist/index.js"
+  },
+  "tools": [
+    "echo",
+    "get-annotated-message",
+    "get-env",
+    "get-resource-links",
+    "get-resource-reference",
+    "get-structured-content",
+    "get-sum",
+    "get-tiny-image",
+    "gzip-file-as-resource",
+    "toggle-simulated-logging",
+    "toggle-subscriber-updates",
+    "trigger-long-running-operation"
+  ],
+  "findings": {
+    "reads_credentials": [],
+    "attempted": [
+      "/etc/nsswitch.conf",
+      "/etc/netsvc.conf",
+      "/etc/svc.conf"
+    ],
+    "attempted_credentials": [],
+    "returned_to_model": [
+      "CANARY-cee69e11",
+      "CANARY-cb276a9e",
+      "CANARY-55e1a5cf",
+      "CANARY-fe891a68",
+      "CANARY-d4ce80f1",
+      "CANARY-9f388ccf",
+      "CANARY-b1327a68",
+      "CANARY-d3e0c3ed"
+    ],
+    "staged_on_disk": [],
+    "egress": [
+      {
+        "host": "raw.githubusercontent.com",
+        "port": 0,
+        "blocked": true,
+        "at": 3.25,
+        "pass": 2
+      }
+    ],
+    "bytes_out": 0,
+    "canary_in_payload": [],
+    "writes_outside_cwd": [],
+    "fingerprinting": [],
+    "correlated": false,
+    "verdict": {
+      "level": "critical",
+      "line": "Handed a seeded credential back through its own MCP response."
+    }
+  },
+  "events": [
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 1
+    },
+    {
+      "ts": 0.204,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 1
+    },
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 0.246,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 3.189,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/resolv.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 3.19,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/nsswitch.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 3.19,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/netsvc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 3.19,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/svc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 3.242,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 3.25,
+      "call": "resolve",
+      "args": {
+        "host": "raw.githubusercontent.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io",
+      "pass": 2
+    }
+  ]
+}

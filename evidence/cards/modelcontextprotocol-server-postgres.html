@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark">
-<title>@modelcontextprotocol/server-filesystem — Blast Radius</title>
+<title>@modelcontextprotocol/server-postgres — Blast Radius</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 *{box-sizing:border-box}
@@ -41,15 +41,19 @@ footer{margin-top:34px;padding-top:16px;border-top:1px solid #2A2E2C;color:#6369
 </style></head><body><div class="wrap">
 <header>
   <div class="eyebrow">Blast radius</div>
-  <h1>@modelcontextprotocol/server-filesystem</h1>
-  <div class="ver">2026.8.31 · sha256 729dc8511e779e5c…</div>
+  <h1>@modelcontextprotocol/server-postgres</h1>
+  <div class="ver">0.6.2 · sha256 4717ef3e03e543da…</div>
 </header>
-<div class="verdict"><span class="lvl">WARN</span><div class="line">Read a seeded credential.</div></div>
-<div class="tiles"><div class="tile"><div class="num" style="color:#F0736A">3</div><div class="cap">credentials read</div></div><div class="tile"><div class="num" style="color:#636965">0</div><div class="cap">more sought</div></div><div class="tile"><div class="num" style="color:#6EE7A8">0</div><div class="cap">staged outbound</div></div><div class="tile"><div class="num" style="color:#636965">0</div><div class="cap">canaries proven</div></div></div>
+<div class="verdict"><span class="lvl">WARN</span><div class="line">Attempted egress.</div></div>
+<div class="tiles"><div class="tile"><div class="num" style="color:#6EE7A8">0</div><div class="cap">credentials read</div></div><div class="tile"><div class="num" style="color:#E8B339">3</div><div class="cap">more sought</div></div><div class="tile"><div class="num" style="color:#6EE7A8">0</div><div class="cap">staged outbound</div></div><div class="tile"><div class="num" style="color:#636965">0</div><div class="cap">canaries proven</div></div></div>
 <section class="ev">
+    <div class="evhead"><span class="badge b-attempt">attempted</span>
+      <h2 style="color:#E8B339">Looked for, not on this box</h2></div>
+    <ul><li><code class="faint">/etc/nsswitch.conf</code></li><li><code class="faint">/etc/netsvc.conf</code></li><li><code class="faint">/etc/svc.conf</code></li></ul>
+  </section><section class="ev">
     <div class="evhead"><span class="badge b-trace">from trace</span>
-      <h2 style="color:#F0736A">Took</h2></div>
-    <ul><li><code>~/.ssh/id_ed25519</code> <span class="faint">×9</span></li><li><code>~/.ssh/id_ed25519.e6745fee8c63cf8a03fed113f97d60a0.tmp</code></li><li><code>~/.ssh/id_ed25519.43a921d7bb8dbd358666ad255776a79f.tmp</code></li></ul>
+      <h2 style="color:#E8B339">Dialled</h2></div>
+    <ul><li><code>127.0.0.1:5432</code> <span style="color:#6EE7A8">refused</span></li></ul>
   </section>
 <footer>
 One execution under Wasmer against a canary world seeded fresh for this run — every string above

@@ -1,0 +1,227 @@
+{
+  "spec": {
+    "name": "exa-mcp-server",
+    "version": "3.4.1",
+    "integrity": "208859af71bb9329ad0d1d781ecb301f983b970ba917b85b795c344ad615f6d3",
+    "entry": "/app/node_modules/exa-mcp-server/dist/stdio.cjs"
+  },
+  "tools": [
+    "web_search_exa",
+    "web_fetch_exa"
+  ],
+  "findings": {
+    "reads_credentials": [],
+    "attempted": [
+      "/etc/nsswitch.conf",
+      "/etc/netsvc.conf",
+      "/etc/svc.conf"
+    ],
+    "attempted_credentials": [],
+    "returned_to_model": [],
+    "staged_on_disk": [],
+    "egress": [
+      {
+        "host": "api.exa.ai",
+        "port": 0,
+        "blocked": true,
+        "at": 0.692,
+        "pass": 2
+      },
+      {
+        "host": "api.agnost.ai",
+        "port": 0,
+        "blocked": true,
+        "at": 0.736,
+        "pass": 2
+      }
+    ],
+    "bytes_out": 0,
+    "canary_in_payload": [],
+    "writes_outside_cwd": [],
+    "fingerprinting": [],
+    "correlated": false,
+    "verdict": {
+      "level": "warn",
+      "line": "Attempted egress."
+    }
+  },
+  "events": [
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 1
+    },
+    {
+      "ts": 0.425,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 1
+    },
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 0.359,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 0.652,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/resolv.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 0.653,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/nsswitch.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 0.653,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/netsvc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 0.653,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/svc.conf",
+        "dirfd": 5,
+        "follow_symlinks": "true"
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "noent",
+      "pass": 2
+    },
+    {
+      "ts": 0.691,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 0.692,
+      "call": "resolve",
+      "args": {
+        "host": "api.exa.ai",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io",
+      "pass": 2
+    },
+    {
+      "ts": 0.698,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 0.698,
+      "call": "resolve",
+      "args": {
+        "host": "api.exa.ai",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io",
+      "pass": 2
+    },
+    {
+      "ts": 0.736,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 0.736,
+      "call": "resolve",
+      "args": {
+        "host": "api.agnost.ai",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io",
+      "pass": 2
+    }
+  ]
+}

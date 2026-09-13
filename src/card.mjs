@@ -52,7 +52,7 @@ export function renderCard(f, meta = {}) {
 
   const blocks = [
     block('trace', 'Took', f.reads_credentials.map(r =>
-      `<code>${esc(short(r.path))}</code>${r.canary ? ` <span class="tag">${esc(r.canary)}</span>` : ''}`), C.critical),
+      `<code>${esc(short(r.path))}</code>${r.count > 1 ? ` <span class="faint">×${r.count}</span>` : ''}${r.canary ? ` <span class="tag">${esc(r.canary)}</span>` : ''}`), C.critical),
 
     block('attempt', 'Looked for, not on this box', attempted.map(p => `<code class="faint">${esc(short(p))}</code>`), C.warn),
 
@@ -64,8 +64,9 @@ export function renderCard(f, meta = {}) {
         ? [`<span class="faint">and ${proven.length - 6} more</span>`] : []), C.critical),
 
     // Two ways out that never touch a socket. See docs/ISOLATION.md.
-    block('stdout', 'Handed back through its own MCP response', (f.returned_to_model || []).map(c =>
-      `<code class="hit">${esc(c)}</code>`), C.critical),
+    block('stdout', 'Returned to the model in a tool result', (f.returned_to_model || []).map(h =>
+      typeof h === 'string' ? `<code class="hit">${esc(h)}</code>`
+        : `<code class="hit">${esc(h.canary)}</code> <span class="tag">${esc(h.from)} · via ${esc(h.tool)}</span>`), C.critical),
 
     block('world', 'Parked on disk for something else to collect', (f.staged_on_disk || []).map(h =>
       `<code>${esc(short(h.path))}</code> <span class="tag">${esc(h.canary)} from ${esc(short(h.from))}</span>`), C.critical),

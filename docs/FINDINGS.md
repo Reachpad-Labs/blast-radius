@@ -294,3 +294,204 @@ Two consequences for the harness itself:
 - `/etc/shadow` carries a canary that should **never** come back from a run. It
   is the negative control: if it ever appears at the sink, the permission model
   is not doing what this section claims.
+
+## The deny errno depends on the mode, not the call
+
+- **Correction, measured on the Notion server:** the errno depends on the mode,
+  not the call. With `--net` omitted, a refused `resolve` returns `io` too
+  (`resolve: return=Ok(Errno::io) host="api.notion.com"`); with
+  `--net="dns:deny=*:*"` the same lookup returns `perm`. The first version of
+  the parser only treated `io` as deny for `sock_connect`, so the Notion card
+  said its blocked lookup was allowed. Both modes were also checked against the
+  sink with the control specimen: neither leaks the canary, and
+  `dns:deny=*:*` refuses raw-IP connects with `perm` as well. Only
+  `ipv4:allow=127.0.0.1:8099` lets the key through, by design.
+
+## Boot coverage, measured
+
+Sixteen real npm MCP servers, screened for native code (`find specimens/node_modules
+-name "*.node"` returns nothing), each fed `initialize` then `tools/list` under
+`wasmer/edgejs@0.2.0` with egress denied. The first ten were chosen up front;
+the other six were added by name through `run.mjs`, which now fetches any
+npm package on demand with install scripts disabled. Table and reasons in
+[SPECIMENS.md](../SPECIMENS.md), raw results in `evidence/boot-test.json`,
+per-specimen argv and env in `src/specimens.mjs`.
+
+**13 of 16 boot and list tools**, every one in about a second once the runtime
+is cached. The ones that do not are all honest and all interesting:
+
+- **`@playwright/mcp`** throws `Error: Unsupported platform: wasi` from inside
+  `playwright-core` before the server constructs. It is not our sandbox
+  refusing it; the package checks `process.platform` and refuses to run. It
+  would also need a browser binary we could never provide.
+- **`@stripe/mcp`** is not a server. It is a stdio-to-HTTP proxy: every message
+  is forwarded to `https://mcp.stripe.com`. Under default-deny it prints
+  "running on stdio" and then `getaddrinfo ENOTFOUND mcp.stripe.com` for the
+  `initialize` it tried to forward. The package itself owns no tools, so the
+  only thing installing it gives you locally is a tunnel. That is a card line
+  in its own right.
+- **`@sentry/mcp-server`** prints its startup warnings, then goes quiet: no
+  syscalls, no egress attempt, no reply to `initialize`, killed by the
+  timeout. Traced for 40 s to be sure it was idle rather than slow. Edge.js
+  lists `node:diagnostics_channel` among its known gaps and Sentry's SDK leans
+  on it, which is a plausible cause we did not confirm.
+
+Two more traps came out of this run:
+
+9. **The guest has no `HOME`.** Node calls `uv_os_homedir` while loading some
+   packages and throws `ERR_SYSTEM_ERROR ... ENOENT` before the server loads
+   (measured on `@playwright/mcp`; it was the first failure, not the platform
+   check). `detonate.mjs` now always passes `--env HOME=/home`, which is also
+   where the canary world is mounted, so `~/.ssh/id_ed25519` resolves to the
+   seeded key. Any server that reads its dotfiles now reads ours.
+10. **Omitting `--net` prints to the guest's stdout.** Wasmer writes "The
+    current package is requesting networking access. Run the package with
+    `--net` flag to bypass the prompt." to stdout, mixed into the JSON-RPC
+    stream, then continues in deny mode. Parse stdout line by line and skip
+    anything that is not JSON, or the first specimen that dials out breaks the
+    tool enumeration.
+
+Fake API keys are passed to the servers that demand one at startup
+(`src/specimens.mjs`). They are inert by construction: egress is denied, and a
+server that ships them somewhere is the behaviour we are here to observe.
+
+## Writes are only visible by their side effects
+
+`path_open2` in the trace carries `dirfd`, `follow_symlinks`, `path` and
+`ret_fd`. No open flags. So a read and a write of the same file produce the same
+line, and `writes_outside_cwd` cannot be filled from opens alone.
+
+What the trace does carry is the rename. `server-filesystem`, asked by the
+probe to write to the seeded key, opened
+`/home/.ssh/id_ed25519.<hash>.tmp` and then emitted
+
+```
+path_rename: old_path="/home/.ssh/id_ed25519.<hash>.tmp" new_path="/home/.ssh/id_ed25519"
+```
+
+The analyser now takes `path_rename` `new_path` and `path_unlink_file` outside
+`/app` as writes. That catches every atomic-write library and every delete.
+
+What it still misses: an in-place `open` then `fd_write`. The trace has both
+(`path_open2 ... ret_fd=17` and later `fd_write: fd=17 nwritten=...`), so the
+next step is to keep `fd_write` in the parser and resolve `fd` back to the path
+from the matching `ret_fd`. Not done today; say so in the limitations.
+
+## Two engines, and which one is the sandbox
+
+There are two Edge.js packages on the registry with the same Node 24 userland
+and a different engine. We checked both, and Wasmer's own repo says which one
+to trust.
+
+| | `wasmer/edgejs` (what the sweep ran on) | `wasmer/edgejs-quickjs` |
+| --- | --- | --- |
+| Engine | V8, provided by the `wasmer` binary through N-API (`--experimental-napi`) | QuickJS, compiled into the wasm module |
+| Where JS executes | on the host | inside the sandbox |
+| What WASIX confines | syscalls: files, sockets, DNS, processes | the same, plus the engine itself |
+| Boot, server-memory | 0.4 s | 1.2 s |
+| Our 10 specimens | 8 boot | 8 boot, same two failures for the same reasons |
+
+Edge.js's `SECURITY-HOST-JS-NAPI.md` is explicit about the first column:
+"Security hardening is deferred for the first performance/compatibility
+milestone", the N-API layer "should be treated as a compatibility mechanism,
+not as a security boundary", and it recommends "the embedded-engine package
+for workloads that rely on a JavaScript engine sandbox".
+
+What that means for us: every claim on a card comes from the WASIX syscall
+trace, and that boundary is the same in both modes, so the *observations* are
+sound either way. What differs is *containment* of a specimen that attacks the
+engine rather than the syscall layer. `detonate.mjs` now takes
+`engine: 'host' | 'quickjs'` (`BLAST_ENGINE=quickjs` for the whole runner), and
+the control specimen produces the identical card under both: key read,
+connect to 127.0.0.1:8099 refused with `Errno::io`, CRITICAL by correlation.
+
+The whole sweep was then re-run with `BLAST_ENGINE=quickjs` and the findings
+compared card by card: **8 of 8 identical** (verdict, credential reads, egress
+hosts and their blocked state, writes). One parser correction came out of it:
+QuickJS writes its bytecode cache by renaming onto `/bin/edge.builtins.qjsb`,
+and the runtime-path filter only looked at `path`, not at a rename's
+`old_path`/`new_path`, so it briefly showed up as a write. Runtime paths are
+now filtered on every path-shaped argument.
+
+## Native addons, measured
+
+Edge.js's blog says it "fully supports running Native modules, since all the
+modern native modules already target NAPI". We tested that with three packages
+that ship prebuilt N-API binaries (`fsevents`, `@parcel/watcher`, `sharp`) and
+by handing a `.node` file straight to the loader:
+
+```
+require('/app/node_modules/fsevents/fsevents.node')
+  -> ERR_DLOPEN_FAILED: dlfcn unsupported on WASIX        (both engines)
+```
+
+So in Edge.js 0.2.0 under Wasmer 7.4.1 no `.node` file loads at all: not a
+host Mach-O (which would be an escape), and not a wasm-compiled one either,
+because dynamic loading is not wired up. The packages' own loaders never get
+that far; they see `process.platform === 'wasi'` and look for a
+`wasi-wasm32` prebuild that does not exist. The screen rule in
+`SPECIMENS.md` stands, and the reason is now measured rather than assumed.
+
+## The Wasmer SDK, and why the runner still shells out to the CLI
+
+`@wasmer/sdk` 0.13.0 (published the morning of the hackathon) runs sandboxes
+from Node: `sandboxes.create({ packages: ["wasmer/edgejs@0.2.0"], network:
+{ mode: "host" } })`, `command().run()`, `sandbox.fs`, `sandbox.ports`. Two
+things it does not expose that this tool is built on:
+
+- **the syscall trace.** There is no tracing or file/network log hook in the
+  SDK; our instrument is `RUST_LOG=wasmer_wasix::syscalls=trace` on the CLI.
+- **per-host network policy.** The SDK's network modes are `host`, `http` and
+  `wisp` (a proxy that "can observe connection metadata and decide which
+  destinations and ports are allowed"). The CLI's `--net` takes
+  `dns:deny=*:*` and `ipv4:allow=127.0.0.1:8099`, which is how scan mode and
+  sink mode differ.
+
+The SDK is the right surface for *running* a sandbox from an app. Blast Radius
+*instruments* one, and today that means the CLI.
+
+## Bytes on the wire are `fd_write`, not `sock_send`
+
+The first evidence run (a Python probe) sent with `sock_send`, and the
+analyser summed `nsent`. Node does not: it writes to a connected socket with
+`fd_write` on the socket's fd. Measured on the control specimen with the sink
+allowed:
+
+```
+sock_open:    return=Ok(Errno::success) ... sock=13
+sock_connect: return=Ok(Errno::success) sock=13 addr="127.0.0.1:8099"
+fd_write:     return=Ok(Errno::success) fd=13 nwritten=181
+```
+
+and `sock_send` never appears. So the card for the one specimen that provably
+exfiltrated said "Bytes staged outbound: 0". The parser now remembers which
+fds came from `sock_open`/`sock_accept` (and forgets them on `fd_close`) and
+keeps `fd_write` on those fds only; the analyser sums `nwritten` alongside
+`nsent`. Trap 11: **any per-fd claim needs fd bookkeeping**, and the same
+bookkeeping is what would resolve in-place file writes (see above).
+
+## What the sweep found in the wild
+
+Nothing critical, one thing worth a sentence. `exa-mcp-server` 3.4.1 dials
+two hosts when a tool is called: `api.exa.ai`, which is the product, and
+`api.agnost.ai`, which is an analytics service. Both were refused. The card
+reads "egress attempted: api.exa.ai blocked, api.agnost.ai blocked", which is
+the whole claim: we do not know what it would have sent, because payload bytes
+are not in the trace and egress was denied. That is the difference between
+observed-from-trace and proven-at-sink, on a real package.
+
+Every other third-party server dialed exactly one host, its own vendor's API.
+`mcp-server-kubernetes` dialed nothing and read nothing: it shells out to
+`kubectl`, which is not in the sandbox, so every tool call fails before it
+can do anything. A CLEAN card for a server that could not act is honest at the
+syscall level and says nothing about the package on a real machine; the footer
+on every card says so.
+
+## Fetching on demand, and why install scripts are off
+
+`node run.mjs <package>` now installs a missing package into `specimens/`
+before detonating it, always with `--ignore-scripts`. An npm lifecycle script
+runs on the host, outside the sandbox, with the user's real home directory.
+A package that wants your keys can take them in `postinstall` before we ever
+run it, and the trace would show a clean specimen. The sandbox is the only
+place the package gets to execute.

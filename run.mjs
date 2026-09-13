@@ -3,9 +3,13 @@
 //
 //   node run.mjs @modelcontextprotocol/server-filesystem
 //   node run.mjs evil-notes --allow-sink
+//   node run.mjs tavily-mcp --env TAVILY_API_KEY=fake         any npm package; fetched on demand
+//   node run.mjs some-server --arg /home --engine quickjs
 //
 // Default is scan mode: egress denied, every claim comes from the trace.
 // --allow-sink routes egress to harness/sink.mjs so payloads can be proven.
+// --env K=V and --arg X repeat; they add to whatever src/specimens.mjs knows.
+// --engine host|quickjs picks the Edge.js package (see src/detonate.mjs).
 import { writeFile, mkdir, readFile } from 'node:fs/promises';
 import { acquire } from './src/acquire.mjs';
 import { seedWorld, scanWorld, snapshotPaths } from './src/world.mjs';
@@ -13,10 +17,20 @@ import { detonate, stageSpecimens, rpcLines, argsFor, INIT, LIST } from './src/d
 import { parseTrace } from './src/parse.mjs';
 import { analyse } from './src/analyse.mjs';
 import { renderCard } from './src/card.mjs';
+import { specimenFor, seededEnv } from './src/specimens.mjs';
 
-const pkg = process.argv[2];
-const allowSink = process.argv.includes('--allow-sink');
-if (!pkg) { console.error('usage: node run.mjs <package> [--allow-sink]'); process.exit(1); }
+const cli = { pkg: null, allowSink: false, env: {}, argv: [], engine: undefined };
+for (let i = 2; i < process.argv.length; i++) {
+  const a = process.argv[i];
+  if (a === '--allow-sink') cli.allowSink = true;
+  else if (a === '--env') { const [k, ...v] = String(process.argv[++i]).split('='); cli.env[k] = v.join('='); }
+  else if (a === '--arg') cli.argv.push(process.argv[++i]);
+  else if (a === '--engine') cli.engine = process.argv[++i];
+  else if (!cli.pkg && !a.startsWith('--')) cli.pkg = a;
+  else { console.error(`unknown option ${a}`); process.exit(1); }
+}
+const { pkg, allowSink } = cli;
+if (!pkg) { console.error('usage: node run.mjs <package> [--allow-sink] [--env K=V]... [--arg X]... [--engine host|quickjs]'); process.exit(1); }
 
 const spec = await acquire(pkg);
 const world = await seedWorld('.run/world');
@@ -28,14 +42,29 @@ const baseline = new Set((await scanWorld(world.dir, world)).map(h => h.path + '
 const before = await snapshotPaths(world.dir);
 const specimensDir = await stageSpecimens();   // the guest gets a copy, never our tree
 const net = allowSink ? 'ipv4:allow=127.0.0.1:8099' : null;
-const argv = /filesystem/.test(spec.name) ? [world.home] : [];
-const common = { entry: spec.entry, worldDir: world.dir, mounts: world.mounts, specimensDir, net, argv, env: world.env };
+// Per-specimen argv and env (fake keys) come from the manifest. The seeded world
+// supplies the rest of the environment, so every token a specimen can find is a
+// canary minted for this run rather than a real key — manifest and CLI values
+// win where they overlap, because some servers refuse to boot without their own.
+const manifest = specimenFor(pkg);
+const common = {
+  entry: spec.entry, worldDir: world.dir, mounts: world.mounts, specimensDir,
+  net, engine: cli.engine,
+  argv: [...(manifest.argv || []), ...cli.argv],
+  env: { ...world.env, ...seededEnv(world), ...(manifest.env || {}), ...cli.env }
+};
 
 process.stderr.write(`[1/3] ${spec.name}@${spec.version}  enumerating tools\n`);
 const pass1 = await detonate({ ...common, rpc: rpcLines(INIT, LIST) });
-const tools = (pass1.stdout.split('\n')
-  .map(l => { try { return JSON.parse(l); } catch { return null; } })
-  .find(o => o && o.id === 2)?.result?.tools) || [];
+const replies = pass1.stdout.split('\n').map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+if (!replies.find(o => o.id === 1)?.result) {
+  // a verdict on a server that never ran would be a false claim, so there is no card
+  const why = pass1.stderr.split('\n').filter(l => l.trim() && !/^\d{4}-\d\d-\d\dT/.test(l) && !/^\s+\d+: /.test(l)).slice(0, 3).join(' | ');
+  const how = pass1.exitCode === null ? 'hung: no reply before the timeout, killed' : `exit ${pass1.exitCode}`;
+  process.stderr.write(`${spec.name}@${spec.version} did not answer initialize (${how}); no card.\n      ${why.slice(0, 300)}\n`);
+  process.exit(2);
+}
+const tools = replies.find(o => o.id === 2)?.result?.tools || [];
 
 process.stderr.write(`[2/3] calling ${tools.length} tool${tools.length === 1 ? '' : 's'}\n`);
 const calls = tools.map((t, i) => ({
@@ -57,13 +86,23 @@ try { sinkHits = [await readFile('sink.log', 'utf8')]; } catch {}
 // finding: one we never named in the request that produced the answer. Without
 // this, server-filesystem scores CRITICAL for doing exactly what it says on the
 // tin — measured, it did.
-const spoken = pass1.stdout + '\n' + pass2.stdout;
+// Attributed to the tool that said it, by JSON-RPC id. Without the name this
+// reads as an accusation; with it, it is a capability. Measured: calling every
+// tool blindly means calling server-everything's get-env, which returns the
+// environment because that is what it advertises. The reader needs to see that.
 const asked = rpc2 + rpcLines(INIT, LIST);
 const solicited = new Set(
   Object.entries(world.origin).filter(([, where]) => asked.includes(where)).map(([canary]) => canary)
 );
-const modelHits = Object.values(world.canaries)
-  .filter(c => c && spoken.includes(c) && !solicited.has(c));
+const modelHits = [];
+for (const [i, line] of (pass1.stdout + '\n' + pass2.stdout).split('\n').entries()) {
+  let reply; try { reply = JSON.parse(line); } catch { continue; }
+  const tool = reply?.id >= 10 ? (calls[reply.id - 10]?.params.name || 'unknown tool') : 'the handshake';
+  for (const [where, canary] of Object.entries(world.canaries)) {
+    if (!canary || solicited.has(canary) || !line.includes(canary)) continue;
+    modelHits.push({ canary, tool, from: where.startsWith('env:') ? where.slice(4) : '/' + where });
+  }
+}
 
 // Channel ③ — loot parked in the world for something else to carry out. Only
 // what moved during the run: anything present at seed time is ours.

@@ -65,9 +65,14 @@ export function analyse(events, {
       const [host, port] = String(e.args.addr).split(':');
       egress.push({ host, port: port ? Number(port) : null, blocked: e.decision === DECISION.DENY, at: e.ts, pass: e.pass });
     }
-    if (e.call === 'sock_send' || e.call === 'sock_send_to' || e.call === 'fd_write') {
-      bytes_out += Number(e.args.nsent ?? e.args.bytes_written ?? e.args.nwritten ?? 0);
+    if (e.call === 'sock_send' || e.call === 'sock_send_to' || (e.call === 'fd_write' && e.args.socket)) {
+      bytes_out += Number(e.args.nsent ?? e.args.nwritten ?? e.args.bytes_written ?? 0);
     }
+    // The trace carries no open flags, but a rename onto a path or an unlink of
+    // it is a write by any definition. Measured: server-filesystem writes a .tmp
+    // beside the target and renames it into place, so the rename is the only
+    // line that names the file that changed. Paths we named ourselves in a tool
+    // call are the provocation, not the specimen.
     if (WRITE_CALLS.has(e.call)) {
       const target = e.args.new_path || e.args.path;
       if (target && !target.startsWith('/app') && !solicited.has(target)) writes_outside_cwd.push(target);
@@ -79,7 +84,10 @@ export function analyse(events, {
   const blob = sinkHits.join('\n');
   const canary_in_payload = known.filter(c => blob.includes(c));
 
-  const returned_to_model = [...new Set(modelHits)];
+  // one row per canary per tool that said it
+  const returned_to_model = [...new Map(
+    modelHits.map(h => [h.canary + '|' + h.tool, h])
+  ).values()];
   const staged_on_disk = stagedHits;
 
   // Correlate ONLY within one pass. Each pass is a separate Wasmer process with
@@ -95,7 +103,7 @@ export function analyse(events, {
   const attempted_credentials = attempted.filter(isCred);
 
   return {
-    reads_credentials,
+    reads_credentials: dedupeReads(reads_credentials),
     attempted,
     attempted_credentials,
     returned_to_model,
@@ -118,6 +126,16 @@ export function analyse(events, {
   };
 }
 
+// one row per path, first time seen, with how many times it was opened
+function dedupeReads(list) {
+  const seen = new Map();
+  for (const r of list) {
+    if (seen.has(r.path)) seen.get(r.path).count++;
+    else seen.set(r.path, { ...r, count: 1 });
+  }
+  return [...seen.values()];
+}
+
 function dedupe(list) {
   const seen = new Map();
   for (const e of list) {
@@ -134,7 +152,11 @@ const SWEEP = 3;
 
 function verdict({ reads_credentials, attempted_credentials, egress, canary_in_payload, returned_to_model, staged_on_disk, correlated }) {
   if (canary_in_payload.length) return { level: 'critical', line: 'Exfiltrated a seeded credential. Proven at the sink.' };
-  if (returned_to_model.length) return { level: 'critical', line: 'Handed a seeded credential back through its own MCP response.' };
+  if (returned_to_model.length) {
+    const tools = [...new Set(returned_to_model.map(h => h.tool))];
+    const what = returned_to_model.length === 1 ? 'a seeded credential' : `${returned_to_model.length} seeded credentials`;
+    return { level: 'critical', line: `Returned ${what} to the model from ${tools.map(t => `“${t}”`).join(', ')}.` };
+  }
   if (staged_on_disk.length) return { level: 'critical', line: 'Copied a seeded credential into a file it does not own.' };
   if (reads_credentials.length && correlated) return { level: 'critical', line: 'Read a seeded credential, then attempted egress.' };
   if (reads_credentials.length) return { level: 'warn', line: 'Read a seeded credential.' };

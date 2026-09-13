@@ -1,0 +1,84 @@
+{
+  "spec": {
+    "name": "@modelcontextprotocol/server-memory",
+    "version": "2026.8.31",
+    "integrity": "e6a04d5457d2d7d3a8ba33bc8da891b212358dfe2f43548a5afec4ff259c4729",
+    "entry": "/app/node_modules/@modelcontextprotocol/server-memory/dist/index.js"
+  },
+  "tools": [
+    "create_entities",
+    "create_relations",
+    "add_observations",
+    "delete_entities",
+    "delete_observations",
+    "delete_relations",
+    "read_graph",
+    "search_nodes",
+    "open_nodes"
+  ],
+  "findings": {
+    "reads_credentials": [],
+    "attempted": [],
+    "attempted_credentials": [],
+    "returned_to_model": [],
+    "staged_on_disk": [],
+    "egress": [],
+    "bytes_out": 0,
+    "canary_in_payload": [],
+    "writes_outside_cwd": [],
+    "fingerprinting": [],
+    "correlated": false,
+    "verdict": {
+      "level": "clean",
+      "line": "No credential access and no egress observed."
+    }
+  },
+  "events": [
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 1
+    },
+    {
+      "ts": 1.391,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 1
+    },
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 1.525,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    }
+  ]
+}
