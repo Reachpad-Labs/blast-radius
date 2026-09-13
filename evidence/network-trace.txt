@@ -1,0 +1,4 @@
+2026-09-13T20:11:24.135123Z TRACE ThreadId(22) sock_open: wasmer_wasix::syscalls::wasix::sock_open: return=Ok(Errno::success) af=Addressfamily::Inet4 ty=Socktype::Stream pt=SockProto::Tcp sock=6
+2026-09-13T20:11:24.135688Z TRACE ThreadId(22) sock_connect: wasmer_wasix::syscalls::wasix::sock_connect: return=Ok(Errno::success) sock=6 addr="127.0.0.1:8099"
+2026-09-13T20:11:24.136121Z TRACE ThreadId(22) sock_send: wasmer_wasix::syscalls::wasix::sock_send: bytes_written=78 fd=6
+2026-09-13T20:11:24.136136Z TRACE ThreadId(22) sock_send: wasmer_wasix::syscalls::wasix::sock_send: return=Ok(Errno::success) fd=6 nsent=78

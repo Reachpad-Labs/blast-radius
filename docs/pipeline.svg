@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1010" viewBox="0 0 1440 1010" font-family="Inter, -apple-system, system-ui, sans-serif">
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#6b6b6b"/>
+  </marker>
+</defs>
+<rect width="1440" height="1010" fill="#121212"/>
+
+<text x="50" y="52" fill="#ECE7DE" font-size="26" font-weight="500">Blast Radius — the dynamic analysis pipeline</text>
+<text x="50" y="80" fill="#8a8a8a" font-size="14">Six stages. Only one of them is swappable, and that is the entire tier conversation.</text>
+
+<!-- ROW 1 -->
+<rect x="50" y="120" width="410" height="180" rx="10" fill="#1a1a1a" stroke="#2e2e2e"/>
+<text x="70" y="151" fill="#34D399" font-size="12" font-weight="500" letter-spacing="1.2">1 · ACQUIRE</text>
+<text x="70" y="180" fill="#ECE7DE" font-size="16" font-weight="500">Get the specimen</text>
+<text x="70" y="211" fill="#9a9a9a" font-size="13">npm tarball, registry entry, GitHub URL</text>
+<text x="70" y="235" fill="#9a9a9a" font-size="13">pin the exact version + hash</text>
+<text x="70" y="272" fill="#6b6b6b" font-size="12.5">so a re-run is a re-run, not a new sample</text>
+
+<rect x="515" y="120" width="410" height="180" rx="10" fill="#1a1a1a" stroke="#2e2e2e"/>
+<text x="535" y="151" fill="#34D399" font-size="12" font-weight="500" letter-spacing="1.2">2 · PREP</text>
+<text x="535" y="180" fill="#ECE7DE" font-size="16" font-weight="500">Build the canary world</text>
+<text x="535" y="211" fill="#9a9a9a" font-size="13">seed FS + env with unique strings</text>
+<text x="535" y="235" fill="#9a9a9a" font-size="13">ssh key, .env, GITHUB_TOKEN, documents</text>
+<text x="535" y="272" fill="#6b6b6b" font-size="12.5">identical world every run, every backend</text>
+
+<rect x="980" y="120" width="410" height="180" rx="10" fill="#1a1a1a" stroke="#2e2e2e"/>
+<text x="1000" y="151" fill="#34D399" font-size="12" font-weight="500" letter-spacing="1.2">3 · DETONATE</text>
+<text x="1000" y="180" fill="#ECE7DE" font-size="16" font-weight="500">Run it, and drive it</text>
+<text x="1000" y="211" fill="#9a9a9a" font-size="13">boot the server, enumerate its tools,</text>
+<text x="1000" y="235" fill="#9a9a9a" font-size="13">have an agent call every one</text>
+<text x="1000" y="272" fill="#6b6b6b" font-size="12.5">you only see what you provoke</text>
+
+<path d="M460 210 L511 210" stroke="#6b6b6b" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M925 210 L976 210" stroke="#6b6b6b" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M1185 300 L1185 340 L255 340 L255 376" stroke="#6b6b6b" stroke-width="1.5" fill="none" marker-end="url(#a)"/>
+
+<!-- ROW 2 -->
+<rect x="50" y="380" width="410" height="180" rx="10" fill="#171717" stroke="#34D399" stroke-width="1.5"/>
+<text x="70" y="411" fill="#34D399" font-size="12" font-weight="500" letter-spacing="1.2">4 · COLLECT</text>
+<text x="70" y="440" fill="#ECE7DE" font-size="16" font-weight="500">Record every crossing</text>
+<text x="70" y="471" fill="#9a9a9a" font-size="13">every time the specimen reaches outside</text>
+<text x="70" y="495" fill="#9a9a9a" font-size="13">itself, log it — with args, with decision</text>
+<text x="70" y="532" fill="#6EE7A8" font-size="12.5" font-weight="500">the only stage that changes per backend</text>
+
+<rect x="515" y="380" width="410" height="180" rx="10" fill="#1a1a1a" stroke="#2e2e2e"/>
+<text x="535" y="411" fill="#34D399" font-size="12" font-weight="500" letter-spacing="1.2">5 · ANALYSE</text>
+<text x="535" y="440" fill="#ECE7DE" font-size="16" font-weight="500">Turn events into claims</text>
+<text x="535" y="471" fill="#9a9a9a" font-size="13">canary string match · egress hosts</text>
+<text x="535" y="495" fill="#9a9a9a" font-size="13">writes outside cwd · runtime fingerprinting</text>
+<text x="535" y="532" fill="#6b6b6b" font-size="12.5">pure function of the trace. no backend knowledge.</text>
+
+<rect x="980" y="380" width="410" height="180" rx="10" fill="#1a1a1a" stroke="#2e2e2e"/>
+<text x="1000" y="411" fill="#34D399" font-size="12" font-weight="500" letter-spacing="1.2">6 · REPORT</text>
+<text x="1000" y="440" fill="#ECE7DE" font-size="16" font-weight="500">The verdict card</text>
+<text x="1000" y="471" fill="#9a9a9a" font-size="13">what running this would have cost you</text>
+<text x="1000" y="495" fill="#9a9a9a" font-size="13">ships as a Reachpad app — a live URL</text>
+<text x="1000" y="532" fill="#6b6b6b" font-size="12.5">the card never says which backend produced it</text>
+
+<path d="M460 470 L511 470" stroke="#6b6b6b" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M925 470 L976 470" stroke="#6b6b6b" stroke-width="1.5" marker-end="url(#a)"/>
+
+<path d="M255 560 L255 616" stroke="#34D399" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#a)"/>
+
+<!-- BACKEND BAND -->
+<rect x="50" y="620" width="1340" height="290" rx="10" fill="#171717" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="70" y="653" fill="#34D399" font-size="12" font-weight="500" letter-spacing="1.2">STAGE 3–4 BACKEND — THE ONLY SWAPPABLE PART</text>
+<text x="70" y="681" fill="#ECE7DE" font-size="16" font-weight="500">Same pipeline. Same schema out. Two places you can stand to watch.</text>
+
+<rect x="70" y="702" width="630" height="188" rx="8" fill="#1e1e1e" stroke="#34D399"/>
+<text x="92" y="731" fill="#6EE7A8" font-size="13" font-weight="500">A · WASMER + WASI IMPORT SHIM</text>
+<text x="92" y="757" fill="#ECE7DE" font-size="13">specimen runs as WASM · you own the imports</text>
+<text x="92" y="785" fill="#34D399" font-size="12.5">+ ~1s, no provisioning, runs in a browser tab</text>
+<text x="92" y="808" fill="#34D399" font-size="12.5">+ can DENY and let it keep running</text>
+<text x="92" y="831" fill="#F87171" font-size="12.5">− QuickJS not V8 · no native addons</text>
+<text x="92" y="854" fill="#F87171" font-size="12.5">− fingerprintable: it can tell it is being watched</text>
+<text x="92" y="879" fill="#6EE7A8" font-size="12.5" font-weight="500">BUILD THIS TODAY</text>
+
+<rect x="740" y="702" width="630" height="188" rx="8" fill="#1e1e1e" stroke="#2e2e2e" stroke-dasharray="6 5"/>
+<text x="762" y="731" fill="#8a8a8a" font-size="13" font-weight="500">B · REACHPAD microVM + eBPF</text>
+<text x="762" y="757" fill="#ECE7DE" font-size="13">specimen is a real process · kernel tracepoints</text>
+<text x="762" y="785" fill="#34D399" font-size="12.5">+ real Node, native addons, full agent harnesses</text>
+<text x="762" y="808" fill="#34D399" font-size="12.5">+ ground truth, hard to fingerprint</text>
+<text x="762" y="831" fill="#F87171" font-size="12.5">− observe-only: the kernel does not ask permission</text>
+<text x="762" y="854" fill="#F87171" font-size="12.5">− provisioning cost · guest kernel needs BTF</text>
+<text x="762" y="879" fill="#8a8a8a" font-size="12.5" font-weight="500">ONE SLIDE. NOT CODE TODAY.</text>
+
+<text x="50" y="965" fill="#9a9a9a" font-size="13.5">Stages 1, 2, 5 and 6 are written once and never change. That is why swapping the backend later is cheap — and why building only A today costs you nothing later.</text>
+</svg>

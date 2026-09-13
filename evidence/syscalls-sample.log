@@ -1,0 +1,400 @@
+2026-09-13T20:09:30.427259Z TRACE ThreadId(22) environ_sizes_get: wasmer_wasix::syscalls::wasi::environ_sizes_get: env_var_count=3 env_buf_size=104
+2026-09-13T20:09:30.427355Z TRACE ThreadId(22) environ_sizes_get: wasmer_wasix::syscalls::wasi::environ_sizes_get: return=Ok(Errno::success)
+2026-09-13T20:09:30.427373Z TRACE ThreadId(22) environ_sizes_get: wasmer_wasix::syscalls::wasi::environ_sizes_get: close time.busy=136µs time.idle=5.67µs
+2026-09-13T20:09:30.427396Z TRACE ThreadId(22) environ_get: wasmer_wasix::syscalls::wasi::environ_get: return=Ok(Errno::success)
+2026-09-13T20:09:30.427403Z TRACE ThreadId(22) environ_get: wasmer_wasix::syscalls::wasi::environ_get: close time.busy=5.50µs time.idle=4.78µs
+2026-09-13T20:09:30.427414Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: return=Errno::success fd=3
+2026-09-13T20:09:30.427422Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: close time.busy=9.26µs time.idle=563ns fd=3
+2026-09-13T20:09:30.427441Z TRACE ThreadId(22) fd_prestat_dir_name: wasmer_wasix::syscalls::wasi::fd_prestat_dir_name: return=Errno::success fd=3 path="/"
+2026-09-13T20:09:30.427444Z TRACE ThreadId(22) fd_prestat_dir_name: wasmer_wasix::syscalls::wasi::fd_prestat_dir_name: close time.busy=15.6µs time.idle=401ns fd=3 path="/"
+2026-09-13T20:09:30.427451Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: return=Errno::success fd=4
+2026-09-13T20:09:30.427462Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: close time.busy=11.3µs time.idle=358ns fd=4
+2026-09-13T20:09:30.427466Z TRACE ThreadId(22) fd_prestat_dir_name: wasmer_wasix::syscalls::wasi::fd_prestat_dir_name: return=Errno::success fd=4 path="."
+2026-09-13T20:09:30.427468Z TRACE ThreadId(22) fd_prestat_dir_name: wasmer_wasix::syscalls::wasi::fd_prestat_dir_name: close time.busy=2.96µs time.idle=307ns fd=4 path="."
+2026-09-13T20:09:30.427472Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: return=Errno::success fd=5
+2026-09-13T20:09:30.427474Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: close time.busy=2.50µs time.idle=313ns fd=5
+2026-09-13T20:09:30.427478Z TRACE ThreadId(22) fd_prestat_dir_name: wasmer_wasix::syscalls::wasi::fd_prestat_dir_name: return=Errno::success fd=5 path="/"
+2026-09-13T20:09:30.427481Z TRACE ThreadId(22) fd_prestat_dir_name: wasmer_wasix::syscalls::wasi::fd_prestat_dir_name: close time.busy=2.70µs time.idle=312ns fd=5 path="/"
+2026-09-13T20:09:30.427484Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: return=Errno::badf fd=6
+2026-09-13T20:09:30.427487Z TRACE ThreadId(22) fd_prestat_get: wasmer_wasix::syscalls::wasi::fd_prestat_get: close time.busy=2.56µs time.idle=310ns fd=6
+2026-09-13T20:09:30.427498Z TRACE ThreadId(22) random_get: wasmer_wasix::syscalls::wasi::random_get: return=Errno::success buf_len=4
+2026-09-13T20:09:30.427509Z TRACE ThreadId(22) random_get: wasmer_wasix::syscalls::wasi::random_get: close time.busy=15.5µs time.idle=842ns buf_len=4
+2026-09-13T20:09:30.427597Z TRACE ThreadId(22) proc_signals_sizes_get: wasmer_wasix::syscalls::wasix::proc_signals_sizes_get: return=Ok(Errno::success) signal_count=0
+2026-09-13T20:09:30.427604Z TRACE ThreadId(22) proc_signals_sizes_get: wasmer_wasix::syscalls::wasix::proc_signals_sizes_get: close time.busy=9.23µs time.idle=795ns signal_count=0
+2026-09-13T20:09:30.427616Z TRACE ThreadId(22) proc_signals_get: wasmer_wasix::syscalls::wasix::proc_signals_get: return=Ok(Errno::success)
+2026-09-13T20:09:30.427619Z TRACE ThreadId(22) proc_signals_get: wasmer_wasix::syscalls::wasix::proc_signals_get: close time.busy=4.04µs time.idle=682ns
+2026-09-13T20:09:30.427632Z TRACE ThreadId(22) callback_signal: wasmer_wasix::syscalls::wasix::callback_signal: return=Ok(()) name="__wasm_signal" funct_is_some=true
+2026-09-13T20:09:30.427636Z TRACE ThreadId(22) callback_signal: wasmer_wasix::syscalls::wasix::callback_signal: close time.busy=11.0µs time.idle=380ns name="__wasm_signal" funct_is_some=true
+2026-09-13T20:09:30.427683Z DEBUG ThreadId(22) args_sizes_get: wasmer_wasix::syscalls::wasi::args_sizes_get: argc=2, argv_buf_size=28
+2026-09-13T20:09:30.427688Z TRACE ThreadId(22) args_sizes_get: wasmer_wasix::syscalls::wasi::args_sizes_get: return=Errno::success
+2026-09-13T20:09:30.427690Z TRACE ThreadId(22) args_sizes_get: wasmer_wasix::syscalls::wasi::args_sizes_get: close time.busy=7.95µs time.idle=527ns
+2026-09-13T20:09:30.427705Z DEBUG ThreadId(22) args_get: wasmer_wasix::syscalls::wasi::args_get: args:
+                   0: python3.13
+                   1: /app/specimen.py
+2026-09-13T20:09:30.427709Z TRACE ThreadId(22) args_get: wasmer_wasix::syscalls::wasi::args_get: return=Errno::success
+2026-09-13T20:09:30.427712Z TRACE ThreadId(22) args_get: wasmer_wasix::syscalls::wasi::args_get: close time.busy=11.4µs time.idle=579ns
+2026-09-13T20:09:30.427777Z TRACE ThreadId(22) random_get: wasmer_wasix::syscalls::wasi::random_get: return=Errno::success buf_len=24
+2026-09-13T20:09:30.427781Z TRACE ThreadId(22) random_get: wasmer_wasix::syscalls::wasi::random_get: close time.busy=6.45µs time.idle=753ns buf_len=24
+2026-09-13T20:09:30.430456Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/1 function_id=1 argument_types_ptr=0 result_types_ptr=0 result=13100074
+2026-09-13T20:09:30.430495Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1 argument_types_ptr=0 result_types_ptr=0 result=13100074
+2026-09-13T20:09:30.430509Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=75.3µs time.idle=3.97µs function_id=1 argument_types_ptr=0 result_types_ptr=0 result=13100074
+2026-09-13T20:09:30.430538Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/3 function_id=2216 argument_types_ptr=0 result_types_ptr=0 result=13100072
+2026-09-13T20:09:30.430544Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2216 argument_types_ptr=0 result_types_ptr=0 result=13100072
+2026-09-13T20:09:30.430548Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=13.6µs time.idle=938ns function_id=2216 argument_types_ptr=0 result_types_ptr=0 result=13100072
+2026-09-13T20:09:30.430673Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2226 argument_types_ptr=0 result_types_ptr=0 result=13099752
+2026-09-13T20:09:30.430691Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2226 argument_types_ptr=0 result_types_ptr=0 result=13099752
+2026-09-13T20:09:30.430696Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=27.7µs time.idle=1.42µs function_id=2226 argument_types_ptr=0 result_types_ptr=0 result=13099752
+2026-09-13T20:09:30.431781Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=1410 argument_types_ptr=0 result_types_ptr=0 result=13098744
+2026-09-13T20:09:30.431802Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1410 argument_types_ptr=0 result_types_ptr=0 result=13098744
+2026-09-13T20:09:30.431807Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=29.5µs time.idle=1.88µs function_id=1410 argument_types_ptr=0 result_types_ptr=0 result=13098744
+2026-09-13T20:09:30.431846Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/3 function_id=1970 argument_types_ptr=0 result_types_ptr=0 result=13099032
+2026-09-13T20:09:30.431863Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1970 argument_types_ptr=0 result_types_ptr=0 result=13099032
+2026-09-13T20:09:30.431866Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=21.0µs time.idle=762ns function_id=1970 argument_types_ptr=0 result_types_ptr=0 result=13099032
+2026-09-13T20:09:30.431874Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=1412 argument_types_ptr=0 result_types_ptr=0 result=13099000
+2026-09-13T20:09:30.431876Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1412 argument_types_ptr=0 result_types_ptr=0 result=13099000
+2026-09-13T20:09:30.431878Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=5.44µs time.idle=366ns function_id=1412 argument_types_ptr=0 result_types_ptr=0 result=13099000
+2026-09-13T20:09:30.431916Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=1691 argument_types_ptr=0 result_types_ptr=0 result=13098632
+2026-09-13T20:09:30.431927Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1691 argument_types_ptr=0 result_types_ptr=0 result=13098632
+2026-09-13T20:09:30.431932Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=19.7µs time.idle=1.20µs function_id=1691 argument_types_ptr=0 result_types_ptr=0 result=13098632
+2026-09-13T20:09:30.431951Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=1693 argument_types_ptr=0 result_types_ptr=0 result=13098632
+2026-09-13T20:09:30.431956Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1693 argument_types_ptr=0 result_types_ptr=0 result=13098632
+2026-09-13T20:09:30.431959Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=8.97µs time.idle=537ns function_id=1693 argument_types_ptr=0 result_types_ptr=0 result=13098632
+2026-09-13T20:09:30.431971Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=1689 argument_types_ptr=0 result_types_ptr=0 result=13098632
+2026-09-13T20:09:30.431976Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1689 argument_types_ptr=0 result_types_ptr=0 result=13098632
+2026-09-13T20:09:30.431979Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=8.82µs time.idle=657ns function_id=1689 argument_types_ptr=0 result_types_ptr=0 result=13098632
+2026-09-13T20:09:30.432020Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/3 function_id=1692 argument_types_ptr=0 result_types_ptr=0 result=13098664
+2026-09-13T20:09:30.432031Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1692 argument_types_ptr=0 result_types_ptr=0 result=13098664
+2026-09-13T20:09:30.432034Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=15.9µs time.idle=590ns function_id=1692 argument_types_ptr=0 result_types_ptr=0 result=13098664
+2026-09-13T20:09:30.432044Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/3 function_id=1694 argument_types_ptr=0 result_types_ptr=0 result=13098664
+2026-09-13T20:09:30.432047Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1694 argument_types_ptr=0 result_types_ptr=0 result=13098664
+2026-09-13T20:09:30.432056Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=13.3µs time.idle=384ns function_id=1694 argument_types_ptr=0 result_types_ptr=0 result=13098664
+2026-09-13T20:09:30.432074Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=1453 argument_types_ptr=0 result_types_ptr=0 result=13098712
+2026-09-13T20:09:30.432083Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1453 argument_types_ptr=0 result_types_ptr=0 result=13098712
+2026-09-13T20:09:30.432088Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=16.5µs time.idle=1.07µs function_id=1453 argument_types_ptr=0 result_types_ptr=0 result=13098712
+2026-09-13T20:09:30.432104Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/3 function_id=1843 argument_types_ptr=0 result_types_ptr=0 result=13098776
+2026-09-13T20:09:30.432110Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1843 argument_types_ptr=0 result_types_ptr=0 result=13098776
+2026-09-13T20:09:30.432114Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=11.4µs time.idle=726ns function_id=1843 argument_types_ptr=0 result_types_ptr=0 result=13098776
+2026-09-13T20:09:30.432393Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=1841 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.432407Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1841 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.432411Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=21.4µs time.idle=1.31µs function_id=1841 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.432498Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2433 argument_types_ptr=0 result_types_ptr=0 result=13098728
+2026-09-13T20:09:30.432506Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2433 argument_types_ptr=0 result_types_ptr=0 result=13098728
+2026-09-13T20:09:30.432512Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=17.5µs time.idle=1.04µs function_id=2433 argument_types_ptr=0 result_types_ptr=0 result=13098728
+2026-09-13T20:09:30.432602Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2792 argument_types_ptr=0 result_types_ptr=0 result=13099432
+2026-09-13T20:09:30.432608Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2792 argument_types_ptr=0 result_types_ptr=0 result=13099432
+2026-09-13T20:09:30.432611Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=21.4µs time.idle=771ns function_id=2792 argument_types_ptr=0 result_types_ptr=0 result=13099432
+2026-09-13T20:09:30.432651Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2649 argument_types_ptr=0 result_types_ptr=0 result=13099432
+2026-09-13T20:09:30.432655Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2649 argument_types_ptr=0 result_types_ptr=0 result=13099432
+2026-09-13T20:09:30.432672Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=23.0µs time.idle=599ns function_id=2649 argument_types_ptr=0 result_types_ptr=0 result=13099432
+2026-09-13T20:09:30.432686Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2788 argument_types_ptr=0 result_types_ptr=0 result=13099432
+2026-09-13T20:09:30.432689Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2788 argument_types_ptr=0 result_types_ptr=0 result=13099432
+2026-09-13T20:09:30.432692Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=6.06µs time.idle=434ns function_id=2788 argument_types_ptr=0 result_types_ptr=0 result=13099432
+2026-09-13T20:09:30.432749Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2791 argument_types_ptr=0 result_types_ptr=0 result=13099432
+2026-09-13T20:09:30.432754Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2791 argument_types_ptr=0 result_types_ptr=0 result=13099432
+2026-09-13T20:09:30.432757Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=9.90µs time.idle=733ns function_id=2791 argument_types_ptr=0 result_types_ptr=0 result=13099432
+2026-09-13T20:09:30.432787Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2789 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.432791Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2789 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.432794Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=7.49µs time.idle=553ns function_id=2789 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.432867Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2798 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.432872Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2798 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.432875Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=8.99µs time.idle=777ns function_id=2798 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.433163Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=1757 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.433172Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1757 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.433177Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=16.7µs time.idle=1.36µs function_id=1757 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.433454Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=6372 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433467Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=6372 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433477Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=26.6µs time.idle=1.27µs function_id=6372 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433510Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=4096 path="/"
+2026-09-13T20:09:30.433516Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=15.1µs time.idle=659ns max_path_len=4096 path="/"
+2026-09-13T20:09:30.433553Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=6374 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433562Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=6374 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433567Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=16.9µs time.idle=1.31µs function_id=6374 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433594Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=6380 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433599Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=6380 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433619Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=26.7µs time.idle=749ns function_id=6380 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433643Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=6381 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433648Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=6381 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433653Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=10.7µs time.idle=701ns function_id=6381 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433670Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: return=Errno::success max_path_len=256 path="/"
+2026-09-13T20:09:30.433675Z TRACE ThreadId(22) getcwd: wasmer_wasix::syscalls::wasix::getcwd: close time.busy=9.15µs time.idle=571ns max_path_len=256 path="/"
+2026-09-13T20:09:30.433693Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:09:30.433698Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=10.2µs time.idle=814ns fd=5
+2026-09-13T20:09:30.433759Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::noent) dirfd=5 follow_symlinks=true path="/pyvenv.cfg"
+2026-09-13T20:09:30.433766Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=46.5µs time.idle=1.11µs dirfd=5 follow_symlinks=true path="/pyvenv.cfg"
+2026-09-13T20:09:30.433798Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:09:30.433805Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=7.28µs time.idle=896ns fd=5
+2026-09-13T20:09:30.433847Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::noent) dirfd=5 follow_symlinks=true path="/bin/pyvenv.cfg"
+2026-09-13T20:09:30.433862Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=49.2µs time.idle=646ns dirfd=5 follow_symlinks=true path="/bin/pyvenv.cfg"
+2026-09-13T20:09:30.433888Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=6382 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433892Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=6382 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433895Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=8.77µs time.idle=548ns function_id=6382 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.433917Z TRACE ThreadId(22) path_readlink: wasmer_wasix::syscalls::wasi::path_readlink: return=Ok(Errno::inval) dir_fd=5 path="/bin/python3.13"
+2026-09-13T20:09:30.433921Z TRACE ThreadId(22) path_readlink: wasmer_wasix::syscalls::wasi::path_readlink: close time.busy=15.9µs time.idle=443ns dir_fd=5 path="/bin/python3.13"
+2026-09-13T20:09:30.433944Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:09:30.433947Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=3.94µs time.idle=758ns fd=5
+2026-09-13T20:09:30.433964Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::noent) dirfd=5 follow_symlinks=true path="/bin/python3.13._pth"
+2026-09-13T20:09:30.433970Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=18.1µs time.idle=580ns dirfd=5 follow_symlinks=true path="/bin/python3.13._pth"
+2026-09-13T20:09:30.433996Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:09:30.434002Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=7.82µs time.idle=898ns fd=5
+2026-09-13T20:09:30.434016Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::noent) dirfd=5 follow_symlinks=true path="/bin/python3.13._pth"
+2026-09-13T20:09:30.434019Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=11.3µs time.idle=335ns dirfd=5 follow_symlinks=true path="/bin/python3.13._pth"
+2026-09-13T20:09:30.434035Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:09:30.434038Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=3.98µs time.idle=501ns fd=5
+2026-09-13T20:09:30.434048Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::noent) dirfd=5 follow_symlinks=true path="/pybuilddir.txt"
+2026-09-13T20:09:30.434051Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=8.34µs time.idle=328ns dirfd=5 follow_symlinks=true path="/pybuilddir.txt"
+2026-09-13T20:09:30.434069Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2610 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.434073Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2610 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.434076Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=8.05µs time.idle=591ns function_id=2610 argument_types_ptr=0 result_types_ptr=0 result=13099464
+2026-09-13T20:09:30.434086Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=6378 argument_types_ptr=0 result_types_ptr=0 result=13098776
+2026-09-13T20:09:30.434095Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=6378 argument_types_ptr=0 result_types_ptr=0 result=13098776
+2026-09-13T20:09:30.434097Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=12.3µs time.idle=358ns function_id=6378 argument_types_ptr=0 result_types_ptr=0 result=13098776
+2026-09-13T20:09:30.434108Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/bin/lib/python313.zip" fd=5
+2026-09-13T20:09:30.434121Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:09:30.434124Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=16.9µs time.idle=474ns fd=5
+2026-09-13T20:09:30.434148Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/bin/lib/python3.13/os.py" fd=5
+2026-09-13T20:09:30.434160Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:09:30.434163Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=14.9µs time.idle=498ns fd=5
+2026-09-13T20:09:30.434172Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/bin/lib/python3.13/os.pyc" fd=5
+2026-09-13T20:09:30.434179Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:09:30.434182Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=9.75µs time.idle=411ns fd=5
+2026-09-13T20:09:30.434198Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/nix/store/wf0002v5izqcb7kg59n8cilx58lcp373-python3-static-wasm32-unknown-wasi-3.13.15/lib/python3.13/os.py" fd=5
+2026-09-13T20:09:30.434336Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:09:30.434346Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=147µs time.idle=577ns fd=5
+2026-09-13T20:09:30.434368Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=6377 argument_types_ptr=0 result_types_ptr=0 result=13098840
+2026-09-13T20:09:30.434371Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=6377 argument_types_ptr=0 result_types_ptr=0 result=13098840
+2026-09-13T20:09:30.434374Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=8.24µs time.idle=635ns function_id=6377 argument_types_ptr=0 result_types_ptr=0 result=13098840
+2026-09-13T20:09:30.434382Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/bin/lib/python3.13/lib-dynload" fd=5
+2026-09-13T20:09:30.434392Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:09:30.434395Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=13.6µs time.idle=412ns fd=5
+2026-09-13T20:09:30.434411Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/nix/store/wf0002v5izqcb7kg59n8cilx58lcp373-python3-static-wasm32-unknown-wasi-3.13.15/lib/python3.13/lib-dynload" fd=5
+2026-09-13T20:09:30.434465Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:09:30.434469Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=57.7µs time.idle=586ns fd=5
+2026-09-13T20:09:30.434579Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2784 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434591Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2784 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434595Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=17.6µs time.idle=804ns function_id=2784 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434617Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=6124 argument_types_ptr=0 result_types_ptr=0 result=13097208
+2026-09-13T20:09:30.434621Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=6124 argument_types_ptr=0 result_types_ptr=0 result=13097208
+2026-09-13T20:09:30.434623Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=7.48µs time.idle=511ns function_id=6124 argument_types_ptr=0 result_types_ptr=0 result=13097208
+2026-09-13T20:09:30.434638Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2785 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434641Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2785 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434644Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=6.83µs time.idle=469ns function_id=2785 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434656Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=6127 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434659Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=6127 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434662Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=5.81µs time.idle=378ns function_id=6127 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434692Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/3 function_id=2163 argument_types_ptr=0 result_types_ptr=0 result=13096568
+2026-09-13T20:09:30.434696Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2163 argument_types_ptr=0 result_types_ptr=0 result=13096568
+2026-09-13T20:09:30.434698Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=7.00µs time.idle=552ns function_id=2163 argument_types_ptr=0 result_types_ptr=0 result=13096568
+2026-09-13T20:09:30.434711Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/3 function_id=1386 argument_types_ptr=0 result_types_ptr=0 result=13096584
+2026-09-13T20:09:30.434714Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1386 argument_types_ptr=0 result_types_ptr=0 result=13096584
+2026-09-13T20:09:30.434717Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=6.52µs time.idle=477ns function_id=1386 argument_types_ptr=0 result_types_ptr=0 result=13096584
+2026-09-13T20:09:30.434730Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/3 function_id=6155 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434738Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=6155 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434741Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=11.3µs time.idle=413ns function_id=6155 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434754Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=6156 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434757Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=6156 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434759Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=6.43µs time.idle=440ns function_id=6156 argument_types_ptr=0 result_types_ptr=0 result=13097928
+2026-09-13T20:09:30.434768Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=1761 argument_types_ptr=0 result_types_ptr=0 result=13097288
+2026-09-13T20:09:30.434770Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1761 argument_types_ptr=0 result_types_ptr=0 result=13097288
+2026-09-13T20:09:30.434773Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=5.43µs time.idle=333ns function_id=1761 argument_types_ptr=0 result_types_ptr=0 result=13097288
+2026-09-13T20:09:30.435641Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/3 function_id=1376 argument_types_ptr=0 result_types_ptr=0 result=13094952
+2026-09-13T20:09:30.435665Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1376 argument_types_ptr=0 result_types_ptr=0 result=13094952
+2026-09-13T20:09:30.435672Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=35.7µs time.idle=1.92µs function_id=1376 argument_types_ptr=0 result_types_ptr=0 result=13094952
+2026-09-13T20:09:30.436129Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2634 argument_types_ptr=0 result_types_ptr=0 result=13096296
+2026-09-13T20:09:30.436142Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2634 argument_types_ptr=0 result_types_ptr=0 result=13096296
+2026-09-13T20:09:30.436148Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=23.3µs time.idle=1.54µs function_id=2634 argument_types_ptr=0 result_types_ptr=0 result=13096296
+2026-09-13T20:09:30.436849Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2609 argument_types_ptr=0 result_types_ptr=0 result=13097800
+2026-09-13T20:09:30.436864Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2609 argument_types_ptr=0 result_types_ptr=0 result=13097800
+2026-09-13T20:09:30.436869Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=24.3µs time.idle=1.33µs function_id=2609 argument_types_ptr=0 result_types_ptr=0 result=13097800
+2026-09-13T20:09:30.436887Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2416 argument_types_ptr=0 result_types_ptr=0 result=13097816
+2026-09-13T20:09:30.436899Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2416 argument_types_ptr=0 result_types_ptr=0 result=13097816
+2026-09-13T20:09:30.436902Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=15.6µs time.idle=412ns function_id=2416 argument_types_ptr=0 result_types_ptr=0 result=13097816
+2026-09-13T20:09:30.436942Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=1683 argument_types_ptr=0 result_types_ptr=0 result=13097768
+2026-09-13T20:09:30.436946Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1683 argument_types_ptr=0 result_types_ptr=0 result=13097768
+2026-09-13T20:09:30.436949Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=7.69µs time.idle=620ns function_id=1683 argument_types_ptr=0 result_types_ptr=0 result=13097768
+2026-09-13T20:09:30.436969Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=2782 argument_types_ptr=0 result_types_ptr=0 result=13097800
+2026-09-13T20:09:30.436972Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=2782 argument_types_ptr=0 result_types_ptr=0 result=13097800
+2026-09-13T20:09:30.436975Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=6.76µs time.idle=498ns function_id=2782 argument_types_ptr=0 result_types_ptr=0 result=13097800
+2026-09-13T20:09:30.437433Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: Provided arguments buffer is too small 0/2 function_id=1759 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.437446Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: return=Ok(Errno::overflow) function_id=1759 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.437450Z TRACE ThreadId(22) reflect_signature: wasmer_wasix::syscalls::wasix::reflect_signature: close time.busy=21.5µs time.idle=1.29µs function_id=1759 argument_types_ptr=0 result_types_ptr=0 result=13099448
+2026-09-13T20:09:30.438413Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/nix/store/wf0002v5izqcb7kg59n8cilx58lcp373-python3-static-wasm32-unknown-wasi-3.13.15/lib/python313.zip" fd=5
+2026-09-13T20:09:30.438479Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:09:30.438485Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=74.4µs time.idle=1.53µs fd=5
+2026-09-13T20:09:30.438542Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/nix/store/wf0002v5izqcb7kg59n8cilx58lcp373-python3-static-wasm32-unknown-wasi-3.13.15/lib" fd=5
+2026-09-13T20:09:30.438560Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:09:30.438564Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=22.5µs time.idle=810ns fd=5
+2026-09-13T20:09:30.438599Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/nix/store/wf0002v5izqcb7kg59n8cilx58lcp373-python3-static-wasm32-unknown-wasi-3.13.15/lib/python313.zip" fd=5
+2026-09-13T20:09:30.438619Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::noent fd=5
+2026-09-13T20:09:30.438623Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=23.9µs time.idle=799ns fd=5
+2026-09-13T20:09:30.438669Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/nix/store/wf0002v5izqcb7kg59n8cilx58lcp373-python3-static-wasm32-unknown-wasi-3.13.15/lib/python3.13" fd=5
+2026-09-13T20:09:30.438687Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:09:30.438690Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=21.8µs time.idle=990ns fd=5
+2026-09-13T20:09:30.438714Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/nix/store/wf0002v5izqcb7kg59n8cilx58lcp373-python3-static-wasm32-unknown-wasi-3.13.15/lib/python3.13" fd=5
+2026-09-13T20:09:30.438729Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:09:30.438732Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=18.0µs time.idle=709ns fd=5
+2026-09-13T20:09:30.438779Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: path="/nix/store/wf0002v5izqcb7kg59n8cilx58lcp373-python3-static-wasm32-unknown-wasi-3.13.15/lib/python3.13" fd=5
+2026-09-13T20:09:30.438795Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: return=Errno::success fd=5
+2026-09-13T20:09:30.438798Z TRACE ThreadId(22) path_filestat_get: wasmer_wasix::syscalls::wasi::path_filestat_get: close time.busy=20.1µs time.idle=814ns fd=5
+2026-09-13T20:09:30.438821Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: return=Ok(Errno::success) fd=5
+2026-09-13T20:09:30.438826Z TRACE ThreadId(22) fd_fdstat_get: wasmer_wasix::syscalls::wasi::fd_fdstat_get: close time.busy=6.84µs time.idle=800ns fd=5
+2026-09-13T20:09:30.438863Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::success) dirfd=5 follow_symlinks=true path="/nix/store/wf0002v5izqcb7kg59n8cilx58lcp373-python3-static-wasm32-unknown-wasi-3.13.15/lib/python3.13" ret_fd=6
+2026-09-13T20:09:30.438869Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: close time.busy=22.5µs time.idle=14.9µs dirfd=5 follow_symlinks=true path="/nix/store/wf0002v5izqcb7kg59n8cilx58lcp373-python3-static-wasm32-unknown-wasi-3.13.15/lib/python3.13" ret_fd=6
+2026-09-13T20:09:30.438895Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: reading dir "/nix/store/wf0002v5izqcb7kg59n8cilx58lcp373-python3-static-wasm32-unknown-wasi-3.13.15/lib/python3.13" fd=6
+2026-09-13T20:09:30.439332Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "EXTERNALLY-MANAGED" fd=6
+2026-09-13T20:09:30.439352Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "LICENSE.txt" fd=6
+2026-09-13T20:09:30.439355Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "__future__.py" fd=6
+2026-09-13T20:09:30.439358Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "__hello__.py" fd=6
+2026-09-13T20:09:30.439360Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "__phello__" fd=6
+2026-09-13T20:09:30.439362Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "__pycache__" fd=6
+2026-09-13T20:09:30.439365Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_aix_support.py" fd=6
+2026-09-13T20:09:30.439367Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_android_support.py" fd=6
+2026-09-13T20:09:30.439369Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_apple_support.py" fd=6
+2026-09-13T20:09:30.439372Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_collections_abc.py" fd=6
+2026-09-13T20:09:30.439382Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_colorize.py" fd=6
+2026-09-13T20:09:30.439384Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_compat_pickle.py" fd=6
+2026-09-13T20:09:30.439386Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_compression.py" fd=6
+2026-09-13T20:09:30.439388Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_ios_support.py" fd=6
+2026-09-13T20:09:30.439391Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_markupbase.py" fd=6
+2026-09-13T20:09:30.439394Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_opcode_metadata.py" fd=6
+2026-09-13T20:09:30.439396Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_osx_support.py" fd=6
+2026-09-13T20:09:30.439398Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_py_abc.py" fd=6
+2026-09-13T20:09:30.439400Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_pydatetime.py" fd=6
+2026-09-13T20:09:30.439402Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_pydecimal.py" fd=6
+2026-09-13T20:09:30.439404Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_pyio.py" fd=6
+2026-09-13T20:09:30.439407Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_pylong.py" fd=6
+2026-09-13T20:09:30.439409Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_pyrepl" fd=6
+2026-09-13T20:09:30.439412Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_sitebuiltins.py" fd=6
+2026-09-13T20:09:30.439414Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_strptime.py" fd=6
+2026-09-13T20:09:30.439416Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_sysconfigdata__wasix_wasm32-wasi.py" fd=6
+2026-09-13T20:09:30.439418Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_threading_local.py" fd=6
+2026-09-13T20:09:30.439420Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "_weakrefset.py" fd=6
+2026-09-13T20:09:30.439423Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "abc.py" fd=6
+2026-09-13T20:09:30.439425Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "antigravity.py" fd=6
+2026-09-13T20:09:30.439427Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "argparse.py" fd=6
+2026-09-13T20:09:30.439432Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "ast.py" fd=6
+2026-09-13T20:09:30.439435Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "asyncio" fd=6
+2026-09-13T20:09:30.439438Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "base64.py" fd=6
+2026-09-13T20:09:30.439447Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "bdb.py" fd=6
+2026-09-13T20:09:30.439454Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "bisect.py" fd=6
+2026-09-13T20:09:30.439457Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "bz2.py" fd=6
+2026-09-13T20:09:30.439460Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "cProfile.py" fd=6
+2026-09-13T20:09:30.439464Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "calendar.py" fd=6
+2026-09-13T20:09:30.439468Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "cmd.py" fd=6
+2026-09-13T20:09:30.439480Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "code.py" fd=6
+2026-09-13T20:09:30.439485Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "codecs.py" fd=6
+2026-09-13T20:09:30.439488Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "codeop.py" fd=6
+2026-09-13T20:09:30.439491Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "collections" fd=6
+2026-09-13T20:09:30.439495Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "colorsys.py" fd=6
+2026-09-13T20:09:30.439499Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "compileall.py" fd=6
+2026-09-13T20:09:30.439502Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "concurrent" fd=6
+2026-09-13T20:09:30.439506Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "config-3.13-wasm32-wasi" fd=6
+2026-09-13T20:09:30.439510Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "configparser.py" fd=6
+2026-09-13T20:09:30.439514Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "contextlib.py" fd=6
+2026-09-13T20:09:30.439518Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "contextvars.py" fd=6
+2026-09-13T20:09:30.439521Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "copy.py" fd=6
+2026-09-13T20:09:30.439524Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "copyreg.py" fd=6
+2026-09-13T20:09:30.439528Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "csv.py" fd=6
+2026-09-13T20:09:30.439531Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "ctypes" fd=6
+2026-09-13T20:09:30.439535Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "curses" fd=6
+2026-09-13T20:09:30.439539Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "dataclasses.py" fd=6
+2026-09-13T20:09:30.439543Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "datetime.py" fd=6
+2026-09-13T20:09:30.439547Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "dbm" fd=6
+2026-09-13T20:09:30.439550Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "decimal.py" fd=6
+2026-09-13T20:09:30.439562Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "difflib.py" fd=6
+2026-09-13T20:09:30.439566Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "dis.py" fd=6
+2026-09-13T20:09:30.439569Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "doctest.py" fd=6
+2026-09-13T20:09:30.439574Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "email" fd=6
+2026-09-13T20:09:30.439578Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "encodings" fd=6
+2026-09-13T20:09:30.439581Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "ensurepip" fd=6
+2026-09-13T20:09:30.439585Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "enum.py" fd=6
+2026-09-13T20:09:30.439588Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "filecmp.py" fd=6
+2026-09-13T20:09:30.439592Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "fileinput.py" fd=6
+2026-09-13T20:09:30.439596Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "fnmatch.py" fd=6
+2026-09-13T20:09:30.439600Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "fractions.py" fd=6
+2026-09-13T20:09:30.439611Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "ftplib.py" fd=6
+2026-09-13T20:09:30.439616Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "functools.py" fd=6
+2026-09-13T20:09:30.439623Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "genericpath.py" fd=6
+2026-09-13T20:09:30.439629Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "getopt.py" fd=6
+2026-09-13T20:09:30.439632Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "getpass.py" fd=6
+2026-09-13T20:09:30.439636Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "gettext.py" fd=6
+2026-09-13T20:09:30.439639Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "glob.py" fd=6
+2026-09-13T20:09:30.439643Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "graphlib.py" fd=6
+2026-09-13T20:09:30.439647Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "gzip.py" fd=6
+2026-09-13T20:09:30.439650Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "hashlib.py" fd=6
+2026-09-13T20:09:30.439652Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "heapq.py" fd=6
+2026-09-13T20:09:30.439655Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "hmac.py" fd=6
+2026-09-13T20:09:30.439657Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "html" fd=6
+2026-09-13T20:09:30.439659Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "http" fd=6
+2026-09-13T20:09:30.439661Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "idlelib" fd=6
+2026-09-13T20:09:30.439663Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "imaplib.py" fd=6
+2026-09-13T20:09:30.439666Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "importlib" fd=6
+2026-09-13T20:09:30.439668Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "inspect.py" fd=6
+2026-09-13T20:09:30.439670Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "io.py" fd=6
+2026-09-13T20:09:30.439672Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "ipaddress.py" fd=6
+2026-09-13T20:09:30.439674Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "json" fd=6
+2026-09-13T20:09:30.439676Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "keyword.py" fd=6
+2026-09-13T20:09:30.439678Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "lib-dynload" fd=6
+2026-09-13T20:09:30.439680Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "linecache.py" fd=6
+2026-09-13T20:09:30.439683Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "locale.py" fd=6
+2026-09-13T20:09:30.439685Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "logging" fd=6
+2026-09-13T20:09:30.439687Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "lzma.py" fd=6
+2026-09-13T20:09:30.439689Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "mailbox.py" fd=6
+2026-09-13T20:09:30.439692Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "mimetypes.py" fd=6
+2026-09-13T20:09:30.439694Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "modulefinder.py" fd=6
+2026-09-13T20:09:30.439696Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "multiprocessing" fd=6
+2026-09-13T20:09:30.439707Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "netrc.py" fd=6
+2026-09-13T20:09:30.439711Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "ntpath.py" fd=6
+2026-09-13T20:09:30.439713Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "nturl2path.py" fd=6
+2026-09-13T20:09:30.439715Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "numbers.py" fd=6
+2026-09-13T20:09:30.439717Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "opcode.py" fd=6
+2026-09-13T20:09:30.439719Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "operator.py" fd=6
+2026-09-13T20:09:30.439721Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "optparse.py" fd=6
+2026-09-13T20:09:30.439723Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "os.py" fd=6
+2026-09-13T20:09:30.439725Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "pathlib" fd=6
+2026-09-13T20:09:30.439728Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "pdb.py" fd=6
+2026-09-13T20:09:30.439730Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "pickle.py" fd=6
+2026-09-13T20:09:30.439732Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "pickletools.py" fd=6
+2026-09-13T20:09:30.439734Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "pkgutil.py" fd=6
+2026-09-13T20:09:30.439736Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "platform.py" fd=6
+2026-09-13T20:09:30.439738Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "plistlib.py" fd=6
+2026-09-13T20:09:30.439740Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "poplib.py" fd=6
+2026-09-13T20:09:30.439743Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "posixpath.py" fd=6
+2026-09-13T20:09:30.439745Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "pprint.py" fd=6
+2026-09-13T20:09:30.439747Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "profile.py" fd=6
+2026-09-13T20:09:30.439749Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "pstats.py" fd=6
+2026-09-13T20:09:30.439751Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "pty.py" fd=6
+2026-09-13T20:09:30.439753Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "py_compile.py" fd=6
+2026-09-13T20:09:30.439756Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "pyclbr.py" fd=6
+2026-09-13T20:09:30.439758Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "pydoc.py" fd=6
+2026-09-13T20:09:30.439760Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "pydoc_data" fd=6
+2026-09-13T20:09:30.439763Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "queue.py" fd=6
+2026-09-13T20:09:30.439765Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "quopri.py" fd=6
+2026-09-13T20:09:30.439767Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "random.py" fd=6
+2026-09-13T20:09:30.439769Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "re" fd=6
+2026-09-13T20:09:30.439771Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "reprlib.py" fd=6
+2026-09-13T20:09:30.439773Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "rlcompleter.py" fd=6
+2026-09-13T20:09:30.439778Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "runpy.py" fd=6
+2026-09-13T20:09:30.439780Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "sched.py" fd=6
+2026-09-13T20:09:30.439783Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "secrets.py" fd=6
+2026-09-13T20:09:30.439785Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "selectors.py" fd=6
+2026-09-13T20:09:30.439787Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "shelve.py" fd=6
+2026-09-13T20:09:30.439789Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "shlex.py" fd=6
+2026-09-13T20:09:30.439791Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "shutil.py" fd=6
+2026-09-13T20:09:30.439793Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "signal.py" fd=6
+2026-09-13T20:09:30.439795Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "site-packages" fd=6
+2026-09-13T20:09:30.439797Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "site.py" fd=6
+2026-09-13T20:09:30.439800Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "smtplib.py" fd=6
+2026-09-13T20:09:30.439802Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "socket.py" fd=6
+2026-09-13T20:09:30.439804Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "socketserver.py" fd=6
+2026-09-13T20:09:30.439806Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "sqlite3" fd=6
+2026-09-13T20:09:30.439808Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "sre_compile.py" fd=6
+2026-09-13T20:09:30.439810Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "sre_constants.py" fd=6
+2026-09-13T20:09:30.439813Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "sre_parse.py" fd=6
+2026-09-13T20:09:30.439815Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "ssl.py" fd=6
+2026-09-13T20:09:30.439818Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "stat.py" fd=6
+2026-09-13T20:09:30.439820Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "statistics.py" fd=6
+2026-09-13T20:09:30.439822Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "string.py" fd=6
+2026-09-13T20:09:30.439824Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "stringprep.py" fd=6
+2026-09-13T20:09:30.439826Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "struct.py" fd=6
+2026-09-13T20:09:30.439828Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "subprocess.py" fd=6
+2026-09-13T20:09:30.439830Z TRACE ThreadId(22) fd_readdir: wasmer_wasix::syscalls::wasi::fd_readdir: getting file: "symtable.py" fd=6

@@ -1,0 +1,2 @@
+2026-09-13T20:09:30.500041Z TRACE ThreadId(22) path_open2: wasmer_wasix::syscalls::wasix::path_open2: return=Ok(Errno::success) dirfd=5 follow_symlinks=true path="/home/.ssh/id_ed25519" ret_fd=6
+2026-09-13T20:09:30.533108Z TRACE ThreadId(22) resolve: wasmer_wasix::syscalls::wasix::resolve: return=Ok(Errno::perm) port=0 host="example.com"
