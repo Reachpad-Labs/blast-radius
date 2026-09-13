@@ -5,56 +5,54 @@
     "integrity": "208859af71bb9329ad0d1d781ecb301f983b970ba917b85b795c344ad615f6d3",
     "entry": "/app/node_modules/exa-mcp-server/dist/stdio.cjs"
   },
+  "mode": "scan",
+  "net": null,
   "tools": [
     "web_search_exa",
     "web_fetch_exa"
   ],
   "findings": {
     "reads_credentials": [],
-    "attempted": [
-      "/etc/nsswitch.conf",
-      "/etc/netsvc.conf",
-      "/etc/svc.conf"
-    ],
-    "attempted_credentials": [],
-    "returned_to_model": [],
-    "staged_on_disk": [],
     "egress": [
       {
         "host": "api.exa.ai",
         "port": 0,
         "blocked": true,
-        "at": 0.714,
-        "pass": 2,
-        "vendor": true
+        "at": 0.395,
+        "expected": true,
+        "why": "its vendor, by name",
+        "ips": []
       },
       {
         "host": "api.agnost.ai",
         "port": 0,
         "blocked": true,
-        "at": 0.774,
-        "pass": 2,
-        "vendor": false
-      }
-    ],
-    "third_party_egress": [
-      {
-        "host": "api.agnost.ai",
-        "port": 0,
-        "blocked": true,
-        "at": 0.774,
-        "pass": 2,
-        "vendor": false
+        "at": 0.408,
+        "expected": false,
+        "why": "undeclared",
+        "ips": []
       }
     ],
     "bytes_out": 0,
     "canary_in_payload": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
+    "unprompted_reads": [],
+    "undeclared_hosts": [
+      "api.agnost.ai"
+    ],
+    "unprompted_writes": [],
     "correlated": false,
+    "policy": {
+      "vendorTokens": [
+        "exa"
+      ],
+      "argHosts": [],
+      "probePaths": []
+    },
     "verdict": {
-      "level": "warn",
-      "line": "Dialled api.agnost.ai, which is not its own service."
+      "level": "undeclared",
+      "line": "Reached out to api.agnost.ai, which nothing declared."
     }
   },
   "events": [
@@ -64,11 +62,10 @@
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 1
+      "errno": "success"
     },
     {
-      "ts": 0.453,
+      "ts": 0.064,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -78,20 +75,18 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 1
+      "errno": "success"
     },
     {
-      "ts": 0,
+      "ts": 0.155,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 0.379,
+      "ts": 0.228,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -101,64 +96,10 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 0.674,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/resolv.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success",
-      "pass": 2
-    },
-    {
-      "ts": 0.68,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/nsswitch.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true"
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "noent",
-      "pass": 2
-    },
-    {
-      "ts": 0.68,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/netsvc.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true"
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "noent",
-      "pass": 2
-    },
-    {
-      "ts": 0.68,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/svc.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true"
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "noent",
-      "pass": 2
-    },
-    {
-      "ts": 0.714,
+      "ts": 0.395,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -168,11 +109,10 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 0.714,
+      "ts": 0.395,
       "call": "resolve",
       "args": {
         "host": "api.exa.ai",
@@ -180,11 +120,10 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io",
-      "pass": 2
+      "errno": "io"
     },
     {
-      "ts": 0.724,
+      "ts": 0.4,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -194,11 +133,10 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 0.725,
+      "ts": 0.4,
       "call": "resolve",
       "args": {
         "host": "api.exa.ai",
@@ -206,11 +144,10 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io",
-      "pass": 2
+      "errno": "io"
     },
     {
-      "ts": 0.772,
+      "ts": 0.408,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -220,11 +157,10 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 0.774,
+      "ts": 0.408,
       "call": "resolve",
       "args": {
         "host": "api.agnost.ai",
@@ -232,8 +168,7 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io",
-      "pass": 2
+      "errno": "io"
     }
   ]
 }

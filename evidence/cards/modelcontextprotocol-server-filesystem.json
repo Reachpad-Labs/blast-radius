@@ -5,6 +5,8 @@
     "integrity": "729dc8511e779e5cd6640851a74b25283e3af1ca3a7106722f993e864a1d9935",
     "entry": "/app/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js"
   },
+  "mode": "scan",
+  "net": null,
   "tools": [
     "read_file",
     "read_text_file",
@@ -24,41 +26,50 @@
   "findings": {
     "reads_credentials": [
       {
-        "path": "/home/dev/.ssh/id_ed25519",
+        "path": "/home/.ssh/id_ed25519",
         "canary": null,
-        "at": 1.877,
-        "pass": 2,
+        "at": 0.519,
+        "asked": true,
         "count": 9
       },
       {
-        "path": "/home/dev/.ssh/id_ed25519.c0f3a1899ba825360850faa704e11af9.tmp",
+        "path": "/home/.ssh/id_ed25519.5c9beac04e920632783ee9fdd64f803e.tmp",
         "canary": null,
-        "at": 1.898,
-        "pass": 2,
+        "at": 0.523,
+        "asked": true,
         "count": 1
       },
       {
-        "path": "/home/dev/.ssh/id_ed25519.48c7e77acbec0717252e4f013b92e964.tmp",
+        "path": "/home/.ssh/id_ed25519.c8e1ebc5ed8ac7741dd13eb0df50ae64.tmp",
         "canary": null,
-        "at": 1.914,
-        "pass": 2,
+        "at": 0.525,
+        "asked": true,
         "count": 1
       }
     ],
-    "attempted": [],
-    "attempted_credentials": [],
-    "returned_to_model": [],
-    "staged_on_disk": [],
     "egress": [],
-    "third_party_egress": [],
     "bytes_out": 0,
     "canary_in_payload": [],
-    "writes_outside_cwd": [],
+    "writes_outside_cwd": [
+      "/home/.ssh/id_ed25519"
+    ],
     "fingerprinting": [],
+    "unprompted_reads": [],
+    "undeclared_hosts": [],
+    "unprompted_writes": [],
     "correlated": false,
+    "policy": {
+      "vendorTokens": [
+        "filesystem"
+      ],
+      "argHosts": [],
+      "probePaths": [
+        "/home/.ssh/id_ed25519"
+      ]
+    },
     "verdict": {
-      "level": "warn",
-      "line": "Read a seeded credential."
+      "level": "expected",
+      "line": "Only did what its job or our request implied."
     }
   },
   "events": [
@@ -68,11 +79,10 @@
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 1
+      "errno": "success"
     },
     {
-      "ts": 1.224,
+      "ts": 0.157,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -82,20 +92,18 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 1
+      "errno": "success"
     },
     {
-      "ts": 0,
+      "ts": 0.29,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 1.244,
+      "ts": 0.431,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -105,118 +113,109 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 1.877,
+      "ts": 0.519,
       "call": "path_open2",
       "args": {
-        "path": "/home/dev/.ssh/id_ed25519",
+        "path": "/home/.ssh/id_ed25519",
         "dirfd": 5,
         "follow_symlinks": "true",
         "ret_fd": 13
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 1.877,
+      "ts": 0.519,
       "call": "path_open2",
       "args": {
-        "path": "/home/dev/.ssh/id_ed25519",
+        "path": "/home/.ssh/id_ed25519",
         "dirfd": 5,
         "follow_symlinks": "true",
         "ret_fd": 14
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 1.879,
+      "ts": 0.519,
       "call": "path_open2",
       "args": {
-        "path": "/home/dev/.ssh/id_ed25519",
+        "path": "/home/.ssh/id_ed25519",
         "dirfd": 5,
         "follow_symlinks": "true"
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "exist",
-      "pass": 2
+      "errno": "exist"
     },
     {
-      "ts": 1.879,
+      "ts": 0.519,
       "call": "path_open2",
       "args": {
-        "path": "/home/dev/.ssh/id_ed25519",
+        "path": "/home/.ssh/id_ed25519",
         "dirfd": 5,
         "follow_symlinks": "true",
         "ret_fd": 15
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 1.88,
+      "ts": 0.519,
       "call": "path_open2",
       "args": {
-        "path": "/home/dev/.ssh/id_ed25519",
+        "path": "/home/.ssh/id_ed25519",
         "dirfd": 5,
         "follow_symlinks": "true"
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "notdir",
-      "pass": 2
+      "errno": "notdir"
     },
     {
-      "ts": 1.881,
+      "ts": 0.519,
       "call": "path_open2",
       "args": {
-        "path": "/home/dev/.ssh/id_ed25519",
+        "path": "/home/.ssh/id_ed25519",
         "dirfd": 5,
         "follow_symlinks": "true"
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "notdir",
-      "pass": 2
+      "errno": "notdir"
     },
     {
-      "ts": 1.881,
+      "ts": 0.52,
       "call": "path_open2",
       "args": {
-        "path": "/home/dev/.ssh/id_ed25519",
+        "path": "/home/.ssh/id_ed25519",
         "dirfd": 5,
         "follow_symlinks": "true"
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "notdir",
-      "pass": 2
+      "errno": "notdir"
     },
     {
-      "ts": 1.882,
+      "ts": 0.52,
       "call": "path_open2",
       "args": {
-        "path": "/home/dev/.ssh/id_ed25519",
+        "path": "/home/.ssh/id_ed25519",
         "dirfd": 5,
         "follow_symlinks": "true"
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "notdir",
-      "pass": 2
+      "errno": "notdir"
     },
     {
-      "ts": 1.883,
+      "ts": 0.52,
       "call": "path_open2",
       "args": {
         "path": "/home",
@@ -226,11 +225,10 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 1.888,
+      "ts": 0.521,
       "call": "path_open2",
       "args": {
         "path": "/home",
@@ -240,78 +238,72 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 1.889,
+      "ts": 0.521,
       "call": "path_open2",
       "args": {
-        "path": "/home/dev/.ssh/id_ed25519",
+        "path": "/home/.ssh/id_ed25519",
         "dirfd": 5,
         "follow_symlinks": "true",
         "ret_fd": 16
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 1.898,
+      "ts": 0.523,
       "call": "path_open2",
       "args": {
-        "path": "/home/dev/.ssh/id_ed25519.c0f3a1899ba825360850faa704e11af9.tmp",
+        "path": "/home/.ssh/id_ed25519.5c9beac04e920632783ee9fdd64f803e.tmp",
         "dirfd": 5,
         "follow_symlinks": "true",
         "ret_fd": 17
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 1.914,
+      "ts": 0.525,
       "call": "path_open2",
       "args": {
-        "path": "/home/dev/.ssh/id_ed25519.48c7e77acbec0717252e4f013b92e964.tmp",
+        "path": "/home/.ssh/id_ed25519.c8e1ebc5ed8ac7741dd13eb0df50ae64.tmp",
         "dirfd": 5,
         "follow_symlinks": "true",
         "ret_fd": 13
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 1.915,
+      "ts": 0.525,
       "call": "path_rename",
       "args": {
-        "old_path": "/home/dev/.ssh/id_ed25519.c0f3a1899ba825360850faa704e11af9.tmp",
-        "new_path": "/home/dev/.ssh/id_ed25519",
+        "old_path": "/home/.ssh/id_ed25519.5c9beac04e920632783ee9fdd64f803e.tmp",
+        "new_path": "/home/.ssh/id_ed25519",
         "old_fd": 5,
         "new_fd": 5
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 1.917,
+      "ts": 0.526,
       "call": "path_rename",
       "args": {
-        "old_path": "/home/dev/.ssh/id_ed25519.48c7e77acbec0717252e4f013b92e964.tmp",
-        "new_path": "/home/dev/.ssh/id_ed25519",
+        "old_path": "/home/.ssh/id_ed25519.c8e1ebc5ed8ac7741dd13eb0df50ae64.tmp",
+        "new_path": "/home/.ssh/id_ed25519",
         "old_fd": 5,
         "new_fd": 5
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     }
   ]
 }

@@ -5,8 +5,8 @@
     "integrity": "e1d0ea90f9f3c49fc3179b5f3a4da911d24536990d7cc78e63c7f1d5643137e6",
     "entry": "/app/node_modules/@modelcontextprotocol/server-github/dist/index.js"
   },
-  "mode": "scan",
-  "net": null,
+  "mode": "vendor",
+  "net": "dns:allow=api.github.com:*",
   "tools": [
     "create_or_update_file",
     "search_repositories",
@@ -41,8 +41,8 @@
       {
         "host": "api.github.com",
         "port": 0,
-        "blocked": true,
-        "at": 0.385,
+        "blocked": false,
+        "at": 0.474,
         "expected": true,
         "why": "its vendor, by name",
         "ips": []
@@ -80,7 +80,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.059,
+      "ts": 0.122,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -93,7 +93,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.214,
+      "ts": 0.305,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -101,7 +101,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.262,
+      "ts": 0.351,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -114,7 +114,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.385,
+      "ts": 0.47,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -127,18 +127,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.385,
-      "call": "resolve",
-      "args": {
-        "host": "api.github.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.387,
+      "ts": 0.471,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -151,18 +140,42 @@
       "errno": "success"
     },
     {
-      "ts": 0.387,
+      "ts": 0.474,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.389,
+      "ts": 0.474,
+      "call": "resolve",
+      "args": {
+        "host": "api.github.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.474,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.474,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -175,18 +188,29 @@
       "errno": "success"
     },
     {
-      "ts": 0.389,
+      "ts": 0.475,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.39,
+      "ts": 0.475,
+      "call": "resolve",
+      "args": {
+        "host": "api.github.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.475,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -199,18 +223,42 @@
       "errno": "success"
     },
     {
-      "ts": 0.39,
+      "ts": 0.475,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.476,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.39,
+      "ts": 0.476,
+      "call": "resolve",
+      "args": {
+        "host": "api.github.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.476,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -223,18 +271,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.39,
-      "call": "resolve",
-      "args": {
-        "host": "api.github.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.391,
+      "ts": 0.477,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -247,18 +284,18 @@
       "errno": "success"
     },
     {
-      "ts": 0.391,
+      "ts": 0.477,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.392,
+      "ts": 0.477,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -271,18 +308,18 @@
       "errno": "success"
     },
     {
-      "ts": 0.392,
+      "ts": 0.477,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.392,
+      "ts": 0.478,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -295,18 +332,29 @@
       "errno": "success"
     },
     {
-      "ts": 0.392,
+      "ts": 0.479,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.393,
+      "ts": 0.479,
+      "call": "resolve",
+      "args": {
+        "host": "api.github.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.479,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -319,18 +367,31 @@
       "errno": "success"
     },
     {
-      "ts": 0.393,
+      "ts": 0.479,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.481,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.393,
+      "ts": 0.481,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -343,18 +404,18 @@
       "errno": "success"
     },
     {
-      "ts": 0.394,
+      "ts": 0.481,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.394,
+      "ts": 0.481,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -367,18 +428,29 @@
       "errno": "success"
     },
     {
-      "ts": 0.394,
+      "ts": 0.482,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.395,
+      "ts": 0.482,
+      "call": "resolve",
+      "args": {
+        "host": "api.github.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.482,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -391,18 +463,31 @@
       "errno": "success"
     },
     {
-      "ts": 0.395,
+      "ts": 0.482,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.483,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.395,
+      "ts": 0.483,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -415,18 +500,18 @@
       "errno": "success"
     },
     {
-      "ts": 0.395,
+      "ts": 0.483,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.396,
+      "ts": 0.483,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -439,18 +524,29 @@
       "errno": "success"
     },
     {
-      "ts": 0.396,
+      "ts": 0.484,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.396,
+      "ts": 0.484,
+      "call": "resolve",
+      "args": {
+        "host": "api.github.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.484,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -463,18 +559,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.396,
-      "call": "resolve",
-      "args": {
-        "host": "api.github.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.397,
+      "ts": 0.484,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -487,18 +572,31 @@
       "errno": "success"
     },
     {
-      "ts": 0.397,
+      "ts": 0.484,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.485,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.398,
+      "ts": 0.485,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -511,18 +609,18 @@
       "errno": "success"
     },
     {
-      "ts": 0.398,
+      "ts": 0.485,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.398,
+      "ts": 0.485,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -535,18 +633,18 @@
       "errno": "success"
     },
     {
-      "ts": 0.398,
+      "ts": 0.486,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.398,
+      "ts": 0.486,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -559,18 +657,18 @@
       "errno": "success"
     },
     {
-      "ts": 0.398,
+      "ts": 0.486,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.399,
+      "ts": 0.487,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -583,18 +681,18 @@
       "errno": "success"
     },
     {
-      "ts": 0.399,
+      "ts": 0.487,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.399,
+      "ts": 0.487,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -607,18 +705,81 @@
       "errno": "success"
     },
     {
-      "ts": 0.399,
+      "ts": 0.487,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.487,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.487,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.487,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.488,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
     },
     {
-      "ts": 0.4,
+      "ts": 0.488,
+      "call": "resolve",
+      "args": {
+        "host": "api.github.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.488,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -631,111 +792,288 @@
       "errno": "success"
     },
     {
-      "ts": 0.4,
-      "call": "resolve",
+      "ts": 0.488,
+      "call": "sock_open",
       "args": {
-        "host": "api.github.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.4,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
       },
       "canary_hit": null,
       "decision": "allow",
       "errno": "success"
     },
     {
-      "ts": 0.4,
-      "call": "resolve",
+      "ts": 0.488,
+      "call": "sock_open",
       "args": {
-        "host": "api.github.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.4,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
       },
       "canary_hit": null,
       "decision": "allow",
       "errno": "success"
     },
     {
-      "ts": 0.4,
-      "call": "resolve",
+      "ts": 0.489,
+      "call": "sock_open",
       "args": {
-        "host": "api.github.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.403,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
       },
       "canary_hit": null,
       "decision": "allow",
       "errno": "success"
     },
     {
-      "ts": 0.403,
-      "call": "resolve",
+      "ts": 0.489,
+      "call": "sock_open",
       "args": {
-        "host": "api.github.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
-    },
-    {
-      "ts": 0.404,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
       },
       "canary_hit": null,
       "decision": "allow",
       "errno": "success"
     },
     {
-      "ts": 0.404,
+      "ts": 0.489,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.489,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.489,
       "call": "resolve",
       "args": {
         "host": "api.github.com",
         "port": 0
       },
       "canary_hit": null,
-      "decision": "deny",
-      "errno": "io"
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.489,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.489,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.49,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.49,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.49,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.49,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.491,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.491,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.493,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.493,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.493,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.493,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.493,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.494,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.494,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
     }
   ]
 }

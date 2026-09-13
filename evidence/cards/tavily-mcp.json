@@ -5,6 +5,8 @@
     "integrity": "b7b031f5e6b44774f16f5f7c6519a793ad4cbd6bee2dacaac02793d995ab9edc",
     "entry": "/app/node_modules/tavily-mcp/build/index.js"
   },
+  "mode": "scan",
+  "net": null,
   "tools": [
     "tavily_search",
     "tavily_extract",
@@ -14,33 +16,35 @@
   ],
   "findings": {
     "reads_credentials": [],
-    "attempted": [
-      "/etc/nsswitch.conf",
-      "/etc/netsvc.conf",
-      "/etc/svc.conf"
-    ],
-    "attempted_credentials": [],
-    "returned_to_model": [],
-    "staged_on_disk": [],
     "egress": [
       {
         "host": "api.tavily.com",
         "port": 0,
         "blocked": true,
-        "at": 3.626,
-        "pass": 2,
-        "vendor": true
+        "at": 0.892,
+        "expected": true,
+        "why": "its vendor, by name",
+        "ips": []
       }
     ],
-    "third_party_egress": [],
     "bytes_out": 0,
     "canary_in_payload": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
+    "unprompted_reads": [],
+    "undeclared_hosts": [],
+    "unprompted_writes": [],
     "correlated": false,
+    "policy": {
+      "vendorTokens": [
+        "tavily"
+      ],
+      "argHosts": [],
+      "probePaths": []
+    },
     "verdict": {
-      "level": "clean",
-      "line": "Dialled only its own service (api.tavily.com)."
+      "level": "expected",
+      "line": "Only did what its job or our request implied."
     }
   },
   "events": [
@@ -50,11 +54,10 @@
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 1
+      "errno": "success"
     },
     {
-      "ts": 1.781,
+      "ts": 0.148,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -64,20 +67,18 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 1
+      "errno": "success"
     },
     {
-      "ts": 0,
+      "ts": 0.512,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 1.573,
+      "ts": 0.664,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -87,64 +88,10 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 3.59,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/resolv.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success",
-      "pass": 2
-    },
-    {
-      "ts": 3.591,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/nsswitch.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true"
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "noent",
-      "pass": 2
-    },
-    {
-      "ts": 3.591,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/netsvc.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true"
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "noent",
-      "pass": 2
-    },
-    {
-      "ts": 3.591,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/svc.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true"
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "noent",
-      "pass": 2
-    },
-    {
-      "ts": 3.626,
+      "ts": 0.892,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -154,11 +101,10 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 3.626,
+      "ts": 0.892,
       "call": "resolve",
       "args": {
         "host": "api.tavily.com",
@@ -166,11 +112,10 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io",
-      "pass": 2
+      "errno": "io"
     },
     {
-      "ts": 3.634,
+      "ts": 0.893,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -180,11 +125,10 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 3.635,
+      "ts": 0.893,
       "call": "resolve",
       "args": {
         "host": "api.tavily.com",
@@ -192,11 +136,10 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io",
-      "pass": 2
+      "errno": "io"
     },
     {
-      "ts": 3.64,
+      "ts": 0.894,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -206,11 +149,10 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 3.641,
+      "ts": 0.894,
       "call": "resolve",
       "args": {
         "host": "api.tavily.com",
@@ -218,11 +160,10 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io",
-      "pass": 2
+      "errno": "io"
     },
     {
-      "ts": 3.645,
+      "ts": 0.895,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -232,11 +173,10 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 3.645,
+      "ts": 0.895,
       "call": "resolve",
       "args": {
         "host": "api.tavily.com",
@@ -244,11 +184,10 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io",
-      "pass": 2
+      "errno": "io"
     },
     {
-      "ts": 3.65,
+      "ts": 0.896,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -258,11 +197,10 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 3.65,
+      "ts": 0.896,
       "call": "resolve",
       "args": {
         "host": "api.tavily.com",
@@ -270,8 +208,7 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io",
-      "pass": 2
+      "errno": "io"
     }
   ]
 }

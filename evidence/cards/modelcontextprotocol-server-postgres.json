@@ -5,38 +5,44 @@
     "integrity": "4717ef3e03e543da7b58e16e249624d4a0ebcd2ee828069661894784e61b2ba4",
     "entry": "/app/node_modules/@modelcontextprotocol/server-postgres/dist/index.js"
   },
+  "mode": "scan",
+  "net": null,
   "tools": [
     "query"
   ],
   "findings": {
     "reads_credentials": [],
-    "attempted": [
-      "/etc/nsswitch.conf",
-      "/etc/netsvc.conf",
-      "/etc/svc.conf"
-    ],
-    "attempted_credentials": [],
-    "returned_to_model": [],
-    "staged_on_disk": [],
     "egress": [
       {
         "host": "127.0.0.1",
         "port": 5432,
         "blocked": true,
-        "at": 0.512,
-        "pass": 2,
-        "vendor": true
+        "at": 0.228,
+        "expected": true,
+        "why": "from our arguments",
+        "ips": []
       }
     ],
-    "third_party_egress": [],
     "bytes_out": 0,
     "canary_in_payload": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
+    "unprompted_reads": [],
+    "undeclared_hosts": [],
+    "unprompted_writes": [],
     "correlated": false,
+    "policy": {
+      "vendorTokens": [
+        "postgres"
+      ],
+      "argHosts": [
+        "127.0.0.1"
+      ],
+      "probePaths": []
+    },
     "verdict": {
-      "level": "clean",
-      "line": "Dialled only its own service (127.0.0.1)."
+      "level": "expected",
+      "line": "Only did what its job or our request implied."
     }
   },
   "events": [
@@ -46,11 +52,10 @@
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 1
+      "errno": "success"
     },
     {
-      "ts": 0.301,
+      "ts": 0.062,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -60,73 +65,18 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 1
+      "errno": "success"
     },
     {
-      "ts": 0.45,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/resolv.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success",
-      "pass": 1
-    },
-    {
-      "ts": 0.45,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/nsswitch.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true"
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "noent",
-      "pass": 1
-    },
-    {
-      "ts": 0.45,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/netsvc.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true"
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "noent",
-      "pass": 1
-    },
-    {
-      "ts": 0.451,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/svc.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true"
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "noent",
-      "pass": 1
-    },
-    {
-      "ts": 0,
+      "ts": 0.147,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 0.323,
+      "ts": 0.195,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -136,64 +86,10 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 0.454,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/resolv.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success",
-      "pass": 2
-    },
-    {
-      "ts": 0.454,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/nsswitch.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true"
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "noent",
-      "pass": 2
-    },
-    {
-      "ts": 0.454,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/netsvc.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true"
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "noent",
-      "pass": 2
-    },
-    {
-      "ts": 0.454,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/svc.conf",
-        "dirfd": 5,
-        "follow_symlinks": "true"
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "noent",
-      "pass": 2
-    },
-    {
-      "ts": 0.512,
+      "ts": 0.228,
       "call": "sock_open",
       "args": {
         "af": "Addressfamily::Inet4",
@@ -203,11 +99,10 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 0.512,
+      "ts": 0.228,
       "call": "sock_connect",
       "args": {
         "addr": "127.0.0.1:5432",
@@ -215,11 +110,10 @@
       },
       "canary_hit": null,
       "decision": "deny",
-      "errno": "io",
-      "pass": 2
+      "errno": "io"
     },
     {
-      "ts": 0.513,
+      "ts": 0.229,
       "call": "sock_open",
       "args": {
         "af": "Addressfamily::Inet4",
@@ -229,8 +123,7 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     }
   ]
 }

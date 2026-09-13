@@ -5,6 +5,14 @@ installing it would have cost you.
 
 Built at the AI Security Hackathon, SF, 2026-09-13. Wasmer SDK track.
 
+## Start here
+
+New to the repo, or a new session? Read [CLAUDE.md](CLAUDE.md) (where things
+are, the rules the code does not explain, known gaps), then
+[docs/FINDINGS.md](docs/FINDINGS.md) (everything measured, every trap). The
+paste-ready submission text is [docs/SUBMISSION.md](docs/SUBMISSION.md). The
+team board is https://blast-radius-board-edksg.reachpad.app/.
+
 ## The idea
 
 You `npm install` an MCP server. It then runs beside your agent with your
@@ -27,6 +35,10 @@ Everything below was verified on a real run today. Evidence is in `evidence/`.
 | Can we see network destinations? | **Yes, host and address.** |
 | Can we see payload bytes? | **No** — size only. Payload proof needs a sink we control. |
 | Can we deny egress and keep the process alive? | **Yes.** |
+| What does a card conclude? | One of three descriptive verdicts: **expected**, **undeclared**, **critical**, with the policy that decided "expected" recorded on the card. |
+| Under which network policies? | Two benchmarks per server: **block all** (default, every connection refused) and **vendor only** (DNS allowed for its own vendor, nothing else). The control also runs with our collector allowed. |
+| Does the result depend on the fast engine? | **No.** The sweep gives identical findings under `wasmer/edgejs` (V8 on the host) and `wasmer/edgejs-quickjs` (engine inside the sandbox). |
+| Can native Node addons run? | **No**, measured: `dlfcn unsupported on WASIX` under both packages. |
 
 The two lines that make the demo, from a real trace:
 
@@ -162,8 +174,10 @@ your box as you before Wasmer is involved. Hence `--ignore-scripts` above.
 
 ## Traps
 
-Eight of them, all measured today, in [docs/FINDINGS.md](docs/FINDINGS.md).
-Read that before touching anything. It will save you an hour.
+Eleven of them, all measured today, in [docs/FINDINGS.md](docs/FINDINGS.md),
+plus the engine comparison, the native-addon test, the SDK review, the three
+verdicts and vendor mode. Read that before touching anything. It will save
+you an hour.
 
 ## Layout
 
@@ -209,7 +223,14 @@ node harness/boot-test.mjs                            # who boots -> SPECIMENS.m
 node harness/sweep.mjs                                # every booted server -> evidence/cards/
 node harness/report.mjs                               # all of it as one page -> evidence/cards/index.html
 node run.mjs evil-notes --engine quickjs               # engine inside the sandbox too (slower)
+node run.mjs exa-mcp-server --net vendor              # let it reach its own vendor, refuse everything else
 ```
+
+Verdicts are **expected** (only did what its job or our request implied),
+**undeclared** (reached a host outside its vendor, or opened or changed
+something nobody asked for) and **critical** (a planted secret provably left,
+or was opened unprompted right before a connection attempt). Each card records
+the policy that decided "expected", so the reasoning can be checked.
 
 `--env K=V` and `--arg X` repeat. What a server needs to boot is recorded in
 `src/specimens.mjs` once known, so the sweep can run it without flags.
@@ -223,6 +244,14 @@ detonation. [SPECIMENS.md](SPECIMENS.md) is the coverage table with reasons;
 [evidence/cards/README.md](evidence/cards/README.md) is the verdict index, and
 `evidence/cards/index.html` is the same evidence as a page anyone can read: a
 table of every server, who each one tried to reach, and a timeline per server.
+
+## Known gaps
+
+In priority order, with detail in [CLAUDE.md](CLAUDE.md): the world's
+`app/.env` canary is never mounted; in-place file writes are not attributed to
+a path; environment reads are invisible to the trace; "its vendor" is read off
+the package name; every tool is called once with made-up arguments. Three of
+the sixteen servers do not run, each for a recorded reason.
 
 ## Event schema
 

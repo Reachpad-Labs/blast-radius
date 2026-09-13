@@ -5,25 +5,33 @@
     "integrity": "246d3cac220c30f7239f5934c5653b560a3deb1820a47f213f9439ab9a91d200",
     "entry": "/app/node_modules/@modelcontextprotocol/server-sequential-thinking/dist/index.js"
   },
+  "mode": "scan",
+  "net": null,
   "tools": [
     "sequentialthinking"
   ],
   "findings": {
     "reads_credentials": [],
-    "attempted": [],
-    "attempted_credentials": [],
-    "returned_to_model": [],
-    "staged_on_disk": [],
     "egress": [],
-    "third_party_egress": [],
     "bytes_out": 0,
     "canary_in_payload": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
+    "unprompted_reads": [],
+    "undeclared_hosts": [],
+    "unprompted_writes": [],
     "correlated": false,
+    "policy": {
+      "vendorTokens": [
+        "sequential",
+        "thinking"
+      ],
+      "argHosts": [],
+      "probePaths": []
+    },
     "verdict": {
-      "level": "clean",
-      "line": "No credential access and no egress observed."
+      "level": "expected",
+      "line": "Did nothing beyond starting up and answering."
     }
   },
   "events": [
@@ -33,11 +41,10 @@
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 1
+      "errno": "success"
     },
     {
-      "ts": 1.453,
+      "ts": 0.183,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -47,20 +54,18 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 1
+      "errno": "success"
     },
     {
-      "ts": 0,
+      "ts": 0.313,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     },
     {
-      "ts": 1.668,
+      "ts": 0.465,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -70,8 +75,7 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "success",
-      "pass": 2
+      "errno": "success"
     }
   ]
 }

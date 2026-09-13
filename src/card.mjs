@@ -8,7 +8,8 @@
 // Describe capabilities, never accuse. We are naming real packages.
 
 const C = {
-  critical: '#F0736A', warn: '#E8B339', clean: '#6EE7A8',
+  critical: '#F0736A', undeclared: '#E8B339', expected: '#6EE7A8',
+  warn: '#E8B339', clean: '#6EE7A8',   // older saved cards still carry these levels
   ground: '#0E100F', surface: '#161918', raise: '#1C201E', line: '#2A2E2C',
   ink: '#ECE7DE', mute: '#8C918C', dim: '#636965', sink: '#7FB2E5'
 };

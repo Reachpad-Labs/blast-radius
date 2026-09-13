@@ -26,8 +26,16 @@ const servers = [];
 for (const s of SPECIMENS) {
   const b = boot.results.find(r => r.pkg === s.pkg);
   const c = cards[slugOf(s.pkg)];
+  const v = cards[slugOf(s.pkg) + '--vendor'];
   if (!b && !c) continue;
+  const LABEL = { scan: 'Block all', vendor: 'Vendor only', sink: 'Collector allowed' };
+  const runOf = card => card ? {
+    mode: card.mode || (s.control ? 'sink' : 'scan'), label: LABEL[card.mode || (s.control ? 'sink' : 'scan')], net: card.net || null,
+    findings: card.findings, events: card.events, level: card.findings.verdict.level, line: card.findings.verdict.line
+  } : null;
+  const runs = [runOf(c), runOf(v)].filter(Boolean);
   servers.push({
+    runs,
     slug: slugOf(s.pkg), pkg: s.pkg,
     name: c?.spec.name || b?.name || s.pkg,
     version: c?.spec.version || b?.version || '',
