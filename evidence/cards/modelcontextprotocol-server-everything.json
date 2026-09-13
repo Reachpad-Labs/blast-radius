@@ -28,14 +28,46 @@
     ],
     "attempted_credentials": [],
     "returned_to_model": [
-      "CANARY-cee69e11",
-      "CANARY-cb276a9e",
-      "CANARY-55e1a5cf",
-      "CANARY-fe891a68",
-      "CANARY-d4ce80f1",
-      "CANARY-9f388ccf",
-      "CANARY-b1327a68",
-      "CANARY-d3e0c3ed"
+      {
+        "canary": "CANARY-49d646df",
+        "tool": "get-env",
+        "from": "GITHUB_TOKEN"
+      },
+      {
+        "canary": "CANARY-5b1f50d6",
+        "tool": "get-env",
+        "from": "AWS_ACCESS_KEY_ID"
+      },
+      {
+        "canary": "CANARY-51f8b44b",
+        "tool": "get-env",
+        "from": "AWS_SECRET_ACCESS_KEY"
+      },
+      {
+        "canary": "CANARY-10a9f325",
+        "tool": "get-env",
+        "from": "OPENAI_API_KEY"
+      },
+      {
+        "canary": "CANARY-63595474",
+        "tool": "get-env",
+        "from": "ANTHROPIC_API_KEY"
+      },
+      {
+        "canary": "CANARY-786529f5",
+        "tool": "get-env",
+        "from": "STRIPE_SECRET_KEY"
+      },
+      {
+        "canary": "CANARY-95199204",
+        "tool": "get-env",
+        "from": "DATABASE_URL"
+      },
+      {
+        "canary": "CANARY-131aa0e2",
+        "tool": "get-env",
+        "from": "SLACK_BOT_TOKEN"
+      }
     ],
     "staged_on_disk": [],
     "egress": [
@@ -43,8 +75,19 @@
         "host": "raw.githubusercontent.com",
         "port": 0,
         "blocked": true,
-        "at": 3.25,
-        "pass": 2
+        "at": 2.63,
+        "pass": 2,
+        "vendor": false
+      }
+    ],
+    "third_party_egress": [
+      {
+        "host": "raw.githubusercontent.com",
+        "port": 0,
+        "blocked": true,
+        "at": 2.63,
+        "pass": 2,
+        "vendor": false
       }
     ],
     "bytes_out": 0,
@@ -54,7 +97,7 @@
     "correlated": false,
     "verdict": {
       "level": "critical",
-      "line": "Handed a seeded credential back through its own MCP response."
+      "line": "Returned 8 seeded credentials to the model from “get-env”."
     }
   },
   "events": [
@@ -68,7 +111,7 @@
       "pass": 1
     },
     {
-      "ts": 0.204,
+      "ts": 0.231,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -91,7 +134,7 @@
       "pass": 2
     },
     {
-      "ts": 0.246,
+      "ts": 0.223,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -105,7 +148,7 @@
       "pass": 2
     },
     {
-      "ts": 3.189,
+      "ts": 2.585,
       "call": "path_open2",
       "args": {
         "path": "/etc/resolv.conf",
@@ -119,7 +162,7 @@
       "pass": 2
     },
     {
-      "ts": 3.19,
+      "ts": 2.586,
       "call": "path_open2",
       "args": {
         "path": "/etc/nsswitch.conf",
@@ -132,7 +175,7 @@
       "pass": 2
     },
     {
-      "ts": 3.19,
+      "ts": 2.586,
       "call": "path_open2",
       "args": {
         "path": "/etc/netsvc.conf",
@@ -145,7 +188,7 @@
       "pass": 2
     },
     {
-      "ts": 3.19,
+      "ts": 2.586,
       "call": "path_open2",
       "args": {
         "path": "/etc/svc.conf",
@@ -158,7 +201,7 @@
       "pass": 2
     },
     {
-      "ts": 3.242,
+      "ts": 2.629,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -172,7 +215,7 @@
       "pass": 2
     },
     {
-      "ts": 3.25,
+      "ts": 2.63,
       "call": "resolve",
       "args": {
         "host": "raw.githubusercontent.com",

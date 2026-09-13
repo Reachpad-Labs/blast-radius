@@ -29,10 +29,27 @@ const PROBES = [
 // Creation is caught by the world scan instead, which also gets the content.
 const WRITE_CALLS = new Set(['path_rename', 'path_unlink_file']);
 
+// Generic words in a package name that say nothing about who the vendor is.
+const NOISE = new Set(['mcp', 'server', 'servers', 'modelcontextprotocol', 'js', 'node', 'cli', 'app', 'api', 'official', 'client', 'sdk', 'tools', 'stdio']);
+
+// Which hosts belong to the thing you installed. A search server calling its own
+// search API is what you installed it for; the row that matters is the OTHER
+// host. Measured: exa-mcp-server dials api.exa.ai and, 44ms later, api.agnost.ai.
+export function vendorTokens(name = '') {
+  return String(name).toLowerCase().split(/[^a-z0-9]+/).filter(t => t.length >= 3 && !NOISE.has(t));
+}
+
 export function analyse(events, {
   sinkHits = [], modelHits = [], stagedHits = [], solicitedPaths = [], createdPaths = [],
-  canaries = {}, credentialPaths = []
+  canaries = {}, credentialPaths = [], vendor = [], askedText = ''
 } = {}) {
+  // A host is the specimen's own if its name carries a token from the package
+  // name, or if we handed it the address ourselves (a database URL in argv).
+  const isVendorHost = host => {
+    const h = String(host).toLowerCase();
+    if (askedText.includes(h)) return true;
+    return vendor.some(t => h.includes(t));
+  };
   const seeded = new Set(credentialPaths);
   const isCred = p => seeded.has(p) || CRED.some(re => re.test(p));
   // We provoke every tool with a real path, so a file server told to write to
@@ -59,11 +76,11 @@ export function analyse(events, {
     if (p && PROBES.some(re => re.test(p))) fingerprinting.push(p);
 
     if (e.call === 'resolve' && e.args.host) {
-      egress.push({ host: e.args.host, port: e.args.port ?? null, blocked: e.decision === DECISION.DENY, at: e.ts, pass: e.pass });
+      egress.push({ host: e.args.host, port: e.args.port ?? null, blocked: e.decision === DECISION.DENY, at: e.ts, pass: e.pass, vendor: isVendorHost(e.args.host) });
     }
     if (e.call === 'sock_connect' && e.args.addr) {
       const [host, port] = String(e.args.addr).split(':');
-      egress.push({ host, port: port ? Number(port) : null, blocked: e.decision === DECISION.DENY, at: e.ts, pass: e.pass });
+      egress.push({ host, port: port ? Number(port) : null, blocked: e.decision === DECISION.DENY, at: e.ts, pass: e.pass, vendor: isVendorHost(host) });
     }
     if (e.call === 'sock_send' || e.call === 'sock_send_to' || (e.call === 'fd_write' && e.args.socket)) {
       bytes_out += Number(e.args.nsent ?? e.args.nwritten ?? e.args.bytes_written ?? 0);
@@ -101,6 +118,7 @@ export function analyse(events, {
 
   const attempted = [...new Set(attempted_paths)];
   const attempted_credentials = attempted.filter(isCred);
+  const third_party_egress = dedupe(egress).filter(e => !e.vendor);
 
   return {
     reads_credentials: dedupeReads(reads_credentials),
@@ -109,6 +127,7 @@ export function analyse(events, {
     returned_to_model,
     staged_on_disk,
     egress: dedupe(egress),
+    third_party_egress,
     bytes_out,
     canary_in_payload,
     // Renames and unlinks come from the trace; creations come from the world
@@ -120,7 +139,7 @@ export function analyse(events, {
     fingerprinting: [...new Set(fingerprinting)],
     correlated,
     verdict: verdict({
-      reads_credentials, attempted_credentials, egress,
+      reads_credentials, attempted_credentials, egress, third_party_egress,
       canary_in_payload, returned_to_model, staged_on_disk, correlated
     })
   };
@@ -150,7 +169,7 @@ function dedupe(list) {
 // particular box did not have them.
 const SWEEP = 3;
 
-function verdict({ reads_credentials, attempted_credentials, egress, canary_in_payload, returned_to_model, staged_on_disk, correlated }) {
+function verdict({ reads_credentials, attempted_credentials, egress, third_party_egress, canary_in_payload, returned_to_model, staged_on_disk, correlated }) {
   if (canary_in_payload.length) return { level: 'critical', line: 'Exfiltrated a seeded credential. Proven at the sink.' };
   if (returned_to_model.length) {
     const tools = [...new Set(returned_to_model.map(h => h.tool))];
@@ -161,6 +180,11 @@ function verdict({ reads_credentials, attempted_credentials, egress, canary_in_p
   if (reads_credentials.length && correlated) return { level: 'critical', line: 'Read a seeded credential, then attempted egress.' };
   if (reads_credentials.length) return { level: 'warn', line: 'Read a seeded credential.' };
   if (attempted_credentials.length >= SWEEP) return { level: 'warn', line: `Swept ${attempted_credentials.length} credential paths that were not there.` };
-  if (egress.length) return { level: 'warn', line: 'Attempted egress.' };
+  // Its own API is what you installed it for. A host that is not its own is the
+  // line worth reading.
+  if (third_party_egress.length) {
+    return { level: 'warn', line: `Dialled ${third_party_egress.map(e => e.host).join(', ')}, which is not its own service.` };
+  }
+  if (egress.length) return { level: 'clean', line: `Dialled only its own service (${dedupe(egress).map(e => e.host).join(', ')}).` };
   return { level: 'clean', line: 'No credential access and no egress observed.' };
 }

@@ -23,18 +23,20 @@
         "host": "127.0.0.1",
         "port": 5432,
         "blocked": true,
-        "at": 0.442,
-        "pass": 2
+        "at": 0.512,
+        "pass": 2,
+        "vendor": true
       }
     ],
+    "third_party_egress": [],
     "bytes_out": 0,
     "canary_in_payload": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
     "correlated": false,
     "verdict": {
-      "level": "warn",
-      "line": "Attempted egress."
+      "level": "clean",
+      "line": "Dialled only its own service (127.0.0.1)."
     }
   },
   "events": [
@@ -48,7 +50,7 @@
       "pass": 1
     },
     {
-      "ts": 0.238,
+      "ts": 0.301,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -62,7 +64,7 @@
       "pass": 1
     },
     {
-      "ts": 0.367,
+      "ts": 0.45,
       "call": "path_open2",
       "args": {
         "path": "/etc/resolv.conf",
@@ -76,7 +78,7 @@
       "pass": 1
     },
     {
-      "ts": 0.367,
+      "ts": 0.45,
       "call": "path_open2",
       "args": {
         "path": "/etc/nsswitch.conf",
@@ -89,7 +91,7 @@
       "pass": 1
     },
     {
-      "ts": 0.367,
+      "ts": 0.45,
       "call": "path_open2",
       "args": {
         "path": "/etc/netsvc.conf",
@@ -102,7 +104,7 @@
       "pass": 1
     },
     {
-      "ts": 0.367,
+      "ts": 0.451,
       "call": "path_open2",
       "args": {
         "path": "/etc/svc.conf",
@@ -124,7 +126,7 @@
       "pass": 2
     },
     {
-      "ts": 0.253,
+      "ts": 0.323,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -138,7 +140,7 @@
       "pass": 2
     },
     {
-      "ts": 0.387,
+      "ts": 0.454,
       "call": "path_open2",
       "args": {
         "path": "/etc/resolv.conf",
@@ -152,7 +154,7 @@
       "pass": 2
     },
     {
-      "ts": 0.388,
+      "ts": 0.454,
       "call": "path_open2",
       "args": {
         "path": "/etc/nsswitch.conf",
@@ -165,7 +167,7 @@
       "pass": 2
     },
     {
-      "ts": 0.388,
+      "ts": 0.454,
       "call": "path_open2",
       "args": {
         "path": "/etc/netsvc.conf",
@@ -178,7 +180,7 @@
       "pass": 2
     },
     {
-      "ts": 0.388,
+      "ts": 0.454,
       "call": "path_open2",
       "args": {
         "path": "/etc/svc.conf",
@@ -191,7 +193,7 @@
       "pass": 2
     },
     {
-      "ts": 0.442,
+      "ts": 0.512,
       "call": "sock_open",
       "args": {
         "af": "Addressfamily::Inet4",
@@ -205,7 +207,7 @@
       "pass": 2
     },
     {
-      "ts": 0.442,
+      "ts": 0.512,
       "call": "sock_connect",
       "args": {
         "addr": "127.0.0.1:5432",
@@ -217,7 +219,7 @@
       "pass": 2
     },
     {
-      "ts": 0.442,
+      "ts": 0.513,
       "call": "sock_open",
       "args": {
         "af": "Addressfamily::Inet4",

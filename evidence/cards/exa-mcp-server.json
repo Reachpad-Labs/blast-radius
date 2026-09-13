@@ -24,15 +24,27 @@
         "host": "api.exa.ai",
         "port": 0,
         "blocked": true,
-        "at": 0.692,
-        "pass": 2
+        "at": 0.714,
+        "pass": 2,
+        "vendor": true
       },
       {
         "host": "api.agnost.ai",
         "port": 0,
         "blocked": true,
-        "at": 0.736,
-        "pass": 2
+        "at": 0.774,
+        "pass": 2,
+        "vendor": false
+      }
+    ],
+    "third_party_egress": [
+      {
+        "host": "api.agnost.ai",
+        "port": 0,
+        "blocked": true,
+        "at": 0.774,
+        "pass": 2,
+        "vendor": false
       }
     ],
     "bytes_out": 0,
@@ -42,7 +54,7 @@
     "correlated": false,
     "verdict": {
       "level": "warn",
-      "line": "Attempted egress."
+      "line": "Dialled api.agnost.ai, which is not its own service."
     }
   },
   "events": [
@@ -56,7 +68,7 @@
       "pass": 1
     },
     {
-      "ts": 0.425,
+      "ts": 0.453,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -79,7 +91,7 @@
       "pass": 2
     },
     {
-      "ts": 0.359,
+      "ts": 0.379,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -93,7 +105,7 @@
       "pass": 2
     },
     {
-      "ts": 0.652,
+      "ts": 0.674,
       "call": "path_open2",
       "args": {
         "path": "/etc/resolv.conf",
@@ -107,7 +119,7 @@
       "pass": 2
     },
     {
-      "ts": 0.653,
+      "ts": 0.68,
       "call": "path_open2",
       "args": {
         "path": "/etc/nsswitch.conf",
@@ -120,7 +132,7 @@
       "pass": 2
     },
     {
-      "ts": 0.653,
+      "ts": 0.68,
       "call": "path_open2",
       "args": {
         "path": "/etc/netsvc.conf",
@@ -133,7 +145,7 @@
       "pass": 2
     },
     {
-      "ts": 0.653,
+      "ts": 0.68,
       "call": "path_open2",
       "args": {
         "path": "/etc/svc.conf",
@@ -146,7 +158,7 @@
       "pass": 2
     },
     {
-      "ts": 0.691,
+      "ts": 0.714,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -160,7 +172,7 @@
       "pass": 2
     },
     {
-      "ts": 0.692,
+      "ts": 0.714,
       "call": "resolve",
       "args": {
         "host": "api.exa.ai",
@@ -172,7 +184,7 @@
       "pass": 2
     },
     {
-      "ts": 0.698,
+      "ts": 0.724,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -186,7 +198,7 @@
       "pass": 2
     },
     {
-      "ts": 0.698,
+      "ts": 0.725,
       "call": "resolve",
       "args": {
         "host": "api.exa.ai",
@@ -198,7 +210,7 @@
       "pass": 2
     },
     {
-      "ts": 0.736,
+      "ts": 0.772,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -212,7 +224,7 @@
       "pass": 2
     },
     {
-      "ts": 0.736,
+      "ts": 0.774,
       "call": "resolve",
       "args": {
         "host": "api.agnost.ai",

@@ -15,7 +15,7 @@ import { acquire } from './src/acquire.mjs';
 import { seedWorld, scanWorld, snapshotPaths } from './src/world.mjs';
 import { detonate, stageSpecimens, rpcLines, argsFor, INIT, LIST } from './src/detonate.mjs';
 import { parseTrace } from './src/parse.mjs';
-import { analyse } from './src/analyse.mjs';
+import { analyse, vendorTokens } from './src/analyse.mjs';
 import { renderCard } from './src/card.mjs';
 import { specimenFor, seededEnv } from './src/specimens.mjs';
 
@@ -125,7 +125,10 @@ const events = [
 ];
 const findings = analyse(events, {
   sinkHits, modelHits, stagedHits, solicitedPaths, createdPaths,
-  canaries: world.canaries, credentialPaths: world.credentialPaths
+  canaries: world.canaries, credentialPaths: world.credentialPaths,
+  // who the specimen's own service is, and every address we handed it ourselves
+  vendor: vendorTokens(spec.name),
+  askedText: (asked + ' ' + JSON.stringify(common.argv) + ' ' + JSON.stringify(common.env)).toLowerCase()
 });
 
 await mkdir('.run', { recursive: true });

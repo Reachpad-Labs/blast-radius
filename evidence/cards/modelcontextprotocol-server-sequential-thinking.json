@@ -15,6 +15,7 @@
     "returned_to_model": [],
     "staged_on_disk": [],
     "egress": [],
+    "third_party_egress": [],
     "bytes_out": 0,
     "canary_in_payload": [],
     "writes_outside_cwd": [],
@@ -36,7 +37,7 @@
       "pass": 1
     },
     {
-      "ts": 1.693,
+      "ts": 1.453,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -59,7 +60,7 @@
       "pass": 2
     },
     {
-      "ts": 1.366,
+      "ts": 1.668,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",

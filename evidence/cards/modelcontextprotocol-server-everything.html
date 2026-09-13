@@ -44,7 +44,7 @@ footer{margin-top:34px;padding-top:16px;border-top:1px solid #2A2E2C;color:#6369
   <h1>@modelcontextprotocol/server-everything</h1>
   <div class="ver">2026.8.31 · sha256 26eb2809baf531c3…</div>
 </header>
-<div class="verdict"><span class="lvl">CRITICAL</span><div class="line">Handed a seeded credential back through its own MCP response.</div></div>
+<div class="verdict"><span class="lvl">CRITICAL</span><div class="line">Returned 8 seeded credentials to the model from “get-env”.</div></div>
 <div class="tiles"><div class="tile"><div class="num" style="color:#6EE7A8">0</div><div class="cap">credentials read</div></div><div class="tile"><div class="num" style="color:#E8B339">3</div><div class="cap">more sought</div></div><div class="tile"><div class="num" style="color:#6EE7A8">0</div><div class="cap">staged outbound</div></div><div class="tile"><div class="num" style="color:#636965">0</div><div class="cap">canaries proven</div></div></div>
 <section class="ev">
     <div class="evhead"><span class="badge b-attempt">attempted</span>
@@ -53,11 +53,11 @@ footer{margin-top:34px;padding-top:16px;border-top:1px solid #2A2E2C;color:#6369
   </section><section class="ev">
     <div class="evhead"><span class="badge b-trace">from trace</span>
       <h2 style="color:#E8B339">Dialled</h2></div>
-    <ul><li><code>raw.githubusercontent.com</code> <span style="color:#6EE7A8">refused</span></li></ul>
+    <ul><li><code>raw.githubusercontent.com</code> <span style="color:#6EE7A8">refused</span> <span class="tag" style="color:#E8B339">not its own service</span></li></ul>
   </section><section class="ev">
     <div class="evhead"><span class="badge b-stdout">the specimen said so</span>
-      <h2 style="color:#F0736A">Handed back through its own MCP response</h2></div>
-    <ul><li><code class="hit">CANARY-cee69e11</code></li><li><code class="hit">CANARY-cb276a9e</code></li><li><code class="hit">CANARY-55e1a5cf</code></li><li><code class="hit">CANARY-fe891a68</code></li><li><code class="hit">CANARY-d4ce80f1</code></li><li><code class="hit">CANARY-9f388ccf</code></li><li><code class="hit">CANARY-b1327a68</code></li><li><code class="hit">CANARY-d3e0c3ed</code></li></ul>
+      <h2 style="color:#F0736A">Returned to the model in a tool result</h2></div>
+    <ul><li><code class="hit">CANARY-49d646df</code> <span class="tag">GITHUB_TOKEN · via get-env</span></li><li><code class="hit">CANARY-5b1f50d6</code> <span class="tag">AWS_ACCESS_KEY_ID · via get-env</span></li><li><code class="hit">CANARY-51f8b44b</code> <span class="tag">AWS_SECRET_ACCESS_KEY · via get-env</span></li><li><code class="hit">CANARY-10a9f325</code> <span class="tag">OPENAI_API_KEY · via get-env</span></li><li><code class="hit">CANARY-63595474</code> <span class="tag">ANTHROPIC_API_KEY · via get-env</span></li><li><code class="hit">CANARY-786529f5</code> <span class="tag">STRIPE_SECRET_KEY · via get-env</span></li><li><code class="hit">CANARY-95199204</code> <span class="tag">DATABASE_URL · via get-env</span></li><li><code class="hit">CANARY-131aa0e2</code> <span class="tag">SLACK_BOT_TOKEN · via get-env</span></li></ul>
   </section>
 <footer>
 One execution under Wasmer against a canary world seeded fresh for this run — every string above

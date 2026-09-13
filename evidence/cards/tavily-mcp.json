@@ -27,18 +27,20 @@
         "host": "api.tavily.com",
         "port": 0,
         "blocked": true,
-        "at": 2.764,
-        "pass": 2
+        "at": 3.626,
+        "pass": 2,
+        "vendor": true
       }
     ],
+    "third_party_egress": [],
     "bytes_out": 0,
     "canary_in_payload": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
     "correlated": false,
     "verdict": {
-      "level": "warn",
-      "line": "Attempted egress."
+      "level": "clean",
+      "line": "Dialled only its own service (api.tavily.com)."
     }
   },
   "events": [
@@ -52,7 +54,7 @@
       "pass": 1
     },
     {
-      "ts": 1.095,
+      "ts": 1.781,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -75,7 +77,7 @@
       "pass": 2
     },
     {
-      "ts": 1.076,
+      "ts": 1.573,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -89,7 +91,7 @@
       "pass": 2
     },
     {
-      "ts": 2.72,
+      "ts": 3.59,
       "call": "path_open2",
       "args": {
         "path": "/etc/resolv.conf",
@@ -103,7 +105,7 @@
       "pass": 2
     },
     {
-      "ts": 2.721,
+      "ts": 3.591,
       "call": "path_open2",
       "args": {
         "path": "/etc/nsswitch.conf",
@@ -116,7 +118,7 @@
       "pass": 2
     },
     {
-      "ts": 2.721,
+      "ts": 3.591,
       "call": "path_open2",
       "args": {
         "path": "/etc/netsvc.conf",
@@ -129,7 +131,7 @@
       "pass": 2
     },
     {
-      "ts": 2.721,
+      "ts": 3.591,
       "call": "path_open2",
       "args": {
         "path": "/etc/svc.conf",
@@ -142,7 +144,7 @@
       "pass": 2
     },
     {
-      "ts": 2.763,
+      "ts": 3.626,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -156,7 +158,7 @@
       "pass": 2
     },
     {
-      "ts": 2.764,
+      "ts": 3.626,
       "call": "resolve",
       "args": {
         "host": "api.tavily.com",
@@ -168,7 +170,7 @@
       "pass": 2
     },
     {
-      "ts": 2.775,
+      "ts": 3.634,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -182,21 +184,7 @@
       "pass": 2
     },
     {
-      "ts": 2.783,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 14
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success",
-      "pass": 2
-    },
-    {
-      "ts": 2.784,
+      "ts": 3.635,
       "call": "resolve",
       "args": {
         "host": "api.tavily.com",
@@ -208,19 +196,7 @@
       "pass": 2
     },
     {
-      "ts": 2.785,
-      "call": "resolve",
-      "args": {
-        "host": "api.tavily.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io",
-      "pass": 2
-    },
-    {
-      "ts": 2.788,
+      "ts": 3.64,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -234,7 +210,7 @@
       "pass": 2
     },
     {
-      "ts": 2.789,
+      "ts": 3.641,
       "call": "resolve",
       "args": {
         "host": "api.tavily.com",
@@ -246,7 +222,7 @@
       "pass": 2
     },
     {
-      "ts": 2.803,
+      "ts": 3.645,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -260,7 +236,33 @@
       "pass": 2
     },
     {
-      "ts": 2.806,
+      "ts": 3.645,
+      "call": "resolve",
+      "args": {
+        "host": "api.tavily.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io",
+      "pass": 2
+    },
+    {
+      "ts": 3.65,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 3.65,
       "call": "resolve",
       "args": {
         "host": "api.tavily.com",

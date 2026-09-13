@@ -49,18 +49,20 @@
         "host": "api.firecrawl.dev",
         "port": 0,
         "blocked": true,
-        "at": 5.694,
-        "pass": 2
+        "at": 4.71,
+        "pass": 2,
+        "vendor": true
       }
     ],
+    "third_party_egress": [],
     "bytes_out": 0,
     "canary_in_payload": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
     "correlated": false,
     "verdict": {
-      "level": "warn",
-      "line": "Attempted egress."
+      "level": "clean",
+      "line": "Dialled only its own service (api.firecrawl.dev)."
     }
   },
   "events": [
@@ -74,7 +76,7 @@
       "pass": 1
     },
     {
-      "ts": 0.627,
+      "ts": 0.759,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -88,7 +90,7 @@
       "pass": 1
     },
     {
-      "ts": 4.523,
+      "ts": 4.198,
       "call": "path_open2",
       "args": {
         "path": "/etc/resolv.conf",
@@ -102,7 +104,7 @@
       "pass": 1
     },
     {
-      "ts": 4.524,
+      "ts": 4.198,
       "call": "path_open2",
       "args": {
         "path": "/etc/nsswitch.conf",
@@ -115,7 +117,7 @@
       "pass": 1
     },
     {
-      "ts": 4.524,
+      "ts": 4.199,
       "call": "path_open2",
       "args": {
         "path": "/etc/netsvc.conf",
@@ -128,7 +130,7 @@
       "pass": 1
     },
     {
-      "ts": 4.524,
+      "ts": 4.199,
       "call": "path_open2",
       "args": {
         "path": "/etc/svc.conf",
@@ -150,7 +152,7 @@
       "pass": 2
     },
     {
-      "ts": 0.621,
+      "ts": 0.473,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -164,7 +166,7 @@
       "pass": 2
     },
     {
-      "ts": 5.023,
+      "ts": 4.141,
       "call": "path_open2",
       "args": {
         "path": "/etc/resolv.conf",
@@ -178,7 +180,7 @@
       "pass": 2
     },
     {
-      "ts": 5.025,
+      "ts": 4.141,
       "call": "path_open2",
       "args": {
         "path": "/etc/nsswitch.conf",
@@ -191,7 +193,7 @@
       "pass": 2
     },
     {
-      "ts": 5.025,
+      "ts": 4.141,
       "call": "path_open2",
       "args": {
         "path": "/etc/netsvc.conf",
@@ -204,7 +206,7 @@
       "pass": 2
     },
     {
-      "ts": 5.025,
+      "ts": 4.141,
       "call": "path_open2",
       "args": {
         "path": "/etc/svc.conf",
@@ -217,7 +219,7 @@
       "pass": 2
     },
     {
-      "ts": 5.693,
+      "ts": 4.707,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -231,7 +233,7 @@
       "pass": 2
     },
     {
-      "ts": 5.694,
+      "ts": 4.71,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -243,7 +245,7 @@
       "pass": 2
     },
     {
-      "ts": 5.704,
+      "ts": 4.719,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -257,7 +259,7 @@
       "pass": 2
     },
     {
-      "ts": 5.707,
+      "ts": 4.72,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -269,7 +271,7 @@
       "pass": 2
     },
     {
-      "ts": 5.711,
+      "ts": 4.725,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -283,7 +285,7 @@
       "pass": 2
     },
     {
-      "ts": 5.715,
+      "ts": 4.725,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -295,7 +297,7 @@
       "pass": 2
     },
     {
-      "ts": 5.719,
+      "ts": 4.734,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -309,7 +311,7 @@
       "pass": 2
     },
     {
-      "ts": 5.72,
+      "ts": 4.734,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -321,7 +323,7 @@
       "pass": 2
     },
     {
-      "ts": 5.725,
+      "ts": 4.739,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -335,7 +337,7 @@
       "pass": 2
     },
     {
-      "ts": 5.726,
+      "ts": 4.74,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -347,7 +349,7 @@
       "pass": 2
     },
     {
-      "ts": 5.737,
+      "ts": 4.747,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -361,7 +363,7 @@
       "pass": 2
     },
     {
-      "ts": 5.738,
+      "ts": 4.748,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -373,7 +375,7 @@
       "pass": 2
     },
     {
-      "ts": 5.762,
+      "ts": 4.762,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -387,7 +389,7 @@
       "pass": 2
     },
     {
-      "ts": 5.765,
+      "ts": 4.763,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -399,7 +401,7 @@
       "pass": 2
     },
     {
-      "ts": 5.771,
+      "ts": 4.773,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -413,7 +415,7 @@
       "pass": 2
     },
     {
-      "ts": 5.772,
+      "ts": 4.779,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -425,7 +427,7 @@
       "pass": 2
     },
     {
-      "ts": 5.779,
+      "ts": 4.783,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -439,7 +441,7 @@
       "pass": 2
     },
     {
-      "ts": 5.781,
+      "ts": 4.784,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -451,7 +453,7 @@
       "pass": 2
     },
     {
-      "ts": 5.787,
+      "ts": 4.787,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -465,7 +467,7 @@
       "pass": 2
     },
     {
-      "ts": 5.788,
+      "ts": 4.788,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -477,7 +479,7 @@
       "pass": 2
     },
     {
-      "ts": 5.794,
+      "ts": 4.79,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -491,7 +493,7 @@
       "pass": 2
     },
     {
-      "ts": 5.795,
+      "ts": 4.791,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -503,7 +505,7 @@
       "pass": 2
     },
     {
-      "ts": 5.797,
+      "ts": 4.794,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -517,7 +519,7 @@
       "pass": 2
     },
     {
-      "ts": 5.797,
+      "ts": 4.795,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -529,7 +531,7 @@
       "pass": 2
     },
     {
-      "ts": 5.803,
+      "ts": 4.801,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -543,7 +545,21 @@
       "pass": 2
     },
     {
-      "ts": 5.804,
+      "ts": 4.805,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 4.805,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -555,21 +571,7 @@
       "pass": 2
     },
     {
-      "ts": 5.809,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success",
-      "pass": 2
-    },
-    {
-      "ts": 5.818,
+      "ts": 4.806,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -581,7 +583,7 @@
       "pass": 2
     },
     {
-      "ts": 5.826,
+      "ts": 4.81,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -595,7 +597,7 @@
       "pass": 2
     },
     {
-      "ts": 5.829,
+      "ts": 4.811,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -607,7 +609,7 @@
       "pass": 2
     },
     {
-      "ts": 5.834,
+      "ts": 4.815,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -621,7 +623,7 @@
       "pass": 2
     },
     {
-      "ts": 5.837,
+      "ts": 4.815,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -633,7 +635,7 @@
       "pass": 2
     },
     {
-      "ts": 5.839,
+      "ts": 4.819,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -647,7 +649,7 @@
       "pass": 2
     },
     {
-      "ts": 5.84,
+      "ts": 4.82,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",
@@ -659,7 +661,7 @@
       "pass": 2
     },
     {
-      "ts": 5.843,
+      "ts": 4.823,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -673,7 +675,7 @@
       "pass": 2
     },
     {
-      "ts": 5.844,
+      "ts": 4.823,
       "call": "resolve",
       "args": {
         "host": "api.firecrawl.dev",

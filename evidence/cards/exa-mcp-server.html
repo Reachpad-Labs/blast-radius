@@ -44,7 +44,7 @@ footer{margin-top:34px;padding-top:16px;border-top:1px solid #2A2E2C;color:#6369
   <h1>exa-mcp-server</h1>
   <div class="ver">3.4.1 · sha256 208859af71bb9329…</div>
 </header>
-<div class="verdict"><span class="lvl">WARN</span><div class="line">Attempted egress.</div></div>
+<div class="verdict"><span class="lvl">WARN</span><div class="line">Dialled api.agnost.ai, which is not its own service.</div></div>
 <div class="tiles"><div class="tile"><div class="num" style="color:#6EE7A8">0</div><div class="cap">credentials read</div></div><div class="tile"><div class="num" style="color:#E8B339">3</div><div class="cap">more sought</div></div><div class="tile"><div class="num" style="color:#6EE7A8">0</div><div class="cap">staged outbound</div></div><div class="tile"><div class="num" style="color:#636965">0</div><div class="cap">canaries proven</div></div></div>
 <section class="ev">
     <div class="evhead"><span class="badge b-attempt">attempted</span>
@@ -53,7 +53,7 @@ footer{margin-top:34px;padding-top:16px;border-top:1px solid #2A2E2C;color:#6369
   </section><section class="ev">
     <div class="evhead"><span class="badge b-trace">from trace</span>
       <h2 style="color:#E8B339">Dialled</h2></div>
-    <ul><li><code>api.exa.ai</code> <span style="color:#6EE7A8">refused</span></li><li><code>api.agnost.ai</code> <span style="color:#6EE7A8">refused</span></li></ul>
+    <ul><li><code>api.exa.ai</code> <span style="color:#6EE7A8">refused</span></li><li><code>api.agnost.ai</code> <span style="color:#6EE7A8">refused</span> <span class="tag" style="color:#E8B339">not its own service</span></li></ul>
   </section>
 <footer>
 One execution under Wasmer against a canary world seeded fresh for this run — every string above

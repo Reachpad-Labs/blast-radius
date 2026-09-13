@@ -35,7 +35,7 @@
       {
         "path": "/home/dev/.kube/config",
         "canary": null,
-        "at": 35.755,
+        "at": 34.534,
         "pass": 1,
         "count": 2
       }
@@ -49,6 +49,7 @@
     "returned_to_model": [],
     "staged_on_disk": [],
     "egress": [],
+    "third_party_egress": [],
     "bytes_out": 0,
     "canary_in_payload": [],
     "writes_outside_cwd": [],
@@ -70,7 +71,7 @@
       "pass": 1
     },
     {
-      "ts": 1.592,
+      "ts": 1.565,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -84,7 +85,7 @@
       "pass": 1
     },
     {
-      "ts": 33.964,
+      "ts": 32.874,
       "call": "path_open2",
       "args": {
         "path": "/etc/resolv.conf",
@@ -98,7 +99,7 @@
       "pass": 1
     },
     {
-      "ts": 33.965,
+      "ts": 32.875,
       "call": "path_open2",
       "args": {
         "path": "/etc/nsswitch.conf",
@@ -111,7 +112,7 @@
       "pass": 1
     },
     {
-      "ts": 33.965,
+      "ts": 32.875,
       "call": "path_open2",
       "args": {
         "path": "/etc/netsvc.conf",
@@ -124,7 +125,7 @@
       "pass": 1
     },
     {
-      "ts": 33.965,
+      "ts": 32.875,
       "call": "path_open2",
       "args": {
         "path": "/etc/svc.conf",
@@ -137,7 +138,7 @@
       "pass": 1
     },
     {
-      "ts": 35.755,
+      "ts": 34.534,
       "call": "path_open2",
       "args": {
         "path": "/home/dev/.kube/config",
@@ -160,7 +161,7 @@
       "pass": 2
     },
     {
-      "ts": 1.452,
+      "ts": 1.951,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -174,7 +175,7 @@
       "pass": 2
     },
     {
-      "ts": 32.541,
+      "ts": 36.867,
       "call": "path_open2",
       "args": {
         "path": "/etc/resolv.conf",
@@ -188,7 +189,7 @@
       "pass": 2
     },
     {
-      "ts": 32.542,
+      "ts": 36.868,
       "call": "path_open2",
       "args": {
         "path": "/etc/nsswitch.conf",
@@ -201,7 +202,7 @@
       "pass": 2
     },
     {
-      "ts": 32.542,
+      "ts": 36.868,
       "call": "path_open2",
       "args": {
         "path": "/etc/netsvc.conf",
@@ -214,7 +215,7 @@
       "pass": 2
     },
     {
-      "ts": 32.542,
+      "ts": 36.868,
       "call": "path_open2",
       "args": {
         "path": "/etc/svc.conf",
@@ -227,7 +228,7 @@
       "pass": 2
     },
     {
-      "ts": 33.992,
+      "ts": 38.635,
       "call": "path_open2",
       "args": {
         "path": "/home/dev/.kube/config",
@@ -241,7 +242,7 @@
       "pass": 2
     },
     {
-      "ts": 34.049,
+      "ts": 38.691,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -255,7 +256,7 @@
       "pass": 2
     },
     {
-      "ts": 34.055,
+      "ts": 38.695,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -269,7 +270,7 @@
       "pass": 2
     },
     {
-      "ts": 34.061,
+      "ts": 38.703,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -283,7 +284,7 @@
       "pass": 2
     },
     {
-      "ts": 34.065,
+      "ts": 38.707,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -297,7 +298,7 @@
       "pass": 2
     },
     {
-      "ts": 34.07,
+      "ts": 38.723,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -311,7 +312,7 @@
       "pass": 2
     },
     {
-      "ts": 34.073,
+      "ts": 38.729,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -325,7 +326,7 @@
       "pass": 2
     },
     {
-      "ts": 34.076,
+      "ts": 38.736,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -339,7 +340,7 @@
       "pass": 2
     },
     {
-      "ts": 34.08,
+      "ts": 38.743,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -353,7 +354,7 @@
       "pass": 2
     },
     {
-      "ts": 34.091,
+      "ts": 38.757,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -367,7 +368,7 @@
       "pass": 2
     },
     {
-      "ts": 34.094,
+      "ts": 38.773,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",

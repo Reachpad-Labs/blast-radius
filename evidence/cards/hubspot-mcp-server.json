@@ -43,18 +43,20 @@
         "host": "api.hubspot.com",
         "port": 0,
         "blocked": true,
-        "at": 2.721,
-        "pass": 2
+        "at": 2.712,
+        "pass": 2,
+        "vendor": true
       }
     ],
+    "third_party_egress": [],
     "bytes_out": 0,
     "canary_in_payload": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
     "correlated": false,
     "verdict": {
-      "level": "warn",
-      "line": "Attempted egress."
+      "level": "clean",
+      "line": "Dialled only its own service (api.hubspot.com)."
     }
   },
   "events": [
@@ -68,7 +70,7 @@
       "pass": 1
     },
     {
-      "ts": 1.282,
+      "ts": 1.52,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -91,7 +93,7 @@
       "pass": 2
     },
     {
-      "ts": 1.232,
+      "ts": 1.252,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -105,7 +107,7 @@
       "pass": 2
     },
     {
-      "ts": 2.66,
+      "ts": 2.664,
       "call": "path_open2",
       "args": {
         "path": "/etc/resolv.conf",
@@ -119,7 +121,7 @@
       "pass": 2
     },
     {
-      "ts": 2.662,
+      "ts": 2.665,
       "call": "path_open2",
       "args": {
         "path": "/etc/nsswitch.conf",
@@ -132,7 +134,7 @@
       "pass": 2
     },
     {
-      "ts": 2.662,
+      "ts": 2.665,
       "call": "path_open2",
       "args": {
         "path": "/etc/netsvc.conf",
@@ -145,7 +147,7 @@
       "pass": 2
     },
     {
-      "ts": 2.662,
+      "ts": 2.665,
       "call": "path_open2",
       "args": {
         "path": "/etc/svc.conf",
@@ -158,7 +160,7 @@
       "pass": 2
     },
     {
-      "ts": 2.713,
+      "ts": 2.711,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -172,59 +174,33 @@
       "pass": 2
     },
     {
-      "ts": 2.72,
+      "ts": 2.712,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io",
+      "pass": 2
+    },
+    {
+      "ts": 2.721,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
         "dirfd": 5,
         "follow_symlinks": "true",
-        "ret_fd": 14
+        "ret_fd": 13
       },
       "canary_hit": null,
       "decision": "allow",
       "errno": "success",
-      "pass": 2
-    },
-    {
-      "ts": 2.721,
-      "call": "resolve",
-      "args": {
-        "host": "api.hubspot.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io",
-      "pass": 2
-    },
-    {
-      "ts": 2.721,
-      "call": "resolve",
-      "args": {
-        "host": "api.hubspot.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io",
       "pass": 2
     },
     {
       "ts": 2.724,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success",
-      "pass": 2
-    },
-    {
-      "ts": 2.725,
       "call": "resolve",
       "args": {
         "host": "api.hubspot.com",
@@ -236,7 +212,7 @@
       "pass": 2
     },
     {
-      "ts": 2.729,
+      "ts": 2.73,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -288,7 +264,33 @@
       "pass": 2
     },
     {
+      "ts": 2.738,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
       "ts": 2.739,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io",
+      "pass": 2
+    },
+    {
+      "ts": 2.743,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -302,7 +304,7 @@
       "pass": 2
     },
     {
-      "ts": 2.741,
+      "ts": 2.744,
       "call": "resolve",
       "args": {
         "host": "api.hubspot.com",
@@ -314,7 +316,7 @@
       "pass": 2
     },
     {
-      "ts": 2.751,
+      "ts": 2.75,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -340,7 +342,33 @@
       "pass": 2
     },
     {
-      "ts": 2.757,
+      "ts": 2.755,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 2.756,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io",
+      "pass": 2
+    },
+    {
+      "ts": 2.759,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -366,7 +394,7 @@
       "pass": 2
     },
     {
-      "ts": 2.763,
+      "ts": 2.764,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -406,7 +434,7 @@
       "pass": 2
     },
     {
-      "ts": 2.77,
+      "ts": 2.769,
       "call": "resolve",
       "args": {
         "host": "api.hubspot.com",
@@ -432,7 +460,33 @@
       "pass": 2
     },
     {
-      "ts": 2.773,
+      "ts": 2.774,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "io",
+      "pass": 2
+    },
+    {
+      "ts": 2.775,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success",
+      "pass": 2
+    },
+    {
+      "ts": 2.776,
       "call": "resolve",
       "args": {
         "host": "api.hubspot.com",
@@ -459,58 +513,6 @@
     },
     {
       "ts": 2.779,
-      "call": "resolve",
-      "args": {
-        "host": "api.hubspot.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io",
-      "pass": 2
-    },
-    {
-      "ts": 2.781,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success",
-      "pass": 2
-    },
-    {
-      "ts": 2.781,
-      "call": "resolve",
-      "args": {
-        "host": "api.hubspot.com",
-        "port": 0
-      },
-      "canary_hit": null,
-      "decision": "deny",
-      "errno": "io",
-      "pass": 2
-    },
-    {
-      "ts": 2.783,
-      "call": "path_open2",
-      "args": {
-        "path": "/etc/hosts",
-        "dirfd": 5,
-        "follow_symlinks": "true",
-        "ret_fd": 13
-      },
-      "canary_hit": null,
-      "decision": "allow",
-      "errno": "success",
-      "pass": 2
-    },
-    {
-      "ts": 2.785,
       "call": "resolve",
       "args": {
         "host": "api.hubspot.com",

@@ -57,7 +57,8 @@ export function renderCard(f, meta = {}) {
     block('attempt', 'Looked for, not on this box', attempted.map(p => `<code class="faint">${esc(short(p))}</code>`), C.warn),
 
     block('trace', 'Dialled', f.egress.map(e =>
-      `<code>${esc(e.host)}${e.port ? ':' + e.port : ''}</code> <span style="color:${e.blocked ? C.clean : C.critical}">${e.blocked ? 'refused' : 'connected'}</span>`), C.warn),
+      `<code>${esc(e.host)}${e.port ? ':' + e.port : ''}</code> <span style="color:${e.blocked ? C.clean : C.critical}">${e.blocked ? 'refused' : 'connected'}</span>`
+      + (e.vendor === false ? ` <span class="tag" style="color:${C.warn}">not its own service</span>` : '')), C.warn),
 
     block('sink', 'Arrived at a collector we control', proven.slice(0, 6).map(c =>
       `<code class="hit">${esc(c)}</code>`).concat(proven.length > 6
