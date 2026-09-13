@@ -10,9 +10,10 @@ Built at the AI Security Hackathon, SF, 2026-09-13. Wasmer SDK track.
 You `npm install` an MCP server. It then runs beside your agent with your
 filesystem and your tokens. You read the README, not the code.
 
-Blast Radius runs that server inside Wasmer against a **canary world** — a fake
-home directory whose secrets are unique strings — traces every syscall it makes,
-and prints a card saying what it touched and where it tried to send it.
+Blast Radius runs that server inside Wasmer against a **canary world** — a
+working developer's home directory whose every secret is a unique string, plus a
+shell environment full of unique tokens — traces every syscall it makes, and
+prints a card saying what it touched and where it tried to send it.
 
 ## Status: the instrument works and the premise is proven
 
@@ -29,7 +30,7 @@ Everything below was verified on a real run today. Evidence is in `evidence/`.
 The two lines that make the demo, from a real trace:
 
 ```
-path_open2: return=Ok(Errno::success) path="/home/.ssh/id_ed25519" ret_fd=6
+path_open2: return=Ok(Errno::success) path="/home/dev/.ssh/id_ed25519" ret_fd=6
 resolve:    return=Ok(Errno::perm)    host="example.com" port=0
 ```
 
@@ -55,6 +56,7 @@ RUST_LOG="wasmer_wasix::syscalls=trace" \
 wasmer run wasmer/edgejs@0.2.0 --experimental-napi \
   --volume "$PWD/specimens:/app" \
   --volume "$PWD/fixtures/world/home:/home" \
+  --env HOME=/home/dev --env USER=dev \
   --net="dns:deny=*:*" \
   -- /app/node_modules/@modelcontextprotocol/server-memory/dist/index.js \
   < rpc.txt 2>trace.log
@@ -69,10 +71,42 @@ Omitting `--net` entirely is default-deny and the guest still runs.
 ```sh
 node harness/sink.mjs &                                # capture sink on :8099
 wasmer run python/python@3.13.20 \
-  --volume "$PWD/fixtures/world/home:/home" --volume "$PWD/fixtures/world/app:/app" \
-  --net -- /app/exfil.py   # from harness/probes/
+  --volume "$PWD/fixtures/world/home:/home" --volume "$PWD/harness/probes:/app" \
+  --net -- /app/exfil.py
 cat sink.log                                   # canary string, on the wire
 ```
+
+## The canary world
+
+The guest gets a home directory that looks like a machine someone works on:
+34 files, 16 of them carrying a canary, mounted at `/home` with `HOME=/home/dev`.
+
+```
+~/.ssh/           id_ed25519, id_rsa, known_hosts, config, authorized_keys
+~/.aws/           credentials, config
+~/.config/        gh/hosts.yml, gcloud/application_default_credentials.json,
+                  Claude/claude_desktop_config.json   (tokens in an MCP config)
+~/.docker/config.json  ~/.kube/config  ~/.npmrc  ~/.pypirc  ~/.netrc
+~/.git-credentials  ~/.cargo/credentials.toml  ~/.claude/.credentials.json
+~/.bashrc  ~/.bash_history  ~/.gitconfig  ~/.viminfo
+~/Documents  ~/Downloads  ~/projects/acme-api   (benign noise, and a real .env)
+```
+
+Plus **19 environment variables** — `GITHUB_TOKEN`, `AWS_SECRET_ACCESS_KEY`,
+`ANTHROPIC_API_KEY`, `DATABASE_URL` and friends, each canary-valued, alongside
+the ordinary `PATH`/`SHELL`/`LANG` of a real shell.
+
+Why env matters: **Wasmer inherits nothing from the host.** An unseeded run hands
+the specimen `process.env === {}`, so the single most common exfiltration path
+finds an empty object and the card reads clean. Measured, not assumed.
+
+Env canaries are `proven-at-sink` only. `environ_get` copies the whole block in
+one call, so the trace shows *that* the environment was read and never *which*
+variable was taken.
+
+Every fixture carrying a `CANARY-xxxxx` placeholder gets a fresh value per run,
+keyed by its path, so a hit names the file it came from. Adding a fixture needs
+no code change.
 
 ## Traps
 

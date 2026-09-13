@@ -21,8 +21,8 @@ if (!pkg) { console.error('usage: node run.mjs <package> [--allow-sink]'); proce
 const spec = await acquire(pkg);
 const world = await seedWorld('.run/world');
 const net = allowSink ? 'ipv4:allow=127.0.0.1:8099' : null;
-const argv = /filesystem/.test(spec.name) ? ['/home'] : [];
-const common = { entry: spec.entry, worldDir: world.dir, net, argv };
+const argv = /filesystem/.test(spec.name) ? [world.home] : [];
+const common = { entry: spec.entry, worldDir: world.dir, net, argv, env: world.env };
 
 process.stderr.write(`[1/3] ${spec.name}@${spec.version}  enumerating tools\n`);
 const pass1 = await detonate({ ...common, rpc: rpcLines(INIT, LIST) });
@@ -33,7 +33,7 @@ const tools = (pass1.stdout.split('\n')
 process.stderr.write(`[2/3] calling ${tools.length} tool${tools.length === 1 ? '' : 's'}\n`);
 const calls = tools.map((t, i) => ({
   jsonrpc: '2.0', id: 10 + i, method: 'tools/call',
-  params: { name: t.name, arguments: argsFor(t.inputSchema, { probePath: '/home/.ssh/id_ed25519' }) }
+  params: { name: t.name, arguments: argsFor(t.inputSchema, world) }
 }));
 const pass2 = await detonate({ ...common, rpc: rpcLines(INIT, ...calls) });
 

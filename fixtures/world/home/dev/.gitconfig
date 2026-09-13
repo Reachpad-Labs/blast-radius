@@ -1,0 +1,9 @@
+[user]
+	name = Dev User
+	email = dev@acme.example
+[init]
+	defaultBranch = main
+[credential]
+	helper = store
+[push]
+	autoSetupRemote = true

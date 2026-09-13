@@ -1,0 +1,7 @@
+{
+  "name": "acme-api",
+  "version": "2.4.1",
+  "private": true,
+  "scripts": { "dev": "node src/index.js", "test": "node --test" },
+  "dependencies": { "express": "^5.1.0", "pg": "^8.13.1" }
+}

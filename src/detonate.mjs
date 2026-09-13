@@ -6,11 +6,15 @@ const WASMER = process.env.WASMER_BIN || path.join(process.env.HOME, '.wasmer/bi
 const RUNTIME = 'wasmer/edgejs@0.2.0';
 
 // net: a --net rule string, or null for default-deny (the flag omitted entirely)
-export function detonate({ entry, worldDir, specimensDir = 'specimens', net = null, argv = [], rpc = '', timeoutMs = 120000 }) {
+// env: the guest environment. Wasmer inherits NOTHING from the host, so an
+//      unseeded run hands the specimen process.env === {} — and env is where
+//      the credentials on a real box actually live. Measured, not assumed.
+export function detonate({ entry, worldDir, specimensDir = 'specimens', net = null, argv = [], env = {}, rpc = '', timeoutMs = 120000 }) {
   const args = [
     'run', RUNTIME, '--experimental-napi',
     '--volume', `${path.resolve(specimensDir)}:/app`,
     '--volume', `${path.join(worldDir, 'home')}:/home`,
+    ...Object.entries(env).flatMap(([k, v]) => ['--env', `${k}=${v}`]),
     ...(net ? [`--net=${net}`] : []),
     '--', entry, ...argv
   ];

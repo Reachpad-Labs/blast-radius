@@ -136,3 +136,47 @@ Two corrections to the filter came out of this run:
 - A denied `sock_connect` to a raw IP returns **`Errno::io`**, not `Errno::perm`.
   DNS denials give `perm`; raw-IP connects under default-deny give `io`. Treat
   both as deny or every blocked exfiltration reads as allowed.
+
+## What the guest actually is
+
+Measured directly with a probe script, not inferred. It is POSIX-shaped, not
+Linux, and it is a subset:
+
+| | guest | a real box |
+| --- | --- | --- |
+| `process.platform` | `wasi` | `linux` |
+| `process.env` | `{}` — **nothing** is inherited | 40+ vars, tokens among them |
+| `os.homedir()` | **throws** `ERR_SYSTEM_ERROR` unless `HOME` is passed | `/home/<user>` |
+| mode / uid / gid | `0` / `0` / `0` on every path | `600`, real uid |
+| `/proc`, `/sys`, `/etc/passwd` | absent (`/etc` holds only `hosts`) | present |
+| `/nix` | absent in the edgejs image | n/a |
+
+Consequences, in order of how much recall they cost:
+
+1. **Env theft was invisible.** Credentials on a real box live in `process.env`
+   as much as on disk. Wasmer inherits nothing, so an unseeded run hands the
+   specimen `{}` and the class scores clean. Fixed: `seedWorld` mints env
+   canaries and `detonate` passes them with `--env`.
+2. **`os.homedir()` throwing killed specimens before they reached the canary.**
+   Anything resolving `~` took its error branch. Fixed: `HOME=/home/dev`, and
+   the world is seeded under a named user rather than at `/home` directly.
+3. **An absent path plus the `Errno::noent` rule equals silence.** The rule is
+   right for Node's startup probes and wrong for the specimen: a credential
+   sweep over paths that do not exist in the world produces zero events. Fixed
+   by making the world contain what a real box contains — 16 canary files
+   across `.ssh`, `.aws`, `.config/gh`, `.docker`, `.kube`, `.npmrc`, `.netrc`,
+   `.claude` and an MCP config with tokens in it. The alternative fix, keeping
+   `noent` under `/home` as a lower-confidence `attempted` tier, is still open
+   and would catch sweeps for paths we did not think to seed.
+4. **Mode-based reasoning is untestable here.** Modes do not survive the mount.
+   The fixtures are `600` on the host anyway, so this stays correct if Wasmer
+   ever preserves them.
+
+`environ_get` *does* appear in the trace, but it copies the whole block in one
+call and Node fires it at startup regardless. It proves the environment was
+read, never which variable was taken — so env canaries are `proven-at-sink`
+tier, never `observed-from-trace`.
+
+Two smaller measured facts: symlinks work and follow into mounted volumes, and
+the guest can **write** to the mounted world, which is why `seedWorld` rebuilds
+it from the template on every run.
