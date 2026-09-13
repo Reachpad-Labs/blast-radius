@@ -42,7 +42,7 @@ the process ran to completion.
 ```sh
 curl -sSfL https://get.wasmer.io | sh          # installs to ~/.wasmer
 source ~/.wasmer/wasmer.sh                     # wasmer 7.4.1+
-cd specimens && npm install                    # the MCP servers under test
+cd specimens && npm install --ignore-scripts   # the MCP servers under test
 ```
 
 ## Run a Node MCP server under the trace
@@ -134,6 +134,22 @@ no code change, and adding a top-level directory needs no change in `detonate`.
 - **proven-at-sink** — a specific canary string in a specific payload. The only
   tier that can ever carry an env canary, because `environ_get` copies the whole
   block in one call.
+
+## What the guest cannot do
+
+Escape attempts, measured: a symlink to a host absolute path, `../` traversal, a
+symlink to `/home/seiji`, and a direct read of a host path are all refused —
+symlink targets resolve in the **guest** namespace, where those paths do not
+exist. The capability model holds.
+
+What a specimen *can* do is write anywhere we mount, because Wasmer has no
+read-only volume. So it is handed copies: the world is re-seeded per run, and
+`stageSpecimens()` copies the specimen tree to `.run/specimens` before every
+detonation. Verified the need the hard way — a probe planted a file in
+`specimens/` through `/app`.
+
+The step outside all of this is `npm install`, which runs lifecycle scripts on
+your box as you before Wasmer is involved. Hence `--ignore-scripts` above.
 
 ## Traps
 

@@ -208,3 +208,39 @@ anything could reach it.
 The one thing to watch: mounting a directory at `/etc` **shadows** the image's
 `/etc`, which holds the `hosts` file. Supply your own or name resolution goes
 with it. Ours does; DNS was verified resolving after the mount.
+
+## Is mounting host paths into the guest a risk?
+
+Tested, because it is the obvious question. Escape attempts from inside the
+guest, all from a specimen-controlled symlink or path:
+
+```
+symlink -> /abs/host/file          BLOCKED ENOENT   targets resolve in the GUEST namespace
+symlink -> ../../../../etc/passwd  BLOCKED EPERM
+symlink -> /home/seiji             BLOCKED ENOENT
+literal /home/../../../etc/passwd  BLOCKED ENOENT
+readdir /home/seiji                BLOCKED ENOENT   the host path simply does not exist
+write through an escaping symlink  BLOCKED ENOENT
+```
+
+The capability model holds: a guest sees the mounts and nothing else, and a
+symlink pointing at a host absolute path resolves against the guest's own root,
+where that path is absent.
+
+**What is real is writes inside the mounts.** Both succeeded:
+
+```
+write /home/dev/planted.txt              WROTE   the world — a per-run copy, fine
+write /app/planted-in-specimens.txt      WROTE   specimens/ ON THE HOST — not fine
+```
+
+Wasmer's `--volume` has no read-only form. A malicious specimen could rewrite
+its own package, or any sibling in `specimens/node_modules`, and the next thing
+on the host to run that code executes it as you. Fixed: `stageSpecimens()`
+copies the tree to `.run/specimens` per run (39 MB, 1.2 s) and the guest is
+handed the copy. The world was already a per-run copy.
+
+**The genuinely unsandboxed step is `npm install`.** Acquiring a specimen runs
+its lifecycle scripts on the host as you, before Wasmer is ever involved. Use
+`npm install --ignore-scripts`, and treat the install itself as the part of this
+tool that is not protected by any of the above.

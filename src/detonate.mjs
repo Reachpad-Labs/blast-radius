@@ -1,9 +1,20 @@
 // STAGE 3 — run the specimen under Wasmer and provoke it.
 import { spawn } from 'node:child_process';
+import { cp, rm } from 'node:fs/promises';
 import path from 'node:path';
 
 const WASMER = process.env.WASMER_BIN || path.join(process.env.HOME, '.wasmer/bin/wasmer');
 const RUNTIME = 'wasmer/edgejs@0.2.0';
+
+// Volumes are read-write and Wasmer has no read-only mount, so a specimen CAN
+// write to whatever we hand it — measured: it planted a file in specimens/.
+// Detonate a copy, never the tree we keep. The world is already a per-run copy
+// for the same reason.
+export async function stageSpecimens(src = 'specimens', dest = '.run/specimens') {
+  await rm(dest, { recursive: true, force: true });
+  await cp(src, dest, { recursive: true });
+  return path.resolve(dest);
+}
 
 // net: a --net rule string, or null for default-deny (the flag omitted entirely)
 // env: the guest environment. Wasmer inherits NOTHING from the host, so an

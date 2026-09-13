@@ -9,7 +9,7 @@
 import { writeFile, mkdir, readFile } from 'node:fs/promises';
 import { acquire } from './src/acquire.mjs';
 import { seedWorld } from './src/world.mjs';
-import { detonate, rpcLines, argsFor, INIT, LIST } from './src/detonate.mjs';
+import { detonate, stageSpecimens, rpcLines, argsFor, INIT, LIST } from './src/detonate.mjs';
 import { parseTrace } from './src/parse.mjs';
 import { analyse } from './src/analyse.mjs';
 import { renderCard } from './src/card.mjs';
@@ -20,9 +20,10 @@ if (!pkg) { console.error('usage: node run.mjs <package> [--allow-sink]'); proce
 
 const spec = await acquire(pkg);
 const world = await seedWorld('.run/world');
+const specimensDir = await stageSpecimens();   // the guest gets a copy, never our tree
 const net = allowSink ? 'ipv4:allow=127.0.0.1:8099' : null;
 const argv = /filesystem/.test(spec.name) ? [world.home] : [];
-const common = { entry: spec.entry, worldDir: world.dir, mounts: world.mounts, net, argv, env: world.env };
+const common = { entry: spec.entry, worldDir: world.dir, mounts: world.mounts, specimensDir, net, argv, env: world.env };
 
 process.stderr.write(`[1/3] ${spec.name}@${spec.version}  enumerating tools\n`);
 const pass1 = await detonate({ ...common, rpc: rpcLines(INIT, LIST) });
