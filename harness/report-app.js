@@ -24,9 +24,16 @@
     sort: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2l3 4H5l3-4zm0 12l-3-4h6l-3 4z"/></svg>',
     x: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2.5 8 7l4.5-4.5 1 1L9 8l4.5 4.5-1 1L8 9l-4.5 4.5-1-1L7 8 2.5 3.5l1-1z"/></svg>',
     check: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.4 3.6 6.5 10.5 3.6 7.6 2.5 8.7l4 4 8-8-1.1-1.1z"/></svg>',
-    flask: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 1h4v1.5h-.5v3.6l3.9 6.8A1.5 1.5 0 0 1 12.1 15H3.9a1.5 1.5 0 0 1-1.3-2.1l3.9-6.8V2.5H6V1z"/></svg>'
+    flask: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 1h4v1.5h-.5v3.6l3.9 6.8A1.5 1.5 0 0 1 12.1 15H3.9a1.5 1.5 0 0 1-1.3-2.1l3.9-6.8V2.5H6V1z"/></svg>',
+    flag: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5h1.5v13H3v-13zm2.5 0h7.5l-2.2 3.25 2.2 3.25H5.5v-6.5z"/></svg>'
   };
-  var LV = { critical: 'Critical', warn: 'Warning', clean: 'Clean', noboot: 'Did not boot' };
+  var LV = { critical: 'Critical', undeclared: 'Undeclared', expected: 'Expected', warn: 'Warning', clean: 'Clean', noboot: 'Did not run' };
+  var WHY = {
+    critical: 'a planted secret provably left, or was opened unprompted right before a connection attempt',
+    undeclared: 'it did something nobody asked for and nothing announced',
+    expected: 'it only did what its job or our request implied',
+    noboot: 'it never finished starting up, so there is nothing to judge'
+  };
   // the card data keeps its own wording; this is how each known line reads to a non-specialist
   var PLAIN = {
     'Exfiltrated a seeded credential. Proven at the sink.': 'Sent a planted secret out of the sandbox. Proven: it arrived at our collector.',
@@ -36,10 +43,27 @@
     'No credential access and no egress observed.': 'Did not open any secret or try to reach any server.'
   };
   function plainLine(t) { return PLAIN[t] || t; }
-  var SEV = { critical: 0, warn: 1, clean: 2, noboot: 3 };
+  var SEV = { critical: 0, undeclared: 1, warn: 1, expected: 2, clean: 2, noboot: 3 };
   var CRED = [/\.ssh\//, /\.env$/, /\.aws\//, /credentials/i, /id_[a-z0-9]+$/, /\.npmrc$/, /\.netrc$/];
 
-  var state = { sel: 'overview', q: '', sortKey: 'sev', sortDir: 1 };
+  var state = { sel: 'overview', q: '', sortKey: 'sev', sortDir: 1, run: null };
+  var POLICY = {
+    scan: 'Block all: every connection refused. The card shows what it tried.',
+    vendor: 'Vendor only: allowed to reach the hosts its block-all run showed to be its own vendor, everything else refused. Real traffic, fake keys.',
+    sink: 'Collector allowed: it may reach our collector and nothing else, so what it sends can be read.'
+  };
+  function runOf(s) { var r = (s.runs || []).filter(function (r) { return r.mode === state.run; })[0]; return r || (s.runs || [])[0] || null; }
+  // one row per host, whatever ports or addresses it used
+  function hostsOf(f) {
+    var m = {}, order = [];
+    (f.egress || []).forEach(function (e) {
+      var c = m[e.host]; if (!c) { c = m[e.host] = { host: e.host, blocked: true, expected: e.expected, why: e.why, at: e.at, ports: [], ips: [] }; order.push(c); }
+      if (!e.blocked) c.blocked = false;
+      if (e.port && c.ports.indexOf(e.port) < 0 && e.port !== 65535 && e.port !== 0) c.ports.push(e.port);
+      (e.ips || []).forEach(function (ip) { if (c.ips.indexOf(ip) < 0) c.ips.push(ip); });
+    });
+    return order;
+  }
 
   /* ---------- event classification (rendering only) ---------- */
   function classify(e) {
@@ -158,13 +182,31 @@
   }
 
   /* ---------- pieces ---------- */
-  function verdictIcon(level) { return I[level] || I.noboot; }
+  function verdictIcon(level) { return { critical: I.critical, undeclared: I.flag, warn: I.warn, expected: I.clean, clean: I.clean, noboot: I.noboot }[level] || I.noboot; }
+  function hostTag(e) {
+    if (e.expected === undefined) return '';
+    return e.expected ? '<span class="pill vendor">' + esc(e.why || 'expected') + '</span>' : '<span class="pill undeclared">' + I.flag + 'undeclared</span>';
+  }
   function pillHost(e) {
     return '<span class="pill ' + (e.blocked ? 'blocked' : 'allowed') + '">' + (e.blocked ? I.x : I.check) + (e.blocked ? 'blocked' : 'went through') + '</span>';
   }
   function whyLine(s) {
     if (s.level === 'noboot') return s.bootReason || 'It never finished starting up.';
     var f = s.findings, parts = [];
+    if (f.policy) {
+      if (f.canary_in_payload.length) return 'The planted secret arrived at our collector, so the leak is proven rather than guessed.';
+      if (s.level === 'critical') return 'It opened a secret no tool argument pointed at, then tried to connect right after. Together that is the shape of a leak, even though the connection was blocked.';
+      var hs = hostsOf(f), vendor = hs.filter(function (e) { return e.expected; }), other = hs.filter(function (e) { return e.expected === false; });
+      if (other.length) parts.push('reached out to ' + other.map(function (e) { return e.host; }).join(' and ') + ', which neither its name nor our arguments explain');
+      if (f.unprompted_reads && f.unprompted_reads.length) parts.push('opened ' + f.unprompted_reads.join(' and ') + ' with no tool argument pointing at it');
+      if (f.unprompted_writes && f.unprompted_writes.length) parts.push('changed ' + f.unprompted_writes.join(' and ') + ' unprompted');
+      if (parts.length) { var t0 = parts.join('; '); return t0.charAt(0).toUpperCase() + t0.slice(1) + '. Everything else it did was expected.'; }
+      var ok = [];
+      if (vendor.length) ok.push('every host it reached (' + vendor.map(function (e) { return e.host; }).join(', ') + ') is its own vendor or one we passed in');
+      if (f.reads_credentials.length) ok.push('the secret file it opened was one our probe asked for');
+      if (!ok.length) return 'Did not open any secret or try to reach any server in this run. It could still do either in a situation we did not trigger.';
+      var t1 = ok.join(', and '); return t1.charAt(0).toUpperCase() + t1.slice(1) + '.';
+    }
     if (f.canary_in_payload.length) parts.push('the planted secret arrived at our collector, so the leak is proven rather than guessed');
     if (f.reads_credentials.length) parts.push('opened ' + plural(f.reads_credentials.length, 'secret file'));
     if (f.egress.length) { var b = f.egress.filter(function (e) { return e.blocked; }).length; parts.push('tried to reach ' + plural(f.egress.length, 'server') + ' (' + b + ' blocked' + (f.egress.length - b ? ', ' + (f.egress.length - b) + ' went through' : '') + ')'); }
@@ -183,7 +225,7 @@
   }
   function renderSidebar() {
     var q = state.q.trim().toLowerCase();
-    var groups = [['critical', 'Critical'], ['warn', 'Warning'], ['clean', 'Clean'], ['noboot', 'Did not boot']];
+    var groups = [['critical', 'Critical'], ['undeclared', 'Undeclared'], ['warn', 'Warning'], ['expected', 'Expected'], ['clean', 'Clean'], ['noboot', 'Did not run']];
     var h = '<div class="brand"><span class="mark">' + I.critical + '</span><div><b>Blast Radius</b><span>' + servers.filter(function (s) { return !s.control; }).length + ' MCP servers from npm, plus one we wrote to be malicious</span></div></div>';
     h += '<label class="search">' + I.search + '<input id="q" type="search" placeholder="Search servers, hosts, tools" value="' + esc(state.q) + '" aria-label="Search"></label>';
     h += '<div class="group"><button class="row" data-sel="overview" aria-current="' + (state.sel === 'overview') + '"><span class="sym overview">' + I.overview + '</span><span class="t"><span class="name">Overview</span><span class="sub">every server in one table</span></span></button></div>';
@@ -217,6 +259,7 @@
         case 'writes': return f ? f.writes_outside_cwd.length : -1;
         case 'bytes': return f ? f.bytes_out : -1;
         case 'proven': return f ? f.canary_in_payload.length : -1;
+        case 'vendor': { var v = (s.runs || []).filter(function (r) { return r.mode === 'vendor'; })[0]; return v ? SEV[v.level] : 9; }
         case 'boot': return s.bootMs == null ? 1e9 : s.bootMs;
       }
       return 0;
@@ -239,36 +282,37 @@
       '<div class="tile"><span class="n">' + npm.length + '</span><span class="l">servers tested<small>all plain JavaScript</small></span></div>' +
       '<div class="tile"><span class="n">' + booted + '<span style="font-size:14px;color:var(--ink2);font-weight:500"> / ' + npm.length + '</span></span><span class="l">started and listed their tools<small>' + (npm.length - booted) + ' did not, reasons below</small></span></div>' +
       '<div class="tile critical"><span class="n">' + n('critical') + '</span><span class="l">critical<small>' + (n('critical') === 1 && servers.some(function (s) { return s.control && s.level === 'critical'; }) ? 'only our planted bad server' : 'a secret provably sent out') + '</small></span></div>' +
-      '<div class="tile warn"><span class="n">' + n('warn') + '</span><span class="l">warning<small>opened a secret or tried to reach a server</small></span></div>' +
-      '<div class="tile clean"><span class="n">' + n('clean') + '</span><span class="l">clean<small>did neither in this run</small></span></div>' +
+      '<div class="tile undeclared"><span class="n">' + (n('undeclared') + n('warn')) + '</span><span class="l">undeclared<small>did something nobody asked for</small></span></div>' +
+      '<div class="tile expected"><span class="n">' + (n('expected') + n('clean')) + '</span><span class="l">expected<small>only did what its job implied</small></span></div>' +
       '</div>';
     h += '<section class="sec"><div class="sec-h"><h2>All servers</h2><span class="tier">click a row for the full run</span></div><div class="box tablewrap"><table><thead><tr>' +
-      th('name', 'Server') + th('sev', 'Verdict') + th('tools', 'Tools', true) + th('reads', 'Secrets', true) + th('egress', 'Reached out to') + th('writes', 'Changes', true) + th('bytes', 'Sent', true) + th('proven', 'Proven leak') + th('boot', 'Startup', true) +
+      th('name', 'Server') + th('sev', 'Block all') + th('vendor', 'Vendor only') + th('tools', 'Tools', true) + th('reads', 'Secrets', true) + th('egress', 'Reached out to') + th('proven', 'Proven leak') + th('boot', 'Startup', true) +
       '</tr></thead><tbody>';
     sortServers(servers).forEach(function (s) {
       var f = s.findings;
       h += '<tr tabindex="0" data-sel="' + esc(s.slug) + '">' +
         '<td><div class="name">' + esc(s.name) + (s.control ? ' <span class="pill count">control</span>' : '') + '</div><div class="ver">' + esc(s.version) + (s.note ? ' · ' + esc(s.note.split(/[;,]/)[0]) : '') + '</div></td>' +
         '<td><span class="vd ' + s.level + '">' + verdictIcon(s.level) + LV[s.level] + '</span></td>' +
+        '<td>' + (function () { var v = (s.runs || []).filter(function (r) { return r.mode === 'vendor'; })[0]; return v ? '<span class="vd ' + v.level + '">' + verdictIcon(v.level) + LV[v.level] + '</span>' : '<span class="none">' + (s.control ? 'collector run' : f ? 'nothing to allow' : '–') + '</span>'; })() + '</td>' +
         '<td class="r">' + (s.tools.length || '<span class="none">–</span>') + '</td>' +
         '<td class="r">' + (f ? (f.reads_credentials.length || '<span class="none">0</span>') : '<span class="none">–</span>') + '</td>' +
-        '<td>' + (f ? (f.egress.length ? '<div class="dots">' + f.egress.map(function (e) { return '<span class="dot ' + (e.blocked ? 'blocked' : 'allowed') + '"><i></i>' + esc(e.host) + (e.port ? ':' + e.port : '') + '</span>'; }).join('') + '</div>' : '<span class="none">none</span>') : '<span class="none">–</span>') + '</td>' +
-        '<td class="r">' + (f ? (f.writes_outside_cwd.length || '<span class="none">0</span>') : '<span class="none">–</span>') + '</td>' +
-        '<td class="r">' + (f ? (f.bytes_out ? f.bytes_out + ' B' : '<span class="none">0</span>') : '<span class="none">–</span>') + '</td>' +
+        '<td>' + (f ? (f.egress.length ? '<div class="dots">' + hostsOf(f).map(function (e) { return '<span class="dot ' + (e.blocked ? 'blocked' : 'allowed') + '"><i></i>' + esc(e.host) + (e.ports.length === 1 ? ':' + e.ports[0] : '') + (e.expected === false ? '<em>undeclared</em>' : '') + '</span>'; }).join('') + '</div>' : '<span class="none">none</span>') : '<span class="none">–</span>') + '</td>' +
+
         '<td>' + (f ? (f.canary_in_payload.length ? '<span class="pill sink">' + I.check + 'yes, proven</span>' : '<span class="none">not observed</span>') : '<span class="none">–</span>') + '</td>' +
         '<td class="r">' + (s.bootMs != null ? (s.booted ? (s.bootMs / 1000).toFixed(1) + 's' : '<span class="vd noboot">' + I.noboot + 'no</span>') : (s.control ? '<span class="none">–</span>' : '<span class="none">–</span>')) + '</td>' +
         '</tr>';
     });
-    h += '</tbody></table></div><p class="foot">Sorted by severity. Secrets: planted secret files it opened. Reached out to: hosts it tried to contact; a green dot means the sandbox blocked it, red would mean it went through. Changes: files it changed outside its own folder. Sent: bytes over an open connection, which only our planted bad server could have, since we let it reach our collector on purpose. Proven leak: the planted secret arrived at our collector.</p></section>';
+    h += '</tbody></table></div><p class="foot">Sorted by severity. <b>Expected</b>: it only did what its job or our request implied. <b>Undeclared</b>: it reached a host outside its vendor, or opened or changed something nobody asked for. <b>Critical</b>: a planted secret provably left, or was opened unprompted right before a connection attempt. Reached out to: a green dot means the sandbox blocked it, red means it went through. File changes and bytes sent are on each server’s page.</p></section>';
 
     // host map
     var hosts = {};
-    servers.forEach(function (s) { if (!s.findings) return; s.findings.egress.forEach(function (e) { var k = e.host + (e.port ? ':' + e.port : ''); (hosts[k] = hosts[k] || []).push({ s: s, blocked: e.blocked }); }); });
+    servers.forEach(function (s) { if (!s.findings) return; s.findings.egress.forEach(function (e) { var k = e.host + (e.port ? ':' + e.port : ''); (hosts[k] = hosts[k] || []).push({ s: s, blocked: e.blocked, expected: e.expected }); }); });
     var keys = Object.keys(hosts).sort(function (a, b) { return hosts[b].length - hosts[a].length || (a < b ? -1 : 1); });
     h += '<section class="sec"><div class="sec-h"><h2>Who they try to reach</h2><span class="tier">seen by the sandbox</span></div><div class="box hostmap">';
     keys.forEach(function (k) {
       var who = hosts[k];
-      h += '<div><div class="h">' + esc(k) + '<small>' + plural(who.length, 'server') + ' · ' + (who.every(function (w) { return w.blocked; }) ? 'all blocked' : who.some(function (w) { return w.blocked; }) ? 'partly blocked' : 'allowed') + '</small></div><div class="who">' +
+      var und = who.filter(function (w) { return w.expected === false; }).length;
+      h += '<div><div class="h">' + esc(k) + '<small>' + plural(who.length, 'server') + ' · ' + (who.every(function (w) { return w.blocked; }) ? 'all blocked' : who.some(function (w) { return w.blocked; }) ? 'partly blocked' : 'allowed') + (und ? ' · <span style="color:var(--orange)">undeclared</span>' : who.some(function (w) { return w.expected; }) ? ' · expected' : '') + '</small></div><div class="who">' +
         who.map(function (w) { return '<button data-sel="' + esc(w.s.slug) + '">' + esc(w.s.name) + '</button>'; }).join('') + '</div></div>';
     });
     h += '</div><p class="foot">Every third-party server tries to reach its own vendor’s API. One also tries a second host its README never mentions; open its page to see which.</p></section>';
@@ -276,6 +320,7 @@
     h += '<section class="sec"><div class="sec-h"><h2>How to read this</h2></div><div class="about">' +
       '<p><b>Seen by the sandbox.</b> Each server runs inside a WebAssembly sandbox (Wasmer). It cannot open a file or make a network connection without asking the sandbox, and the sandbox writes down every request: which file, which host, how many bytes. Those records are facts about one run.</p>' +
       '<p><b>Received by our collector.</b> The one row that can say a secret actually left. Every run plants a unique fake secret in the sandbox’s home folder. For our deliberately malicious server we let it connect to a collector we control; the fake secret showed up in what arrived, so that leak is proven. Every other server was blocked from connecting, so their row reads “not observed” by design. The sandbox never sees the contents of a message, so nothing else on these pages claims to know what a server would have sent.</p>' +
+      '<p><b>Three verdicts, all descriptive.</b> <b>Expected</b> means it only did what its job or our request implied: reached its own vendor, opened a file we passed as an argument, connected to the database we gave it, or did nothing. <b>Undeclared</b> means it did something nobody asked for and nothing announced: a host outside its vendor’s domains, a secret file no argument pointed at, a change outside its own folder. <b>Critical</b> means a planted secret provably arrived at our collector, or was opened unprompted right before a connection attempt. “Its vendor” is read off the package name: api.exa.ai belongs to exa-mcp-server, api.hubspot.com to @hubspot/mcp-server.</p>' +
       '<p><b>One run, not a reputation.</b> Each tool was called once with made-up arguments. A verdict says what the server did here, not what it might do on your machine over months. Sandbox: ' + esc(DATA.engine) + '.</p>' +
       '</div></section>';
     return h;
@@ -286,7 +331,10 @@
     return '<div class="box"><div class="kv">' + rows.map(function (r) { return '<div class="k">' + r[0] + '</div><div class="v">' + r[1] + '</div>'; }).join('') + '</div></div>';
   }
   function renderDetail(s) {
-    var f = s.findings;
+    var run = runOf(s);
+    var f = run ? run.findings : null;
+    var view = run ? { level: run.level, findings: run.findings, bootReason: s.bootReason } : s;
+    var events = run ? run.events : [];
     var h = '<button class="back" data-sel="overview">' + I.back + 'Servers</button>';
     h += '<div class="hdr"><span class="eyebrow">' + (s.control ? 'Our planted bad server, written to prove the tool catches a real leak' : 'npm package') + (s.note ? ' · ' + esc(s.note) : '') + '</span>' +
       '<h1>' + esc(s.name) + '</h1><div class="meta">' +
@@ -295,20 +343,25 @@
       (s.tools.length ? '<span>' + plural(s.tools.length, 'tool') + ' offered</span>' : '') +
       (s.bootMs != null && s.booted ? '<span>started in ' + (s.bootMs / 1000).toFixed(1) + 's</span>' : '') +
       '</div></div>';
-    h += '<div class="verdict ' + s.level + '">' + verdictIcon(s.level) + '<div><div class="lvl">' + LV[s.level] + '</div><div class="line" title="' + esc(f ? f.verdict.line : '') + '">' + esc(f ? plainLine(f.verdict.line) : 'Never finished starting up.') + '</div><div class="why">' + esc(whyLine(s)) + '</div></div></div>';
+    if (s.runs && s.runs.length > 1) {
+      h += '<div class="seg" role="tablist" aria-label="Network policy">' + s.runs.map(function (r) { return '<button role="tab" aria-selected="' + (r === run) + '" data-run="' + esc(r.mode) + '">' + esc(r.label) + '</button>'; }).join('') + '</div>';
+    }
+    if (run) h += '<p class="policy-line">' + esc(POLICY[run.mode] || '') + (run.mode === 'vendor' && run.net ? ' Allowed: <code>' + esc(run.net.replace(/dns:allow=/g, '').replace(/:\*/g, '')) + '</code>.' : '') + '</p>';
+    var lvl = view.level;
+    h += '<div class="verdict ' + lvl + '">' + verdictIcon(lvl) + '<div><div class="lvl">' + LV[lvl] + '</div><div class="line" title="' + esc(f ? f.verdict.line : '') + '">' + esc(f ? plainLine(f.verdict.line) : 'Never finished starting up.') + '</div><div class="why">' + esc(whyLine(view)) + (WHY[lvl] ? ' <span class="none">' + esc(LV[lvl]) + ' means ' + esc(WHY[lvl]) + '.</span>' : '') + '</div></div></div>';
 
     if (f) {
-      h += '<section class="sec"><div class="sec-h"><h2>What it did, in order</h2><span class="tier">seen by the sandbox · ' + plural(s.events.length, 'action') + ', runtime noise removed</span></div><div class="box"><div class="tl">' + timeline(s.events) + '</div>' + legend() + logList(s.events) + '</div>' +
+      h += '<section class="sec"><div class="sec-h"><h2>What it did, in order</h2><span class="tier">seen by the sandbox · ' + plural(events.length, 'action') + ', runtime noise removed</span></div><div class="box"><div class="tl">' + timeline(events) + '</div>' + legend() + logList(events) + '</div>' +
         '<p class="foot">Time runs left to right. We started the server, asked for its tool list, then called every tool once with made-up arguments. Hover a dot for details; the log underneath says the same thing in words.</p></section>';
 
       h += '<section class="sec"><div class="sec-h"><h2>Who it tried to reach</h2><span class="tier">seen by the sandbox, except the last row</span></div>' + kv([
-        ['Servers contacted', f.egress.length ? '<div class="hosts">' + f.egress.map(function (e) { return '<div><code>' + esc(e.host) + (e.port ? ':' + e.port : '') + '</code>' + pillHost(e) + '<span class="none num">at ' + e.at.toFixed(2) + 's</span></div>'; }).join('') + '</div>' : '<span class="none">none</span>'],
+        ['Servers contacted', f.egress.length ? '<div class="hosts">' + hostsOf(f).map(function (e) { return '<div><code>' + esc(e.host) + (e.ports.length ? ':' + e.ports.join(',') : '') + '</code>' + pillHost(e) + hostTag(e) + (e.ips.length ? '<span class="none">' + esc(e.ips.slice(0, 2).join(', ')) + (e.ips.length > 2 ? ' +' + (e.ips.length - 2) : '') + '</span>' : '') + '<span class="none num">at ' + e.at.toFixed(2) + 's</span></div>'; }).join('') + '</div>' : '<span class="none">none</span>'],
         ['Data sent', f.bytes_out ? '<b>' + f.bytes_out + ' bytes</b> over an open connection' : '<span class="none">none, no connection was allowed</span>'],
         ['Planted secret received <span class="tier sink">by our collector</span>', f.canary_in_payload.length ? f.canary_in_payload.map(function (c) { return '<code>' + esc(c) + '</code>'; }).join(' ') + ' <span class="pill sink">' + I.check + 'arrived at our collector</span>' : '<span class="none">not observed' + (f.egress.length && f.egress.every(function (e) { return e.blocked; }) ? ' — its connections were blocked, so nothing could arrive' : '') + '</span>']
       ]) + '</section>';
 
       h += '<section class="sec"><div class="sec-h"><h2>Files it touched</h2><span class="tier">seen by the sandbox</span></div>' + kv([
-        ['Secret files opened', f.reads_credentials.length ? f.reads_credentials.map(function (r) { return '<div><code>' + esc(r.path) + '</code>' + (r.count > 1 ? ' <span class="pill count">×' + r.count + '</span>' : '') + (r.canary ? ' <span class="pill sink">planted secret</span>' : '') + '</div>'; }).join('') : '<span class="none">none</span>'],
+        ['Secret files opened', f.reads_credentials.length ? f.reads_credentials.map(function (r) { return '<div><code>' + esc(r.path) + '</code>' + (r.count > 1 ? ' <span class="pill count">×' + r.count + '</span>' : '') + (r.asked === true ? ' <span class="pill asked">our probe asked for it</span>' : r.asked === false ? ' <span class="pill unprompted">' + I.flag + 'unprompted</span>' : '') + (r.canary ? ' <span class="pill sink">planted secret</span>' : '') + '</div>'; }).join('') : '<span class="none">none</span>'],
         ['Files changed outside its own folder', f.writes_outside_cwd.length ? f.writes_outside_cwd.map(function (p) { return '<div><code>' + esc(p) + '</code></div>'; }).join('') : '<span class="none">none</span>'],
         ['Probing the runtime (engine, version)', f.fingerprinting.length ? f.fingerprinting.map(function (p) { return '<div><code>' + esc(p) + '</code></div>'; }).join('') : '<span class="none">none</span>']
       ]) + '</section>';
@@ -328,8 +381,10 @@
       ['Version', '<code>' + esc(s.version) + '</code>'],
       ['File fingerprint (SHA-256)', s.integrity ? '<code>' + esc(s.integrity) + '</code>' : '<span class="none">–</span>'],
       ['Start file inside the sandbox', s.entry ? '<code>' + esc(s.entry) + '</code>' : '<span class="none">–</span>'],
+      ['How “expected” was decided', f && f.policy ? '<div>vendor words from its name: ' + (f.policy.vendorTokens.length ? f.policy.vendorTokens.map(function (t) { return '<code>' + esc(t) + '</code>'; }).join(' ') : '<span class="none">none</span>') + '</div><div>hosts we passed in: ' + (f.policy.argHosts.length ? f.policy.argHosts.map(function (t) { return '<code>' + esc(t) + '</code>'; }).join(' ') : '<span class="none">none</span>') + '</div><div>paths our probe handed to its tools: ' + (f.policy.probePaths.length ? f.policy.probePaths.map(function (t) { return '<code>' + esc(t) + '</code>'; }).join(' ') : '<span class="none">none</span>') + '</div>' : '<span class="none">older card, no policy recorded</span>'],
       ['Sandbox', esc(DATA.engine)],
-      ['When', esc(DATA.ran ? new Date(DATA.ran).toLocaleString() : '') + (s.control ? ' · allowed to reach our collector only' : ' · all outside connections blocked')]
+      ['Network policy', run ? esc(run.label) + (run.net ? ' · rule <code>' + esc(run.net) + '</code>' : ' · no rule, which refuses everything') : '<span class="none">–</span>'],
+      ['When', esc(DATA.ran ? new Date(DATA.ran).toLocaleString() : '')]
     ]) + '</section>';
     return h;
   }
@@ -350,13 +405,16 @@
     window.scrollTo({ top: 0, behavior: 'auto' });
   }
   function fromHash() {
-    var m = /^#s\/(.+)$/.exec(location.hash || '');
+    var m = /^#s\/([^/]+)(?:\/([a-z]+))?$/.exec(location.hash || '');
+    if (m && m[2]) state.run = m[2];
     return m ? decodeURIComponent(m[1]) : 'overview';
   }
 
   document.addEventListener('click', function (ev) {
     var t = ev.target.closest('[data-sel]');
     if (t) { select(t.getAttribute('data-sel')); return; }
+    var rt = ev.target.closest('[data-run]');
+    if (rt) { state.run = rt.getAttribute('data-run'); render(); try { history.replaceState(null, '', '#s/' + state.sel + '/' + state.run); } catch (e) {} return; }
     var st = ev.target.closest('[data-sort]');
     if (st) { var k = st.getAttribute('data-sort'); if (state.sortKey === k) state.sortDir = -state.sortDir; else { state.sortKey = k; state.sortDir = 1; } render(); }
   });

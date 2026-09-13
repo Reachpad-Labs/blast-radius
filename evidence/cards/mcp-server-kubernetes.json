@@ -5,6 +5,8 @@
     "integrity": "a11aea2d3218b6ac843858b1c2f0b4035431ffe73118807a613e888a518d89d5",
     "entry": "/app/node_modules/mcp-server-kubernetes/dist/index.js"
   },
+  "mode": "scan",
+  "net": null,
   "tools": [
     "cleanup",
     "kubectl_get",
@@ -37,10 +39,20 @@
     "canary_in_payload": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
+    "unprompted_reads": [],
+    "undeclared_hosts": [],
+    "unprompted_writes": [],
     "correlated": false,
+    "policy": {
+      "vendorTokens": [
+        "kubernetes"
+      ],
+      "argHosts": [],
+      "probePaths": []
+    },
     "verdict": {
-      "level": "clean",
-      "line": "No credential access and no egress observed."
+      "level": "expected",
+      "line": "Did nothing beyond starting up and answering."
     }
   },
   "events": [
@@ -53,7 +65,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.336,
+      "ts": 0.209,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -66,7 +78,7 @@
       "errno": "success"
     },
     {
-      "ts": 7.092,
+      "ts": 4.521,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -74,7 +86,7 @@
       "errno": "success"
     },
     {
-      "ts": 7.421,
+      "ts": 4.713,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -87,7 +99,7 @@
       "errno": "success"
     },
     {
-      "ts": 14.849,
+      "ts": 8.371,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -100,7 +112,7 @@
       "errno": "success"
     },
     {
-      "ts": 14.85,
+      "ts": 8.373,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -113,7 +125,7 @@
       "errno": "success"
     },
     {
-      "ts": 14.852,
+      "ts": 8.374,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -126,7 +138,7 @@
       "errno": "success"
     },
     {
-      "ts": 14.852,
+      "ts": 8.374,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -139,7 +151,7 @@
       "errno": "success"
     },
     {
-      "ts": 14.853,
+      "ts": 8.375,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -152,7 +164,7 @@
       "errno": "success"
     },
     {
-      "ts": 14.855,
+      "ts": 8.375,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -165,7 +177,7 @@
       "errno": "success"
     },
     {
-      "ts": 14.855,
+      "ts": 8.375,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -178,7 +190,7 @@
       "errno": "success"
     },
     {
-      "ts": 14.856,
+      "ts": 8.375,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -191,7 +203,7 @@
       "errno": "success"
     },
     {
-      "ts": 14.859,
+      "ts": 8.377,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -204,7 +216,7 @@
       "errno": "success"
     },
     {
-      "ts": 14.86,
+      "ts": 8.377,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",

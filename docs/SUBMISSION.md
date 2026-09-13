@@ -42,13 +42,25 @@ observed and survivable: the server keeps running and keeps answering.
   `mcp.stripe.com` with no local tools; it cannot answer `initialize` with
   egress denied. `@sentry/mcp-server` hangs after its startup warnings and
   never answers `initialize`.
-- **13 of 13 ran to a verdict**: 10 warn, 3 clean, 0 critical. Every archived
-  official server and every third-party server dialed its vendor
-  (api.github.com, api.notion.com, context7.com, api.tavily.com,
-  api.hubspot.com, api.firecrawl.dev, api.exa.ai, raw.githubusercontent.com,
-  the Postgres URL), and every dial was blocked. One server, `exa-mcp-server`,
-  also dialed `api.agnost.ai`, an analytics service its README does not
-  mention; the card says exactly that and nothing more.
+- **Two benchmarks per server.** *Block all*: every connection refused, the
+  card shows what it tried. *Vendor only*: DNS allowed for exactly the hosts
+  the block-all run showed to be its own vendor, everything else refused.
+- **Three verdicts, all descriptive.** *Expected*: it only did what its job or
+  our request implied. *Undeclared*: it reached a host outside its vendor, or
+  opened or changed something nobody asked for. *Critical*: a planted secret
+  provably left, or was opened unprompted right before a connection attempt.
+  Each card records the policy that decided "expected", so the reasoning can
+  be checked.
+- **Block all, 13 of 13 ran to a verdict: 11 expected, 2 undeclared, 0
+  critical.** Every third-party server reached for its own vendor and was
+  blocked, which is expected. Two did more: `exa-mcp-server` also dialed
+  `api.agnost.ai`, an analytics service its README does not mention, and the
+  reference `server-everything` fetched from `raw.githubusercontent.com`.
+  The cards say exactly that and nothing more.
+- **Vendor only, 7 ran: 6 expected, 1 undeclared, 0 critical.** The other six
+  reached no vendor host in block-all mode, so there was nothing to allow.
+  Allowed to reach their own API, none of the seven reached anywhere new;
+  Exa again also dialed api.agnost.ai, which stayed blocked.
 - The control specimen, a notes summariser that quietly reads
   `~/.ssh/id_ed25519` and posts it to a collector, lands at **CRITICAL** with
   the per-run canary matched at the sink. With egress denied it is refused and
@@ -57,6 +69,12 @@ observed and survivable: the server keeps running and keeps answering.
 ## Limitations, stated plainly
 
 - **Coverage is 13 of 16, not 16 of 16.** Reasons above and in `SPECIMENS.md`.
+- **"Its vendor" is read off the package name.** `api.exa.ai` belongs to
+  `exa-mcp-server` because the name says exa; a vendor whose API lives on an
+  unrelated domain would be flagged undeclared until someone adds the domain
+  to the manifest. Undeclared is a fact to read, not a verdict of malice.
+- **Vendor mode is real traffic.** The server reaches its actual API with our
+  fake keys. We saw the request go out and, presumably, a 401 come back.
 - **Payload bytes are not in the trace.** `sock_send` reports a byte count. A
   card says "dialed host X, blocked" from the trace alone; it says "your key
   left the box" only when egress was routed to a sink we control and the

@@ -124,7 +124,14 @@ node harness/boot-test.mjs                            # who boots -> SPECIMENS.m
 node harness/sweep.mjs                                # every booted server -> evidence/cards/
 node harness/report.mjs                               # all of it as one page -> evidence/cards/index.html
 node run.mjs evil-notes --engine quickjs               # engine inside the sandbox too (slower)
+node run.mjs exa-mcp-server --net vendor              # let it reach its own vendor, refuse everything else
 ```
+
+Verdicts are **expected** (only did what its job or our request implied),
+**undeclared** (reached a host outside its vendor, or opened or changed
+something nobody asked for) and **critical** (a planted secret provably left,
+or was opened unprompted right before a connection attempt). Each card records
+the policy that decided "expected", so the reasoning can be checked.
 
 `--env K=V` and `--arg X` repeat. What a server needs to boot is recorded in
 `src/specimens.mjs` once known, so the sweep can run it without flags.

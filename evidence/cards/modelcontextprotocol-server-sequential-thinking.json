@@ -5,6 +5,8 @@
     "integrity": "246d3cac220c30f7239f5934c5653b560a3deb1820a47f213f9439ab9a91d200",
     "entry": "/app/node_modules/@modelcontextprotocol/server-sequential-thinking/dist/index.js"
   },
+  "mode": "scan",
+  "net": null,
   "tools": [
     "sequentialthinking"
   ],
@@ -15,10 +17,21 @@
     "canary_in_payload": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
+    "unprompted_reads": [],
+    "undeclared_hosts": [],
+    "unprompted_writes": [],
     "correlated": false,
+    "policy": {
+      "vendorTokens": [
+        "sequential",
+        "thinking"
+      ],
+      "argHosts": [],
+      "probePaths": []
+    },
     "verdict": {
-      "level": "clean",
-      "line": "No credential access and no egress observed."
+      "level": "expected",
+      "line": "Did nothing beyond starting up and answering."
     }
   },
   "events": [
@@ -31,7 +44,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.274,
+      "ts": 0.183,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -44,7 +57,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.48,
+      "ts": 0.313,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -52,7 +65,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.746,
+      "ts": 0.465,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",

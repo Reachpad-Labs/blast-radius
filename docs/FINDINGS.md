@@ -334,3 +334,61 @@ runs on the host, outside the sandbox, with the user's real home directory.
 A package that wants your keys can take them in `postinstall` before we ever
 run it, and the trace would show a clean specimen. The sandbox is the only
 place the package gets to execute.
+
+## Three verdicts, all descriptive
+
+"Warning" for a server that called its own vendor was noise: that is the
+server's job, and a warning that fires on expected behaviour teaches people to
+ignore warnings. The analyser now has three tiers and says which one and why:
+
+| verdict | means |
+| --- | --- |
+| **expected** | it only did what its job or our request implied: reached its own vendor, opened a file we passed as an argument, connected to the database URL we gave it, or did nothing at all |
+| **undeclared** | it did something nobody asked for and nothing announced: a host outside its vendor's domains, a secret file no argument pointed at, a change outside its own folder |
+| **critical** | a planted secret provably arrived at our collector, or a secret was opened unprompted and a connection was attempted right after |
+
+"Did not run" is not a verdict; a server that never started cannot be judged.
+Reading environment variables is shown but never scored: every Node process
+does it.
+
+"Expected" is decided by a policy the runner passes in and the findings record
+(`findings.policy`), so a reader can check the reasoning:
+
+- **vendor words** come from the package name with generic words removed:
+  `@hubspot/mcp-server` gives `hubspot`, `exa-mcp-server` gives `exa`,
+  `@upstash/context7-mcp` gives `upstash` and `context7`. A host whose owner
+  label is one of those words is the vendor's own (`api.exa.ai` -> `exa`). The
+  manifest can add words with `vendor: [...]` when a name does not say.
+- **hosts we passed in** are pulled out of argv and env, so the Postgres server
+  connecting to the URL we gave it is expected.
+- **paths our probe handed to tools** make a read of that path, or of a
+  temporary file beside it, "asked for". `server-filesystem` opening the key
+  because `read_file` was called with that path is expected; `evil-notes`
+  opening it inside `summarize_notes` is not.
+
+Measured on the full block-all sweep after the change: **11 expected, 2
+undeclared, 0 critical** among the 13 npm servers that boot. The control is
+critical by proof. The two undeclared are `exa-mcp-server` (api.agnost.ai)
+and `server-everything` (raw.githubusercontent.com). Every "warning" from
+the earlier sweep that was a server calling its own vendor is now expected.
+
+## Vendor mode: let it do its job, watch everything else
+
+Blocking everything shows intent, but some behaviour only happens once the
+server can reach home. `--net vendor` allows DNS for exactly the hosts a
+previous scan judged to be the vendor's (plus `--allow HOST`), and refuses
+everything else including raw IPs. Two things had to be measured first:
+
+- Wasmer takes several rules separated by commas
+  (`ipv4:allow=127.0.0.1:8099,dns:deny=*:*` works; a space between rules is a
+  parse error), and a `dns:allow=host:*` rule on its own leaves raw-IP
+  connects refused with `Errno::perm`, so the allow-list really is an
+  allow-list.
+- Once a lookup succeeds, Node connects to the addresses it got back, and the
+  trace shows `sock_connect` to bare IPs, several of them (IPv4, IPv6, retries).
+  The analyser attributes a connect to the last successful lookup before it,
+  so the card reads "api.exa.ai went through (172.66.40.91)" rather than five
+  undeclared IPs. With no successful lookup before it, an IP stands on its own.
+
+Vendor mode is real traffic to the vendor with our fake keys. Exa's API was
+sent 4 KB and, presumably, answered 401. The analytics host stayed blocked.

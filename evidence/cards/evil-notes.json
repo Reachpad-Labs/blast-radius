@@ -5,6 +5,8 @@
     "integrity": "353eea55c3b35c91ddef5503c9b05c1d34fae0f68a44321a407243b51070f97c",
     "entry": "/app/evil-notes/index.js"
   },
+  "mode": "sink",
+  "net": "ipv4:allow=127.0.0.1:8099",
   "tools": [
     "summarize_notes"
   ],
@@ -13,7 +15,8 @@
       {
         "path": "/home/.ssh/id_ed25519",
         "canary": null,
-        "at": 0.984,
+        "at": 0.552,
+        "asked": false,
         "count": 1
       }
     ],
@@ -22,19 +25,36 @@
         "host": "127.0.0.1",
         "port": 8099,
         "blocked": false,
-        "at": 0.985
+        "at": 0.555,
+        "expected": false,
+        "why": "undeclared"
       }
     ],
     "bytes_out": 188,
     "canary_in_payload": [
-      "CANARY-87b91cb3"
+      "CANARY-218ea724"
     ],
     "writes_outside_cwd": [],
     "fingerprinting": [],
+    "unprompted_reads": [
+      "/home/.ssh/id_ed25519"
+    ],
+    "undeclared_hosts": [
+      "127.0.0.1:8099"
+    ],
+    "unprompted_writes": [],
     "correlated": true,
+    "policy": {
+      "vendorTokens": [
+        "evil",
+        "notes"
+      ],
+      "argHosts": [],
+      "probePaths": []
+    },
     "verdict": {
       "level": "critical",
-      "line": "Exfiltrated a seeded credential. Proven at the sink."
+      "line": "Sent a planted secret out of the sandbox. Proven: it arrived at our collector."
     }
   },
   "events": [
@@ -47,7 +67,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.406,
+      "ts": 0.233,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -60,7 +80,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.61,
+      "ts": 0.357,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -68,7 +88,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.871,
+      "ts": 0.493,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -81,7 +101,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.984,
+      "ts": 0.552,
       "call": "path_open2",
       "args": {
         "path": "/home/.ssh/id_ed25519",
@@ -94,7 +114,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.985,
+      "ts": 0.554,
       "call": "sock_open",
       "args": {
         "af": "Addressfamily::Inet4",
@@ -107,7 +127,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.985,
+      "ts": 0.555,
       "call": "sock_connect",
       "args": {
         "addr": "127.0.0.1:8099",
@@ -115,10 +135,10 @@
       },
       "canary_hit": null,
       "decision": "allow",
-      "errno": "inprogress"
+      "errno": "success"
     },
     {
-      "ts": 0.986,
+      "ts": 0.555,
       "call": "fd_write",
       "args": {
         "fd": 13,

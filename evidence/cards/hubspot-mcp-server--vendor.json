@@ -1,0 +1,2958 @@
+{
+  "spec": {
+    "name": "@hubspot/mcp-server",
+    "version": "0.4.0",
+    "integrity": "080dceca966b0c61744f532e566f8b1bdc3786a7a2bea3d08aa80a7a53373d23",
+    "entry": "/app/node_modules/@hubspot/mcp-server/dist/index.js"
+  },
+  "mode": "vendor",
+  "net": "dns:allow=api.hubspot.com:*",
+  "tools": [
+    "hubspot-get-user-details",
+    "hubspot-list-objects",
+    "hubspot-search-objects",
+    "hubspot-batch-create-associations",
+    "hubspot-get-association-definitions",
+    "hubspot-list-associations",
+    "hubspot-batch-create-objects",
+    "hubspot-batch-update-objects",
+    "hubspot-batch-read-objects",
+    "hubspot-list-properties",
+    "hubspot-get-property",
+    "hubspot-create-property",
+    "hubspot-update-property",
+    "hubspot-create-engagement",
+    "hubspot-get-engagement",
+    "hubspot-update-engagement",
+    "hubspot-generate-feedback-link",
+    "hubspot-get-schemas",
+    "hubspot-get-link",
+    "hubspot-list-workflows",
+    "hubspot-get-workflow"
+  ],
+  "findings": {
+    "reads_credentials": [],
+    "egress": [
+      {
+        "host": "api.hubspot.com",
+        "port": 0,
+        "blocked": false,
+        "at": 0.759,
+        "expected": true,
+        "why": "its vendor, by name",
+        "ips": []
+      },
+      {
+        "host": "api.hubspot.com",
+        "port": 65535,
+        "blocked": true,
+        "at": 0.759,
+        "expected": true,
+        "why": "its vendor, by name",
+        "ips": [
+          "104.17.92.187",
+          "104.17.91.187",
+          "2606:4700::6811:5bbb",
+          "2606:4700::6811:5cbb"
+        ]
+      },
+      {
+        "host": "api.hubspot.com",
+        "port": 443,
+        "blocked": false,
+        "at": 0.76,
+        "expected": true,
+        "why": "its vendor, by name",
+        "ips": [
+          "104.17.92.187",
+          "2606:4700::6811:5cbb"
+        ]
+      }
+    ],
+    "bytes_out": 28740,
+    "canary_in_payload": [],
+    "writes_outside_cwd": [],
+    "fingerprinting": [],
+    "unprompted_reads": [],
+    "undeclared_hosts": [],
+    "unprompted_writes": [],
+    "correlated": false,
+    "policy": {
+      "vendorTokens": [
+        "hubspot"
+      ],
+      "argHosts": [],
+      "probePaths": []
+    },
+    "verdict": {
+      "level": "expected",
+      "line": "Only did what its job or our request implied."
+    }
+  },
+  "events": [
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.153,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.343,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.49,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.66,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.662,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.759,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.759,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:65535",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:65535",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.91.187:65535",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.91.187:65535",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5bbb]:65535",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5bbb]:65535",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:65535",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.759,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:65535",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.759,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.759,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.76,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.76,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.76,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:443",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.76,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.761,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.761,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:443",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.761,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.761,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:65535",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.762,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 16
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.91.187:65535",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:65535",
+        "sock": 16
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 16
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5bbb]:65535",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.91.187:65535",
+        "sock": 16
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 16
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5bbb]:65535",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:65535",
+        "sock": 16
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:65535",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.762,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 16
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:443",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 16
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 16
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.762,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:443",
+        "sock": 16
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.763,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.763,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:65535",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 18
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:65535",
+        "sock": 18
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 18
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.91.187:65535",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.91.187:65535",
+        "sock": 18
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 18
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5bbb]:65535",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5bbb]:65535",
+        "sock": 18
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 18
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:65535",
+        "sock": 18
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:65535",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.763,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.763,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.763,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.764,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.764,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:443",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.764,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 18
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.764,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 18
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.764,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:443",
+        "sock": 18
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.765,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:65535",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.91.187:65535",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5bbb]:65535",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:65535",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.765,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 19
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:65535",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.91.187:65535",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5bbb]:65535",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:65535",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 20
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:443",
+        "sock": 19
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 20
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 20
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.765,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:443",
+        "sock": 20
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.767,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:65535",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.91.187:65535",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5bbb]:65535",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:65535",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.767,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 21
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.767,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:65535",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.91.187:65535",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5bbb]:65535",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:65535",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.767,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.767,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 22
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.768,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.768,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:443",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.768,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 22
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.768,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 22
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.768,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:443",
+        "sock": 22
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.769,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 23
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.769,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:65535",
+        "sock": 23
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 24
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:65535",
+        "sock": 24
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 23
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 24
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.91.187:65535",
+        "sock": 23
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.91.187:65535",
+        "sock": 24
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 23
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 24
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5bbb]:65535",
+        "sock": 23
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5bbb]:65535",
+        "sock": 24
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 23
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 24
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:65535",
+        "sock": 23
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:65535",
+        "sock": 24
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.769,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 23
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.769,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 24
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 23
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 23
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.769,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:443",
+        "sock": 23
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 24
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 24
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:443",
+        "sock": 24
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.77,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:65535",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.77,
+      "call": "resolve",
+      "args": {
+        "host": "api.hubspot.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 26
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.91.187:65535",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:65535",
+        "sock": 26
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5bbb]:65535",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 26
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.91.187:65535",
+        "sock": 26
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:65535",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 26
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5bbb]:65535",
+        "sock": 26
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.77,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:65535",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.771,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.771,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.771,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:443",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.771,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 26
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.771,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 26
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.771,
+      "call": "sock_connect",
+      "args": {
+        "addr": "104.17.92.187:443",
+        "sock": 26
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 1.015,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.015,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:443",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 1.016,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.017,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:443",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 1.017,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.017,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:443",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 1.018,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 16
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.019,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:443",
+        "sock": 16
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 1.019,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.02,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:443",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 1.022,
+      "call": "fd_write",
+      "args": {
+        "fd": 18,
+        "nwritten": 1607,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.023,
+      "call": "fd_write",
+      "args": {
+        "fd": 19,
+        "nwritten": 1607,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.024,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 20
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.024,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:443",
+        "sock": 20
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 1.025,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.026,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:443",
+        "sock": 21
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 1.026,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 22
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.027,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:443",
+        "sock": 22
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 1.027,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 23
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.027,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:443",
+        "sock": 23
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 1.028,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 24
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.028,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:443",
+        "sock": 24
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 1.029,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.029,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:443",
+        "sock": 25
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 1.029,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 26
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.03,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700::6811:5cbb]:443",
+        "sock": 26
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 1.124,
+      "call": "fd_write",
+      "args": {
+        "fd": 14,
+        "nwritten": 1607,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.126,
+      "call": "fd_write",
+      "args": {
+        "fd": 15,
+        "nwritten": 1607,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.128,
+      "call": "fd_write",
+      "args": {
+        "fd": 13,
+        "nwritten": 1607,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.263,
+      "call": "fd_write",
+      "args": {
+        "fd": 17,
+        "nwritten": 1607,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.265,
+      "call": "fd_write",
+      "args": {
+        "fd": 16,
+        "nwritten": 1607,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.266,
+      "call": "fd_write",
+      "args": {
+        "fd": 20,
+        "nwritten": 1607,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.268,
+      "call": "fd_write",
+      "args": {
+        "fd": 21,
+        "nwritten": 1607,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.27,
+      "call": "fd_write",
+      "args": {
+        "fd": 22,
+        "nwritten": 1607,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.27,
+      "call": "fd_write",
+      "args": {
+        "fd": 23,
+        "nwritten": 1607,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.271,
+      "call": "fd_write",
+      "args": {
+        "fd": 25,
+        "nwritten": 1607,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.272,
+      "call": "fd_write",
+      "args": {
+        "fd": 26,
+        "nwritten": 1607,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.284,
+      "call": "fd_write",
+      "args": {
+        "fd": 18,
+        "nwritten": 447,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.29,
+      "call": "fd_write",
+      "args": {
+        "fd": 19,
+        "nwritten": 400,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.291,
+      "call": "fd_write",
+      "args": {
+        "fd": 24,
+        "nwritten": 1607,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.298,
+      "call": "fd_write",
+      "args": {
+        "fd": 13,
+        "nwritten": 395,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.302,
+      "call": "fd_write",
+      "args": {
+        "fd": 14,
+        "nwritten": 434,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.307,
+      "call": "fd_write",
+      "args": {
+        "fd": 15,
+        "nwritten": 478,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.542,
+      "call": "fd_write",
+      "args": {
+        "fd": 17,
+        "nwritten": 435,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.549,
+      "call": "fd_write",
+      "args": {
+        "fd": 16,
+        "nwritten": 444,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.554,
+      "call": "fd_write",
+      "args": {
+        "fd": 20,
+        "nwritten": 401,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.558,
+      "call": "fd_write",
+      "args": {
+        "fd": 21,
+        "nwritten": 400,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.564,
+      "call": "fd_write",
+      "args": {
+        "fd": 25,
+        "nwritten": 560,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.571,
+      "call": "fd_write",
+      "args": {
+        "fd": 22,
+        "nwritten": 414,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.575,
+      "call": "fd_write",
+      "args": {
+        "fd": 23,
+        "nwritten": 471,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.578,
+      "call": "fd_write",
+      "args": {
+        "fd": 24,
+        "nwritten": 449,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.581,
+      "call": "fd_write",
+      "args": {
+        "fd": 26,
+        "nwritten": 514,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    }
+  ]
+}

@@ -1,0 +1,530 @@
+{
+  "spec": {
+    "name": "tavily-mcp",
+    "version": "0.2.22",
+    "integrity": "b7b031f5e6b44774f16f5f7c6519a793ad4cbd6bee2dacaac02793d995ab9edc",
+    "entry": "/app/node_modules/tavily-mcp/build/index.js"
+  },
+  "mode": "vendor",
+  "net": "dns:allow=api.tavily.com:*",
+  "tools": [
+    "tavily_search",
+    "tavily_extract",
+    "tavily_crawl",
+    "tavily_map",
+    "tavily_research"
+  ],
+  "findings": {
+    "reads_credentials": [],
+    "egress": [
+      {
+        "host": "api.tavily.com",
+        "port": 0,
+        "blocked": false,
+        "at": 0.923,
+        "expected": true,
+        "why": "its vendor, by name",
+        "ips": []
+      },
+      {
+        "host": "api.tavily.com",
+        "port": 443,
+        "blocked": false,
+        "at": 0.924,
+        "expected": true,
+        "why": "its vendor, by name",
+        "ips": [
+          "107.20.111.91"
+        ]
+      }
+    ],
+    "bytes_out": 10496,
+    "canary_in_payload": [],
+    "writes_outside_cwd": [],
+    "fingerprinting": [],
+    "unprompted_reads": [],
+    "undeclared_hosts": [],
+    "unprompted_writes": [],
+    "correlated": false,
+    "policy": {
+      "vendorTokens": [
+        "tavily"
+      ],
+      "argHosts": [],
+      "probePaths": []
+    },
+    "verdict": {
+      "level": "expected",
+      "line": "Only did what its job or our request implied."
+    }
+  },
+  "events": [
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.159,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.449,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.6,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.834,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.836,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.923,
+      "call": "resolve",
+      "args": {
+        "host": "api.tavily.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.923,
+      "call": "resolve",
+      "args": {
+        "host": "api.tavily.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.923,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.923,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.923,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.924,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.924,
+      "call": "sock_connect",
+      "args": {
+        "addr": "107.20.111.91:443",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.924,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.924,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.924,
+      "call": "sock_connect",
+      "args": {
+        "addr": "107.20.111.91:443",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.927,
+      "call": "resolve",
+      "args": {
+        "host": "api.tavily.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.927,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.927,
+      "call": "resolve",
+      "args": {
+        "host": "api.tavily.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.927,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.927,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.927,
+      "call": "sock_connect",
+      "args": {
+        "addr": "107.20.111.91:443",
+        "sock": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.927,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 16
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.927,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 16
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.927,
+      "call": "sock_connect",
+      "args": {
+        "addr": "107.20.111.91:443",
+        "sock": 16
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.928,
+      "call": "resolve",
+      "args": {
+        "host": "api.tavily.com",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.928,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.928,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.928,
+      "call": "sock_connect",
+      "args": {
+        "addr": "107.20.111.91:443",
+        "sock": 17
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 1.067,
+      "call": "fd_write",
+      "args": {
+        "fd": 13,
+        "nwritten": 1591,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.068,
+      "call": "fd_write",
+      "args": {
+        "fd": 15,
+        "nwritten": 1591,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.068,
+      "call": "fd_write",
+      "args": {
+        "fd": 16,
+        "nwritten": 1591,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.069,
+      "call": "fd_write",
+      "args": {
+        "fd": 17,
+        "nwritten": 1591,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.069,
+      "call": "fd_write",
+      "args": {
+        "fd": 14,
+        "nwritten": 1591,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.211,
+      "call": "fd_write",
+      "args": {
+        "fd": 13,
+        "nwritten": 490,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.215,
+      "call": "fd_write",
+      "args": {
+        "fd": 14,
+        "nwritten": 472,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.219,
+      "call": "fd_write",
+      "args": {
+        "fd": 15,
+        "nwritten": 548,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.223,
+      "call": "fd_write",
+      "args": {
+        "fd": 16,
+        "nwritten": 524,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.226,
+      "call": "fd_write",
+      "args": {
+        "fd": 17,
+        "nwritten": 507,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    }
+  ]
+}

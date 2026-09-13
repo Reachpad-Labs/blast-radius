@@ -5,6 +5,8 @@
     "integrity": "932b01c5ce5a85e9d6bca61afe78f4694c99bab2d5636f92296ed5ad902e374d",
     "entry": "/app/node_modules/@upstash/context7-mcp/dist/index.js"
   },
+  "mode": "scan",
+  "net": null,
   "tools": [
     "resolve-library-id",
     "query-docs"
@@ -16,17 +18,31 @@
         "host": "context7.com",
         "port": 0,
         "blocked": true,
-        "at": 1.808
+        "at": 1.11,
+        "expected": true,
+        "why": "its vendor, by name",
+        "ips": []
       }
     ],
     "bytes_out": 0,
     "canary_in_payload": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
+    "unprompted_reads": [],
+    "undeclared_hosts": [],
+    "unprompted_writes": [],
     "correlated": false,
+    "policy": {
+      "vendorTokens": [
+        "upstash",
+        "context7"
+      ],
+      "argHosts": [],
+      "probePaths": []
+    },
     "verdict": {
-      "level": "warn",
-      "line": "Attempted egress."
+      "level": "expected",
+      "line": "Only did what its job or our request implied."
     }
   },
   "events": [
@@ -39,7 +55,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.242,
+      "ts": 0.133,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -52,7 +68,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.01,
+      "ts": 0.634,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -60,7 +76,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.193,
+      "ts": 0.739,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -73,7 +89,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.808,
+      "ts": 1.11,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -86,7 +102,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.808,
+      "ts": 1.11,
       "call": "resolve",
       "args": {
         "host": "context7.com",
@@ -97,7 +113,7 @@
       "errno": "io"
     },
     {
-      "ts": 1.81,
+      "ts": 1.112,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -110,7 +126,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.81,
+      "ts": 1.112,
       "call": "resolve",
       "args": {
         "host": "context7.com",

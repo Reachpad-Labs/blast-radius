@@ -5,6 +5,8 @@
     "integrity": "b7b031f5e6b44774f16f5f7c6519a793ad4cbd6bee2dacaac02793d995ab9edc",
     "entry": "/app/node_modules/tavily-mcp/build/index.js"
   },
+  "mode": "scan",
+  "net": null,
   "tools": [
     "tavily_search",
     "tavily_extract",
@@ -19,17 +21,30 @@
         "host": "api.tavily.com",
         "port": 0,
         "blocked": true,
-        "at": 1.463
+        "at": 0.892,
+        "expected": true,
+        "why": "its vendor, by name",
+        "ips": []
       }
     ],
     "bytes_out": 0,
     "canary_in_payload": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
+    "unprompted_reads": [],
+    "undeclared_hosts": [],
+    "unprompted_writes": [],
     "correlated": false,
+    "policy": {
+      "vendorTokens": [
+        "tavily"
+      ],
+      "argHosts": [],
+      "probePaths": []
+    },
     "verdict": {
-      "level": "warn",
-      "line": "Attempted egress."
+      "level": "expected",
+      "line": "Only did what its job or our request implied."
     }
   },
   "events": [
@@ -42,7 +57,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.268,
+      "ts": 0.148,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -55,7 +70,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.775,
+      "ts": 0.512,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -63,7 +78,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.037,
+      "ts": 0.664,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -76,7 +91,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.463,
+      "ts": 0.892,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -89,7 +104,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.463,
+      "ts": 0.892,
       "call": "resolve",
       "args": {
         "host": "api.tavily.com",
@@ -100,7 +115,7 @@
       "errno": "io"
     },
     {
-      "ts": 1.466,
+      "ts": 0.893,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -113,7 +128,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.466,
+      "ts": 0.893,
       "call": "resolve",
       "args": {
         "host": "api.tavily.com",
@@ -124,7 +139,7 @@
       "errno": "io"
     },
     {
-      "ts": 1.467,
+      "ts": 0.894,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -137,7 +152,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.468,
+      "ts": 0.894,
       "call": "resolve",
       "args": {
         "host": "api.tavily.com",
@@ -148,7 +163,7 @@
       "errno": "io"
     },
     {
-      "ts": 1.469,
+      "ts": 0.895,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -161,7 +176,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.469,
+      "ts": 0.895,
       "call": "resolve",
       "args": {
         "host": "api.tavily.com",
@@ -172,7 +187,7 @@
       "errno": "io"
     },
     {
-      "ts": 1.47,
+      "ts": 0.896,
       "call": "path_open2",
       "args": {
         "path": "/etc/hosts",
@@ -185,7 +200,7 @@
       "errno": "success"
     },
     {
-      "ts": 1.47,
+      "ts": 0.896,
       "call": "resolve",
       "args": {
         "host": "api.tavily.com",

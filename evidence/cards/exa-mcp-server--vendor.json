@@ -1,0 +1,537 @@
+{
+  "spec": {
+    "name": "exa-mcp-server",
+    "version": "3.4.1",
+    "integrity": "208859af71bb9329ad0d1d781ecb301f983b970ba917b85b795c344ad615f6d3",
+    "entry": "/app/node_modules/exa-mcp-server/dist/stdio.cjs"
+  },
+  "mode": "vendor",
+  "net": "dns:allow=api.exa.ai:*",
+  "tools": [
+    "web_search_exa",
+    "web_fetch_exa"
+  ],
+  "findings": {
+    "reads_credentials": [],
+    "egress": [
+      {
+        "host": "api.exa.ai",
+        "port": 0,
+        "blocked": false,
+        "at": 0.514,
+        "expected": true,
+        "why": "its vendor, by name",
+        "ips": []
+      },
+      {
+        "host": "api.exa.ai",
+        "port": 65535,
+        "blocked": true,
+        "at": 0.514,
+        "expected": true,
+        "why": "its vendor, by name",
+        "ips": [
+          "172.66.40.91",
+          "172.66.43.165",
+          "2606:4700:3108::ac42:2ba5",
+          "2606:4700:3108::ac42:285b"
+        ]
+      },
+      {
+        "host": "api.exa.ai",
+        "port": 443,
+        "blocked": false,
+        "at": 0.516,
+        "expected": true,
+        "why": "its vendor, by name",
+        "ips": [
+          "172.66.40.91"
+        ]
+      },
+      {
+        "host": "api.agnost.ai",
+        "port": 0,
+        "blocked": true,
+        "at": 1.225,
+        "expected": false,
+        "why": "undeclared",
+        "ips": []
+      }
+    ],
+    "bytes_out": 4146,
+    "canary_in_payload": [],
+    "writes_outside_cwd": [],
+    "fingerprinting": [],
+    "unprompted_reads": [],
+    "undeclared_hosts": [
+      "api.agnost.ai"
+    ],
+    "unprompted_writes": [],
+    "correlated": false,
+    "policy": {
+      "vendorTokens": [
+        "exa"
+      ],
+      "argHosts": [],
+      "probePaths": []
+    },
+    "verdict": {
+      "level": "undeclared",
+      "line": "Reached out to api.agnost.ai, which nothing declared."
+    }
+  },
+  "events": [
+    {
+      "ts": 0,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.063,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.149,
+      "call": "environ_get",
+      "args": {},
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.216,
+      "call": "path_open2",
+      "args": {
+        "path": "/dev/null",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 12
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.272,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.273,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.514,
+      "call": "resolve",
+      "args": {
+        "host": "api.exa.ai",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.514,
+      "call": "resolve",
+      "args": {
+        "host": "api.exa.ai",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_connect",
+      "args": {
+        "addr": "172.66.40.91:65535",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_connect",
+      "args": {
+        "addr": "172.66.40.91:65535",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_connect",
+      "args": {
+        "addr": "172.66.43.165:65535",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_connect",
+      "args": {
+        "addr": "172.66.43.165:65535",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700:3108::ac42:2ba5]:65535",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700:3108::ac42:2ba5]:65535",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700:3108::ac42:285b]:65535",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Dgram",
+        "pt": "SockProto::Udp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.514,
+      "call": "sock_connect",
+      "args": {
+        "addr": "[2606:4700:3108::ac42:285b]:65535",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 0.515,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.516,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.516,
+      "call": "sock_connect",
+      "args": {
+        "addr": "172.66.40.91:443",
+        "sock": 13
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.517,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet6",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.517,
+      "call": "sock_open",
+      "args": {
+        "af": "Addressfamily::Inet4",
+        "ty": "Socktype::Stream",
+        "pt": "SockProto::Tcp",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.517,
+      "call": "sock_connect",
+      "args": {
+        "addr": "172.66.40.91:443",
+        "sock": 14
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "inprogress"
+    },
+    {
+      "ts": 0.706,
+      "call": "fd_write",
+      "args": {
+        "fd": 13,
+        "nwritten": 1602,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 0.707,
+      "call": "fd_write",
+      "args": {
+        "fd": 14,
+        "nwritten": 1602,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.003,
+      "call": "fd_write",
+      "args": {
+        "fd": 13,
+        "nwritten": 446,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.012,
+      "call": "fd_write",
+      "args": {
+        "fd": 14,
+        "nwritten": 496,
+        "socket": true
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.225,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.225,
+      "call": "resolve",
+      "args": {
+        "host": "api.agnost.ai",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    },
+    {
+      "ts": 1.238,
+      "call": "path_open2",
+      "args": {
+        "path": "/etc/hosts",
+        "dirfd": 5,
+        "follow_symlinks": "true",
+        "ret_fd": 15
+      },
+      "canary_hit": null,
+      "decision": "allow",
+      "errno": "success"
+    },
+    {
+      "ts": 1.238,
+      "call": "resolve",
+      "args": {
+        "host": "api.agnost.ai",
+        "port": 0
+      },
+      "canary_hit": null,
+      "decision": "deny",
+      "errno": "perm"
+    }
+  ]
+}

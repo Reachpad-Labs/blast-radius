@@ -5,6 +5,8 @@
     "integrity": "4717ef3e03e543da7b58e16e249624d4a0ebcd2ee828069661894784e61b2ba4",
     "entry": "/app/node_modules/@modelcontextprotocol/server-postgres/dist/index.js"
   },
+  "mode": "scan",
+  "net": null,
   "tools": [
     "query"
   ],
@@ -15,17 +17,32 @@
         "host": "127.0.0.1",
         "port": 5432,
         "blocked": true,
-        "at": 0.37
+        "at": 0.228,
+        "expected": true,
+        "why": "from our arguments",
+        "ips": []
       }
     ],
     "bytes_out": 0,
     "canary_in_payload": [],
     "writes_outside_cwd": [],
     "fingerprinting": [],
+    "unprompted_reads": [],
+    "undeclared_hosts": [],
+    "unprompted_writes": [],
     "correlated": false,
+    "policy": {
+      "vendorTokens": [
+        "postgres"
+      ],
+      "argHosts": [
+        "127.0.0.1"
+      ],
+      "probePaths": []
+    },
     "verdict": {
-      "level": "warn",
-      "line": "Attempted egress."
+      "level": "expected",
+      "line": "Only did what its job or our request implied."
     }
   },
   "events": [
@@ -38,7 +55,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.091,
+      "ts": 0.062,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -51,7 +68,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.227,
+      "ts": 0.147,
       "call": "environ_get",
       "args": {},
       "canary_hit": null,
@@ -59,7 +76,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.314,
+      "ts": 0.195,
       "call": "path_open2",
       "args": {
         "path": "/dev/null",
@@ -72,7 +89,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.37,
+      "ts": 0.228,
       "call": "sock_open",
       "args": {
         "af": "Addressfamily::Inet4",
@@ -85,7 +102,7 @@
       "errno": "success"
     },
     {
-      "ts": 0.37,
+      "ts": 0.228,
       "call": "sock_connect",
       "args": {
         "addr": "127.0.0.1:5432",
@@ -96,7 +113,7 @@
       "errno": "io"
     },
     {
-      "ts": 0.37,
+      "ts": 0.229,
       "call": "sock_open",
       "args": {
         "af": "Addressfamily::Inet4",
