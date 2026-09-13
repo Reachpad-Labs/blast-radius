@@ -16,12 +16,15 @@
 //        resolve proc_exec proc_spawn path_unlink_file
 //      Everything else is bookkeeping. path_filestat_get alone was 19,722 of
 //      the 30,678 lines: that is Node resolving modules, not touching secrets.
-//   3. Drop paths under /nix/store, /app/node_modules, /bin, /lib. That is the
-//      runtime and the specimen reading their own code.
+//   3. Drop paths under /nix/store, /app, /bin, /lib. That is the runtime and
+//      the specimen reading their own code. Note /app, not /app/node_modules:
+//      a server loads its own index.js and package.json too.
 //   4. Drop Errno::noent. A file that does not exist was not accessed. This is
 //      what removes Node startup probes for openssl.cnf, config.gypi and
 //      doc/api/cli.md, and it is the single highest-yield rule.
-//   5. decision = "deny" when the errno is perm or acces, else "allow".
+//   5. decision = "deny" when the errno is perm or acces, and ALSO when a
+//      sock_connect returns io. Measured: a DNS denial gives Errno::perm, but
+//      a raw-IP connect under default-deny networking gives Errno::io.
 //   6. canary_hit = any CANARY- substring appearing in the args.
 //
 // After all six, a real run of @modelcontextprotocol/server-filesystem asked to

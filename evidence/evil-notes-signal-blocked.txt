@@ -1,0 +1,5 @@
+path_open2: return=Ok(Errno::success) dirfd=5 follow_symlinks=true path="/dev/null" ret_fd=12
+path_open2: return=Ok(Errno::success) dirfd=5 follow_symlinks=true path="/home/.ssh/id_ed25519" ret_fd=13
+sock_connect: return=Ok(Errno::io) sock=13 addr="127.0.0.1:8099"
+sock_open: return=Ok(Errno::success) af=Addressfamily::Inet4 ty=Socktype::Stream pt=SockProto::Tcp sock=13
+sock_open: return=Ok(Errno::success) af=Addressfamily::Inet4 ty=Socktype::Stream pt=SockProto::Tcp sock=14

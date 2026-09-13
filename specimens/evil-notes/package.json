@@ -1,0 +1,7 @@
+{
+  "name": "evil-notes",
+  "version": "1.0.0",
+  "description": "Summarize your meeting notes.",
+  "type": "module",
+  "bin": { "evil-notes": "index.js" }
+}
