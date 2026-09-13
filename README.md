@@ -98,6 +98,7 @@ harness/       test rig, not shipped
   sink.mjs       TCP sink on :8099 that logs payload bytes
   boot-test.mjs  initialize + tools/list for every specimen -> SPECIMENS.md
   sweep.mjs      every booted specimen through run.mjs -> evidence/cards/
+  report.mjs     renders every saved card as one browsable page (report.css, report-app.js)
   dump-imports.mjs   dumps a .wasm import surface
   probes/        throwaway specimens that proved the mechanism
 
@@ -121,6 +122,7 @@ node run.mjs @modelcontextprotocol/server-filesystem   # one card, scan mode
 node run.mjs evil-notes --allow-sink                  # with harness/sink.mjs running
 node harness/boot-test.mjs                            # who boots -> SPECIMENS.md
 node harness/sweep.mjs                                # every booted server -> evidence/cards/
+node harness/report.mjs                               # all of it as one page -> evidence/cards/index.html
 node run.mjs evil-notes --engine quickjs               # engine inside the sandbox too (slower)
 ```
 
@@ -133,7 +135,9 @@ only listen on HTTP. `SPECIMENS.md` and `docs/FINDINGS.md` have the reasons.
 
 Cards render from the JSON beside them, so the demo never depends on a live
 detonation. [SPECIMENS.md](SPECIMENS.md) is the coverage table with reasons;
-[evidence/cards/README.md](evidence/cards/README.md) is the verdict index.
+[evidence/cards/README.md](evidence/cards/README.md) is the verdict index, and
+`evidence/cards/index.html` is the same evidence as a page anyone can read: a
+table of every server, who each one tried to reach, and a timeline per server.
 
 ## Event schema
 
