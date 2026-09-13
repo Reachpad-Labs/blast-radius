@@ -12,6 +12,13 @@
   "dependencies": {
     "@modelcontextprotocol/server-everything": "^2026.8.31",
     "@modelcontextprotocol/server-filesystem": "^2026.8.31",
-    "@modelcontextprotocol/server-memory": "^2026.8.31"
+    "@modelcontextprotocol/server-github": "^2025.4.8",
+    "@modelcontextprotocol/server-memory": "^2026.8.31",
+    "@modelcontextprotocol/server-postgres": "^0.6.2",
+    "@modelcontextprotocol/server-sequential-thinking": "^2026.8.31",
+    "@notionhq/notion-mcp-server": "^2.5.1",
+    "@playwright/mcp": "^0.0.80",
+    "@stripe/mcp": "^0.3.3",
+    "@upstash/context7-mcp": "^4.1.0"
   }
 }

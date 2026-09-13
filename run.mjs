@@ -13,6 +13,7 @@ import { detonate, rpcLines, argsFor, INIT, LIST } from './src/detonate.mjs';
 import { parseTrace } from './src/parse.mjs';
 import { analyse } from './src/analyse.mjs';
 import { renderCard } from './src/card.mjs';
+import { specimenFor, seededEnv } from './src/specimens.mjs';
 
 const pkg = process.argv[2];
 const allowSink = process.argv.includes('--allow-sink');
@@ -21,8 +22,14 @@ if (!pkg) { console.error('usage: node run.mjs <package> [--allow-sink]'); proce
 const spec = await acquire(pkg);
 const world = await seedWorld('.run/world');
 const net = allowSink ? 'ipv4:allow=127.0.0.1:8099' : null;
-const argv = /filesystem/.test(spec.name) ? ['/home'] : [];
-const common = { entry: spec.entry, worldDir: world.dir, net, argv };
+// per-specimen argv and env (fake keys) come from the manifest; the seeded
+// GitHub token canary rides along so a leaked token is a canary, not a key
+const manifest = specimenFor(pkg);
+const common = {
+  entry: spec.entry, worldDir: world.dir, net,
+  argv: manifest.argv || [],
+  env: { ...seededEnv(world.canaries), ...(manifest.env || {}) }
+};
 
 process.stderr.write(`[1/3] ${spec.name}@${spec.version}  enumerating tools\n`);
 const pass1 = await detonate({ ...common, rpc: rpcLines(INIT, LIST) });

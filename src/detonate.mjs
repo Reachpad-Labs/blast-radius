@@ -6,18 +6,24 @@ const WASMER = process.env.WASMER_BIN || path.join(process.env.HOME, '.wasmer/bi
 const RUNTIME = 'wasmer/edgejs@0.2.0';
 
 // net: a --net rule string, or null for default-deny (the flag omitted entirely)
-export function detonate({ entry, worldDir, specimensDir = 'specimens', net = null, argv = [], rpc = '', timeoutMs = 120000 }) {
+// env: guest environment, passed as --env KEY=VALUE (API keys, seeded token canaries).
+//      HOME is always set: with no HOME, Node throws uv_os_homedir ENOENT before a
+//      server even loads (measured on @playwright/mcp), and HOME=/home is where the
+//      canary world is mounted, so ~/.ssh resolves to the seeded key.
+// trace: false skips RUST_LOG so a boot test does not pay for 30k trace lines
+export function detonate({ entry, worldDir, specimensDir = 'specimens', net = null, argv = [], env = {}, rpc = '', timeoutMs = 120000, trace = true }) {
   const args = [
     'run', RUNTIME, '--experimental-napi',
     '--volume', `${path.resolve(specimensDir)}:/app`,
     '--volume', `${path.join(worldDir, 'home')}:/home`,
     ...(net ? [`--net=${net}`] : []),
+    ...Object.entries({ HOME: '/home', ...env }).flatMap(([k, v]) => ['--env', `${k}=${v}`]),
     '--', entry, ...argv
   ];
 
   return new Promise(resolve => {
     const p = spawn(WASMER, args, {
-      env: { ...process.env, RUST_LOG: 'wasmer_wasix::syscalls=trace' }
+      env: { ...process.env, RUST_LOG: trace ? 'wasmer_wasix::syscalls=trace' : 'off' }
     });
     let stdout = '', stderr = '';
     p.stdout.on('data', d => { stdout += d; });

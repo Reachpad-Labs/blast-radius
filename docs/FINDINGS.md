@@ -136,3 +136,44 @@ Two corrections to the filter came out of this run:
 - A denied `sock_connect` to a raw IP returns **`Errno::io`**, not `Errno::perm`.
   DNS denials give `perm`; raw-IP connects under default-deny give `io`. Treat
   both as deny or every blocked exfiltration reads as allowed.
+
+## Boot coverage, measured
+
+Ten real npm MCP servers, screened for native code (`find specimens/node_modules
+-name "*.node"` returns nothing), each fed `initialize` then `tools/list` under
+`wasmer/edgejs@0.2.0` with egress denied. Table and reasons in
+[SPECIMENS.md](../SPECIMENS.md), raw results in `evidence/boot-test.json`,
+per-specimen argv and env in `src/specimens.mjs`.
+
+**8 of 10 boot and list tools**, every one in under a second once the runtime
+is cached. The two that do not are both honest and both interesting:
+
+- **`@playwright/mcp`** throws `Error: Unsupported platform: wasi` from inside
+  `playwright-core` before the server constructs. It is not our sandbox
+  refusing it; the package checks `process.platform` and refuses to run. It
+  would also need a browser binary we could never provide.
+- **`@stripe/mcp`** is not a server. It is a stdio-to-HTTP proxy: every message
+  is forwarded to `https://mcp.stripe.com`. Under default-deny it prints
+  "running on stdio" and then `getaddrinfo ENOTFOUND mcp.stripe.com` for the
+  `initialize` it tried to forward. The package itself owns no tools, so the
+  only thing installing it gives you locally is a tunnel. That is a card line
+  in its own right.
+
+Two more traps came out of this run:
+
+9. **The guest has no `HOME`.** Node calls `uv_os_homedir` while loading some
+   packages and throws `ERR_SYSTEM_ERROR ... ENOENT` before the server loads
+   (measured on `@playwright/mcp`; it was the first failure, not the platform
+   check). `detonate.mjs` now always passes `--env HOME=/home`, which is also
+   where the canary world is mounted, so `~/.ssh/id_ed25519` resolves to the
+   seeded key. Any server that reads its dotfiles now reads ours.
+10. **Omitting `--net` prints to the guest's stdout.** Wasmer writes "The
+    current package is requesting networking access. Run the package with
+    `--net` flag to bypass the prompt." to stdout, mixed into the JSON-RPC
+    stream, then continues in deny mode. Parse stdout line by line and skip
+    anything that is not JSON, or the first specimen that dials out breaks the
+    tool enumeration.
+
+Fake API keys are passed to the servers that demand one at startup
+(`src/specimens.mjs`). They are inert by construction: egress is denied, and a
+server that ships them somewhere is the behaviour we are here to observe.
