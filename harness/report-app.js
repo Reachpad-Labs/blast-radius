@@ -285,8 +285,8 @@
     var nn = function (lv) { return npm.filter(function (s) { return s.level === lv; }).length; };
     var nOdd = nn('critical') + nn('undeclared') + nn('warn');
     var ours = servers.filter(function (s) { return s.control; });
-    var h = '<div class="hdr"><h1>' + nOdd + ' of ' + booted + ' servers did something nobody asked for</h1>' +
-      '<div class="meta"><span>We gave each one a fake home folder full of secrets and asked it to use every tool it offers. This is what it did. Nothing could reach the internet.</span></div></div>';
+    var h = '<div class="hdr"><h1>' + plural(nOdd, 'finding') + '</h1>' +
+      '<div class="meta"><span>Across ' + booted + ' MCP servers from npm. We gave each one a fake home folder full of secrets and asked it to use every tool it offers. Nothing could reach the internet.</span></div></div>';
     h += '<div class="tiles">' +
       '<div class="tile critical"><span class="n">' + nn('critical') + '</span><span class="l">critical<small>a planted secret left, or went to the model</small></span></div>' +
       '<div class="tile undeclared"><span class="n">' + (nn('undeclared') + nn('warn')) + '</span><span class="l">undeclared<small>a host, a file, or a change nobody asked for</small></span></div>' +
