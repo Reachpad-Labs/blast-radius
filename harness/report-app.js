@@ -226,7 +226,9 @@
   function renderSidebar() {
     var q = state.q.trim().toLowerCase();
     var groups = [['critical', 'Critical'], ['undeclared', 'Undeclared'], ['warn', 'Warning'], ['expected', 'Expected'], ['clean', 'Clean'], ['noboot', 'Did not run']];
-    var h = '<div class="brand"><span class="mark">' + I.critical + '</span><div><b>Blast Radius</b><span>' + servers.filter(function (s) { return !s.control; }).length + ' MCP servers from npm, plus one we wrote to be malicious</span></div></div>';
+    var nNpm = servers.filter(function (s) { return !s.control; }).length;
+    var nOurs = servers.filter(function (s) { return s.control; }).length;
+    var h = '<div class="brand"><span class="mark">' + I.critical + '</span><div><b>Blast Radius</b><span>' + nNpm + ' servers from npm · ' + nOurs + ' of our own</span></div></div>';
     h += '<label class="search">' + I.search + '<input id="q" type="search" placeholder="Search servers, hosts, tools" value="' + esc(state.q) + '" aria-label="Search"></label>';
     h += '<div class="group"><button class="row" data-sel="overview" aria-current="' + (state.sel === 'overview') + '"><span class="sym overview">' + I.overview + '</span><span class="t"><span class="name">Overview</span><span class="sub">every server in one table</span></span></button></div>';
     groups.forEach(function (g) {
@@ -276,16 +278,26 @@
     var n = function (lv) { return servers.filter(function (s) { return s.level === lv; }).length; };
     var ran = DATA.ran ? new Date(DATA.ran) : null;
     var when = ran ? ran.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) : '';
-    var h = '<div class="hdr"><span class="eyebrow">Sweep · ' + esc(when) + ' · ' + esc(DATA.mode) + '</span><h1>Blast Radius Sweep</h1>' +
-      '<div class="meta"><span>' + npm.length + ' MCP servers from npm, each run inside a sandbox with a fake home folder full of planted secrets, then asked to use every tool it offers. Everything below is what the sandbox saw each server do. No server was allowed to reach the internet.</span></div></div>';
+    // The first screen answers one question: of the servers that ran, how many
+    // did something nobody asked for? Everything else is a row away.
+    // Counts are npm servers only — ours are controls, and counting them here
+    // would inflate the finding with servers we wrote to be caught.
+    var nn = function (lv) { return npm.filter(function (s) { return s.level === lv; }).length; };
+    var nOdd = nn('critical') + nn('undeclared') + nn('warn');
+    var ours = servers.filter(function (s) { return s.control; });
+    var h = '<div class="hdr"><h1>' + nOdd + ' of ' + booted + ' servers did something nobody asked for</h1>' +
+      '<div class="meta"><span>We gave each one a fake home folder full of secrets and asked it to use every tool it offers. This is what it did. Nothing could reach the internet.</span></div></div>';
     h += '<div class="tiles">' +
-      '<div class="tile"><span class="n">' + npm.length + '</span><span class="l">servers tested<small>all plain JavaScript</small></span></div>' +
-      '<div class="tile"><span class="n">' + booted + '<span style="font-size:14px;color:var(--ink2);font-weight:500"> / ' + npm.length + '</span></span><span class="l">started and listed their tools<small>' + (npm.length - booted) + ' did not, reasons below</small></span></div>' +
-      '<div class="tile critical"><span class="n">' + n('critical') + '</span><span class="l">critical<small>' + (n('critical') === 1 && servers.some(function (s) { return s.control && s.level === 'critical'; }) ? 'only our planted bad server' : 'a secret provably sent out') + '</small></span></div>' +
-      '<div class="tile undeclared"><span class="n">' + (n('undeclared') + n('warn')) + '</span><span class="l">undeclared<small>did something nobody asked for</small></span></div>' +
-      '<div class="tile expected"><span class="n">' + (n('expected') + n('clean')) + '</span><span class="l">expected<small>only did what its job implied</small></span></div>' +
+      '<div class="tile critical"><span class="n">' + nn('critical') + '</span><span class="l">critical<small>a planted secret left, or went to the model</small></span></div>' +
+      '<div class="tile undeclared"><span class="n">' + (nn('undeclared') + nn('warn')) + '</span><span class="l">undeclared<small>a host, a file, or a change nobody asked for</small></span></div>' +
+      '<div class="tile expected"><span class="n">' + (nn('expected') + nn('clean')) + '</span><span class="l">expected<small>only did what its job implied</small></span></div>' +
       '</div>';
-    h += '<section class="sec"><div class="sec-h"><h2>All servers</h2><span class="tier">click a row for the full run</span></div><div class="box tablewrap"><table><thead><tr>' +
+    if (ours.length) {
+      h += '<p class="ours">Plus ' + plural(ours.length, 'server') + ' we wrote ourselves, to check the instrument catches both routes out: ' +
+        ours.map(function (s) { return '<button data-sel="' + esc(s.slug) + '">' + esc(shortName(s.name)) + '</button>'; }).join(' and ') +
+        '. One sends the secret over the network. The other never opens a socket.</p>';
+    }
+    h += '<section class="sec"><div class="sec-h"><h2>All servers</h2><span class="tier">' + npm.length + ' from npm, ' + booted + ' started · ' + esc(when) + ' · ' + esc(DATA.mode) + ' · click a row for the full run</div><div class="box tablewrap"><table><thead><tr>' +
       th('name', 'Server') + th('sev', 'Block all') + th('vendor', 'Vendor only') + th('tools', 'Tools', true) + th('reads', 'Secrets', true) + th('egress', 'Reached out to') + th('proven', 'Proven leak') + th('boot', 'Startup', true) +
       '</tr></thead><tbody>';
     sortServers(servers).forEach(function (s) {

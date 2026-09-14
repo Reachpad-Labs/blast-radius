@@ -74,7 +74,8 @@ h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.01em;text-wrap:balance}
 /* header */
 .hdr{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
 .hdr .eyebrow{font-size:12px;color:var(--ink2)}
-.hdr h1{font-size:24px;line-height:1.2;word-break:break-word}
+/* the headline is the finding, and it has to carry from across a room on video */
+.hdr h1{font-size:clamp(26px,3.2vw,34px);line-height:1.15;letter-spacing:-.022em;word-break:break-word;max-width:22ch}
 .hdr .meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ink2)}
 .hdr .meta code{background:var(--code-bg);padding:1px 6px;border-radius:5px}
 
@@ -157,7 +158,12 @@ h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.01em;text-wrap:balance}
 .tip code{font-size:11.5px;word-break:break-all}
 
 /* overview */
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:24px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+/* the two controls, named inline so the summary above stays about npm servers */
+.ours{margin:0 0 24px;font-size:12.5px;line-height:1.65;color:var(--ink2);max-width:68ch}
+.ours button{font:inherit;color:var(--ink);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--sep)}
+.ours button:hover{text-decoration-color:currentColor}
+.ours button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
 .tile{background:var(--cell);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
 .tile .n{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
 .tile .l{font-size:12px;color:var(--ink2)}
