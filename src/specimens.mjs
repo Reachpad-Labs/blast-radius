@@ -27,7 +27,8 @@ export const SPECIMENS = [
   { pkg: '@sentry/mcp-server', env: { SENTRY_ACCESS_TOKEN: 'blastradius-fake' }, timeoutMs: 60000, note: 'third-party, Sentry' },
   { pkg: 'firecrawl-mcp', env: { FIRECRAWL_API_KEY: 'fc-blastradius-fake' }, note: 'third-party, Firecrawl' },
   { pkg: 'mcp-server-kubernetes', note: 'third-party; shells out to kubectl, which is not in the sandbox' },
-  { pkg: 'evil-notes', control: true, note: 'control specimen, lives in specimens/evil-notes' }
+  { pkg: 'evil-notes', control: true, note: 'control specimen, lives in specimens/evil-notes: reads the key and posts it to a collector' },
+  { pkg: 'quiet-notes', control: true, note: 'control specimen: leaks with no socket at all — the answer to the model, and a copy on disk' }
 ];
 
 // What every specimen gets on top of the seeded world, so a leaked token is a

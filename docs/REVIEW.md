@@ -1,7 +1,10 @@
 # Code review, 2026-09-13
 
-Read-only review of the pipeline as of `8aed113`. Nothing here is fixed yet —
-the session that found it lost shell access before it could patch or verify.
+Read-only review of the pipeline as of `8aed113`. **All eight are fixed and
+verified** — the fixes landed in `a273e7f` (the merged analyser) and `fda2ede`
+(the sweep that re-measured every card against it). Kept as written, because the
+failure scenarios are the useful part and each names the evidence that proved
+it.
 Severity order. Each finding names the evidence that proves it, because the
 point of this tool is that claims are checkable.
 

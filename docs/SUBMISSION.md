@@ -51,20 +51,35 @@ observed and survivable: the server keeps running and keeps answering.
   provably left, or was opened unprompted right before a connection attempt.
   Each card records the policy that decided "expected", so the reasoning can
   be checked.
-- **Block all, 13 of 13 ran to a verdict: 11 expected, 2 undeclared, 0
+- **Block all, 13 of 13 ran to a verdict: 10 expected, 2 undeclared, 1
   critical.** Every third-party server reached for its own vendor and was
-  blocked, which is expected. Two did more: `exa-mcp-server` also dialed
-  `api.agnost.ai`, an analytics service its README does not mention, and the
-  reference `server-everything` fetched from `raw.githubusercontent.com`.
+  blocked, which is expected. Three did more:
+  - `mcp-server-kubernetes` opens `~/.kube/config` **before any tool is
+    called** — reading it is part of starting up. It reached no host, because
+    it shells out to `kubectl`, which does not exist in the sandbox.
+  - `exa-mcp-server` also dialed `api.agnost.ai`, which its README does not
+    mention, 44 ms after its own API.
+  - `@modelcontextprotocol/server-everything` returned 8 planted environment
+    secrets to the model in the answer from its `get-env` tool, and fetched
+    from `raw.githubusercontent.com`. `get-env` advertises exactly that, which
+    is the point: the card names the tool, so a reader sees a capability rather
+    than an accusation.
+
   The cards say exactly that and nothing more.
 - **Vendor only, 7 ran: 6 expected, 1 undeclared, 0 critical.** The other six
   reached no vendor host in block-all mode, so there was nothing to allow.
   Allowed to reach their own API, none of the seven reached anywhere new;
   Exa again also dialed api.agnost.ai, which stayed blocked.
-- The control specimen, a notes summariser that quietly reads
-  `~/.ssh/id_ed25519` and posts it to a collector, lands at **CRITICAL** with
-  the per-run canary matched at the sink. With egress denied it is refused and
-  still returns a normal summary.
+- **Two controls, because a network-shaped detector is not enough.**
+  `evil-notes` is a notes summariser that reads seven credential files and posts
+  them to a collector: **critical**, with 14 per-run planted strings matched in
+  the capture and 3,294 bytes counted on the wire. With egress denied it is
+  refused and still returns a normal summary.
+  `quiet-notes` answers the same question correctly and **never opens a
+  socket**: it appends the key to its own reply, where the model reads it, and
+  copies the key and seven environment secrets into `~/.cache/fontconfig/`.
+  **Critical with zero bytes out, zero hosts, and nothing at the collector.**
+  A detector that only watches the network scores it clean.
 
 ## Limitations, stated plainly
 
@@ -88,9 +103,16 @@ observed and survivable: the server keeps running and keeps answering.
   catches atomic writes, and caught `server-filesystem` overwriting the seeded
   key when asked). An in-place open-then-write is not yet resolved back to its
   path.
-- **Environment reads are invisible.** `environ_get` reports sizes only. A
-  server that reads `GITHUB_TOKEN` and ships it is caught at the sink, not in
-  the trace.
+- **Environment reads are invisible *in the trace*.** `environ_get` copies the
+  whole block in one call, so the trace shows that the environment was read and
+  never which variable was taken — and Node reads it at startup regardless. A
+  server that takes `GITHUB_TOKEN` is caught where the secret surfaces: in the
+  capture at our collector, in its own answer to the model, or in a file it
+  copied it into. Never inferred from the trace.
+- **The world is one shape.** An Ubuntu-flavoured developer box on EC2, with a
+  planted `/etc`, `/proc` and `/sys`. A server hunting macOS Keychain paths, or
+  one that fingerprints the machine and abstains, finds nothing here.
+  `process.platform` is `wasi`, which a determined specimen can read.
 - **Python MCP servers are out entirely.** `pip install mcp` reaches `rpds-py`,
   a Rust extension with no wasm32-wasi wheel.
 - **Native Node modules are out.** Measured, not assumed: handing a `.node`

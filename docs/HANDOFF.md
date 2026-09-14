@@ -1,4 +1,12 @@
-# Handoff — unverified changes sitting in the tree
+# Handoff — CLOSED, kept for the reasoning
+
+Everything below landed and was verified. `a273e7f` merged the two analysers,
+`fda2ede` regenerated every card against the merged one: `evil-notes` reads 7,
+`quiet-notes` is critical with nothing on the wire, `server-filesystem` stays
+clean on the same world. Read this for *why* each change exists — nothing in it
+is outstanding.
+
+# Handoff — unverified changes sitting in the tree (historical)
 
 Written 2026-09-13, after the session lost the ability to execute anything.
 Last verified commit: **`8aed113`**. Everything below is edited on disk and

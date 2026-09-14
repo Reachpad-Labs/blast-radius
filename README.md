@@ -33,8 +33,10 @@ Everything below was verified on a real run today. Evidence is in `evidence/`.
 | How many real ones boot? | **13 of 16**, each in about a second. The ones that do not, with reasons, in [SPECIMENS.md](SPECIMENS.md). |
 | Can we see file access? | **Yes, with full paths.** |
 | Can we see network destinations? | **Yes, host and address.** |
-| Can we see payload bytes? | **No** — size only. Payload proof needs a sink we control. |
+| Can we see payload bytes? | **No** — size only. Payload proof needs a collector we control. |
 | Can we deny egress and keep the process alive? | **Yes.** |
+| Does a server need the network to leak? | **No**, and both other routes are covered: the answer it hands the model, and a copy it leaves on disk. The `quiet-notes` control is **critical** with zero bytes on the wire. |
+| What did the sweep actually find? | Of 13 that ran: **10 expected, 2 undeclared, 1 critical.** `mcp-server-kubernetes` opens `~/.kube/config` before any tool is called; `exa-mcp-server` also dials `api.agnost.ai`; `server-everything` hands the environment to the model through its `get-env` tool. |
 | What does a card conclude? | One of three descriptive verdicts: **expected**, **undeclared**, **critical**, with the policy that decided "expected" recorded on the card. |
 | Under which network policies? | Two benchmarks per server: **block all** (default, every connection refused) and **vendor only** (DNS allowed for its own vendor, nothing else). The control also runs with our collector allowed. |
 | Does the result depend on the fast engine? | **No.** The sweep gives identical findings under `wasmer/edgejs` (V8 on the host) and `wasmer/edgejs-quickjs` (engine inside the sandbox). |
@@ -146,15 +148,28 @@ Every fixture carrying a `CANARY-xxxxx` placeholder gets a fresh value per run,
 keyed by its path, so a hit names the file it came from. Adding a fixture needs
 no code change, and adding a top-level directory needs no change in `detonate`.
 
-## Three claim tiers
+## Where a claim comes from
 
-- **observed-from-trace** — a path opened, a host resolved, bytes counted.
-- **attempted** — a path asked for that was not there. Only kept under roots a
-  credential hunt would walk (`/home`, `/root`, `/etc`, `/proc`, `/sys`, `/var`),
-  minus Node's own startup misses. Three or more is a sweep, and the card says so.
-- **proven-at-sink** — a specific canary string in a specific payload. The only
-  tier that can ever carry an env canary, because `environ_get` copies the whole
-  block in one call.
+Every line on a card is labelled with how we know it. Never mix them.
+
+- **from trace** — a path opened, a host resolved, bytes counted. The syscall
+  boundary, which the code cannot route around.
+- **attempted** — a path asked for that was not there. Only kept under the
+  folders a search would walk (`/home`, `/root`, `/etc`, `/proc`, `/sys`,
+  `/var`), minus Node's own startup misses. Three or more is a search, and the
+  card says so.
+- **the specimen said so** — a planted string found in the server's own answer,
+  attributed to the tool that returned it. No syscall exists for this: the model
+  reads the answer, so the agent is the way out.
+- **found in the world** — a planted string found in a file it was not planted
+  in, from a scan of the world against a baseline taken at seed time. Park it
+  somewhere ordinary and let a later session or a backup carry it.
+- **proven at the collector** — a specific planted string in a specific payload.
+  The only tier that can carry an environment secret from the trace's point of
+  view, because `environ_get` copies the whole block in one call.
+
+The last three are why a network-shaped detector is not enough. `quiet-notes`
+opens no socket and is still critical.
 
 ## What the guest cannot do
 
@@ -164,10 +179,12 @@ symlink targets resolve in the **guest** namespace, where those paths do not
 exist. The capability model holds.
 
 What a specimen *can* do is write anywhere we mount, because Wasmer has no
-read-only volume. So it is handed copies: the world is re-seeded per run, and
-`stageSpecimens()` copies the specimen tree to `.run/specimens` before every
-detonation. Verified the need the hard way — a probe planted a file in
-`specimens/` through `/app`.
+read-only volume. So it is handed copies, and the copies are per run:
+`.run/<slug>/world` and `.run/<slug>/specimens`. Verified the need the hard way
+twice — a probe planted a file in `specimens/` through `/app`, and two pipelines
+sharing one scratch directory re-seeded the world under each other and killed
+four cards in a sweep with errors that looked exactly like four servers failing
+to boot.
 
 The step outside all of this is `npm install`, which runs lifecycle scripts on
 your box as you before Wasmer is involved. Hence `--ignore-scripts` above.
@@ -198,6 +215,7 @@ harness/       test rig, not shipped
   boot-test.mjs  initialize + tools/list for every specimen -> SPECIMENS.md
   sweep.mjs      every booted specimen through run.mjs -> evidence/cards/
   report.mjs     renders every saved card as one browsable page (report.css, report-app.js)
+  replay.mjs     re-runs analyse.mjs over saved cards and diffs the verdicts
   dump-imports.mjs   dumps a .wasm import surface
   probes/        throwaway specimens that proved the mechanism
 
@@ -219,6 +237,8 @@ booted, enumerated, provoked and scored.
 node run.mjs tavily-mcp --env TAVILY_API_KEY=fake      # any package; keys are fakes, egress is denied
 node run.mjs @modelcontextprotocol/server-filesystem   # one card, scan mode
 node run.mjs evil-notes --allow-sink                  # with harness/sink.mjs running
+node run.mjs quiet-notes                              # leaks with no network at all; still critical
+node harness/replay.mjs                               # re-judge every saved card, diff the verdicts
 node harness/boot-test.mjs                            # who boots -> SPECIMENS.md
 node harness/sweep.mjs                                # every booted server -> evidence/cards/
 node harness/report.mjs                               # all of it as one page -> evidence/cards/index.html
@@ -247,10 +267,12 @@ table of every server, who each one tried to reach, and a timeline per server.
 
 ## Known gaps
 
-In priority order, with detail in [CLAUDE.md](CLAUDE.md): the world's
-`app/.env` canary is never mounted; in-place file writes are not attributed to
-a path; environment reads are invisible to the trace; "its vendor" is read off
-the package name; every tool is called once with made-up arguments. Three of
+In priority order, with detail in [CLAUDE.md](CLAUDE.md): "its vendor" is read
+off the package name; every tool is called once with made-up arguments, so
+anything needing real data or a second call traces clean; an in-place
+open-then-write is still not resolved back to its path (a rename, an unlink, or
+a file that appears during the run is); a server that detects the sandbox and
+does nothing is indistinguishable from a server with nothing to hide. Three of
 the sixteen servers do not run, each for a recorded reason.
 
 ## Event schema

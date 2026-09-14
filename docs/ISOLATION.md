@@ -42,8 +42,15 @@ change.
 Env canaries have no origin file, so any file containing one is staging by
 definition.
 
-**Status:** started, blocked mid-edit by the permission classifier, not landed.
-The repo is at `8aed113` without it. Redo in a fresh session.
+**Status: both shipped** in `a273e7f`, each with a filter that only a *benign*
+specimen could have revealed — a planted string we named in the request is
+solicited and does not count, and one present at seed time is ours. Attribution
+came later: a canary in an answer names the tool that returned it, because
+`server-everything`'s `get-env` does this by design and a card that does not say
+so reads as an accusation.
+
+`quiet-notes` proves both channels: critical, zero bytes, zero hosts, nothing at
+the collector. The remaining channel is ④.
 
 ### ④ is unsolved and probably unsolvable here
 

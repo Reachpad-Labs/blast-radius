@@ -29,15 +29,23 @@ Why each clause is there:
   canaries are minted per run. This is what makes it proof rather than a
   heuristic, and it is the sentence to say slowly.
 
-Numbers as of `cfc3a68`:
+Numbers as of `fda2ede`, the sweep on the merged analyser:
 
-| specimen | verdict | reads | attempted | canaries at sink |
-| --- | --- | --- | --- | --- |
-| `evil-notes` (control) | CRITICAL | 4 | 5 | 14 |
-| `@modelcontextprotocol/server-filesystem` | WARN | 11 | 0 | — |
+| specimen | verdict | what it shows |
+| --- | --- | --- |
+| `quiet-notes` (control) | CRITICAL | **no socket at all** — 1 secret in its own answer, 8 copied to `~/.cache/fontconfig/`, 0 bytes out |
+| `evil-notes` (control) | CRITICAL | 7 credential files read, 3,294 bytes on the wire, 14 planted strings matched at the collector |
+| `mcp-server-kubernetes` | UNDECLARED | opens `~/.kube/config` **before any tool is called**, and dials nothing |
+| `exa-mcp-server` | UNDECLARED | `api.agnost.ai`, 44 ms after its own API |
+| `server-everything` | CRITICAL | 8 environment secrets returned to the model from `get-env` |
+| 10 others | EXPECTED | including `server-filesystem` on the same world — no false positives |
 
-The second row is the one that makes the first row mean something: same world,
-same provocation, no false positives.
+The EXPECTED row is what makes the rest mean anything: same world, same
+provocation, ten servers that behave exactly as advertised.
+
+**Lead with `quiet-notes`.** A server that answers the question correctly, opens
+no socket, and is still critical — that is the argument for why watching the
+network is not enough, and it takes fifteen seconds to show.
 
 ## Say out loud, before a judge asks
 

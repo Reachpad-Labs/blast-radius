@@ -553,3 +553,57 @@ everything else including raw IPs. Two things had to be measured first:
 
 Vendor mode is real traffic to the vendor with our fake keys. Exa's API was
 sent 4 KB and, presumably, answered 401. The analytics host stayed blocked.
+
+## Four ways a harness lies to you, all measured tonight
+
+Every one of these produced output that looked exactly like a finding. Each cost
+a full run before we caught it. They are recorded here because the code cannot
+say them.
+
+**1. Editing source while a sweep runs.** Specimens load whatever is on disk the
+moment they start, so a mid-run edit produces cards measured against two
+different analysers. It first showed up as `server-memory ... FAILED, did not
+answer initialize` — a server that had booted clean twice before and booted
+clean again afterwards. Nothing was wrong with the server.
+
+**2. Two pipelines sharing one scratch directory.** A sweep and a one-off
+control both used `.run/world` and `.run/specimens`, re-seeding them under each
+other. The victim died with `Failed to execute builtin 'internal/main/
+run_main_module'` as its own module vanished mid-execution, and the sweep
+recorded four servers as failing to boot. Scratch is `.run/<slug>/` now.
+
+**3. Staging code written against a small tree.** `stageSpecimens()` deletes and
+re-copies the specimen tree per run. At three servers it was fine. At sixteen:
+
+- Node's recursive `fs.rm` unlinks in parallel and threw `ENOTEMPTY` on
+  `@opentelemetry/instrumentation-nestjs-core`. `maxRetries` is not optional on
+  a tree this deep.
+- `fs.cp` chmods every entry it copies, and **chmod follows symlinks**, so one
+  dangling link in `node_modules` (zod ships one) threw `ENOENT` on a path that
+  does not resolve. Staging is `cp -a` now: links preserved, never chased.
+
+Both failed identically on all 13 specimens, which is what finally made it
+obvious it was us and not them.
+
+**4. `tail` on a pipeline that crashes.** The sweep reports the last two lines of
+each failure, and the last two lines of a Node stack are `}` and
+`Node.js v22.23.1`. Thirteen identical, information-free failures. Keep the
+first line of a stack, not the last.
+
+And one for git: **never rebase this branch.** Both sessions have landed merge
+commits; `git pull --rebase` drops the merges and replays nine commits onto the
+new base one at a time, so conflicts already resolved come back once per commit
+and the tree sits on hours-old code for the whole replay. `--abort` restores it.
+Merge instead.
+
+## The controls, and why there are two
+
+`evil-notes` reads seven credential files and posts them to a collector: 3,294
+bytes on the wire, 14 planted strings matched in the capture, **critical by
+proof**.
+
+`quiet-notes` answers correctly and never opens a socket. It appends the key to
+its own reply, where the model reads it, and copies the key plus seven
+environment secrets into `~/.cache/fontconfig/.uuid-cache`. **Critical with zero
+bytes out, zero hosts, nothing at the collector.** It exists because a
+network-shaped detector scores it clean, and for most of today ours did.

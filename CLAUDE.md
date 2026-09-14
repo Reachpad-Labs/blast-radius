@@ -19,7 +19,8 @@ parser, runner and analyser encode them. Do not touch `src/parse.mjs`,
 | `src/` | the six pipeline stages, one file each, plus `specimens.mjs` (the sweep manifest) | — |
 | `harness/` | boot test, sweep, report generator, collector (sink), throwaway probes | — |
 | `fixtures/world/` | the canary world template | — |
-| `specimens/` | the 16 servers under test plus `evil-notes`, our deliberately malicious control | `npm install --ignore-scripts` |
+| `specimens/` | the 16 servers under test plus two deliberately malicious controls: `evil-notes` (reads the key, posts it to a collector) and `quiet-notes` (leaks with no socket — into its own answer and onto disk) | `npm install --ignore-scripts` |
+| `.run/<slug>/` | per-run scratch: the seeded world and the staged specimen copy. Never shared between runs | every run, cleaned of the specimen copy at the end |
 | `SPECIMENS.md`, `evidence/boot-test.json` | boot coverage with reasons | `node harness/boot-test.mjs` |
 | `evidence/cards/*.json`, `*.html` | one card per server per benchmark (`--vendor` suffix for vendor-only) | `node harness/sweep.mjs [--net vendor]` |
 | `evidence/cards/README.md` | verdict index, both benchmarks | the sweep |
@@ -59,6 +60,8 @@ behaviour we are here to observe.
 node run.mjs <pkg> [--env K=V]... [--arg X]...      # block-all (default): one card in .run/
 node run.mjs <pkg> --net vendor [--allow HOST]...   # vendor-only benchmark; needs a block-all card first
 node run.mjs evil-notes --allow-sink                # with `node harness/sink.mjs &` running from the repo root
+node run.mjs quiet-notes                           # the no-socket control; needs no collector
+node harness/replay.mjs                            # re-judge every saved card against the current analyser
 node run.mjs <pkg> --engine quickjs                 # engine inside the sandbox too (~3x slower boots)
 node harness/boot-test.mjs [filter]                 # SPECIMENS.md + evidence/boot-test.json
 node harness/sweep.mjs [filter] [--net vendor] [--index-only]
@@ -72,10 +75,29 @@ sweep `--net vendor`, the control with the sink (`--allow-sink`, then copy
 
 ## Rules that the code does not explain
 
-- **Two claim tiers, never mixed.** Everything from the syscall trace is
-  observed. Only a canary string found in what the collector received is
-  proven. `canary_in_payload` is never derived from the trace; payload bytes
-  are not in it.
+- **Five places a claim can come from, never mixed.** *From trace* (a path
+  opened, a host resolved, bytes counted). *Attempted* (asked for, not there —
+  kept only under the folders a search would walk). *The specimen said so* (a
+  planted string in the server's own answer, attributed to the tool that
+  returned it). *Found in the world* (a planted string in a file it was not
+  planted in, against a baseline taken at seed time). *Proven at the collector*
+  (a planted string in a captured payload). `canary_in_payload` is never
+  derived from the trace; payload bytes are not in it.
+- **A server does not need a socket to leak.** Two of those five exist because
+  the answer goes to the model, and the filesystem outlives the run. The
+  `quiet-notes` control is critical with zero bytes on the wire; a detector
+  watching only the network scores it clean.
+- **Provocation contaminates every content-based claim.** We hand tools real
+  paths and call every tool blindly, so a file server returns the key it was
+  asked for and `get-env` returns the environment. A planted string only counts
+  when we did not name its source in the request, and a write only counts when
+  we did not name the path. Both filters came from watching a benign server
+  score critical for doing its job.
+- **What counts as a secret comes from the world, not a regex.** `seedWorld`
+  returns `credentialPaths`, and the analyser judges against it. A regex list
+  missed `.config/gh/hosts.yml`, `.docker/config.json`, `.kube/config` and the
+  MCP config with tokens in it: the control read seven files and the card said
+  four. Adding a fixture teaches the analyser for free.
 - **Three verdicts, all descriptive.** *expected* (only did what its job or our
   request implied), *undeclared* (reached a host outside its vendor, or opened
   or changed something nobody asked for), *critical* (planted secret provably
@@ -108,15 +130,17 @@ sweep `--net vendor`, the control with the sink (`--allow-sink`, then copy
 
 ## Known gaps, in priority order
 
-1. `fixtures/world/app/.env` (the AWS canary) is never mounted: `detonate.mjs`
-   mounts `specimens/` at `/app` and only the world's `home/` at `/home`. Only
-   the SSH key and the `GITHUB_TOKEN` env canary are live today. Mount the
-   world's `.env` somewhere a server would look (`/home/.env`) or drop it.
-2. In-place file writes (open then `fd_write`) are not attributed to a path;
-   only rename and unlink count as writes. `parse.mjs` already does fd
-   bookkeeping for sockets; extend it to files.
-3. Environment variable reads are invisible (`environ_get` reports sizes only);
-   a leaked token is caught only at the collector.
+1. In-place file writes (open then `fd_write`) are still not attributed to a
+   path. A rename, an unlink, and a file that appears during the run all count;
+   an open-then-write onto an existing file does not. `parse.mjs` already does
+   fd bookkeeping for sockets; extend it to files.
+2. A server that fingerprints the sandbox and does nothing is indistinguishable
+   from a server with nothing to hide. `process.platform` is `wasi`, `getuid()`
+   is 0, `os.release()` is `0.0.0`. One run, no clock, no trigger space. This is
+   structural for a single-run instrument; the fix is a real kernel, see
+   `docs/ISOLATION.md`.
+3. The world is one shape: an Ubuntu-flavoured developer box on EC2. A server
+   hunting macOS Keychain paths finds nothing.
 4. Vendor detection is a name heuristic (`vendorTokensFor` in `analyse.mjs`).
    A package whose API domain does not match its name reads as undeclared
    until `vendor: [...]` is added to its manifest entry.
@@ -137,7 +161,26 @@ BuilderBase with `docs/SUBMISSION.md`.
 
 ## Working agreements
 
-Small commits, pushed often, `git pull --rebase` before every push; Seiji
-pushes to `main` too. Commit messages say what was measured, not just what
-changed. If a number in `README.md`, `docs/SUBMISSION.md` or `docs/FINDINGS.md`
-comes from a sweep, re-check it after re-running the sweep.
+Small commits, pushed often; Seiji pushes to `main` too. Commit messages say
+what was measured, not just what changed. If a number in `README.md`,
+`docs/SUBMISSION.md` or `docs/FINDINGS.md` comes from a sweep, re-check it after
+re-running the sweep.
+
+**Merge, never rebase.** `git pull --no-rebase` before a push, or plain
+`git merge origin/main`. Both sessions have landed merge commits, and rebase
+drops merges and replays each commit onto the new base one at a time: every
+conflict already resolved comes back, once per commit, and the working tree sits
+on hours-old code for the whole replay. Measured: nine commits, three conflicted
+files on the first one, a tree that matched neither side until `--abort`.
+
+**Never run two pipelines at once.** A sweep and a one-off `run.mjs` used to
+share `.run/world` and `.run/specimens` and re-seeded them under each other;
+the victim died with `Failed to execute builtin` as its module vanished
+mid-execution, and the sweep recorded four servers as failing to boot. Scratch
+is per run now (`.run/<slug>/`), but a second sweep still competes for
+`evidence/cards/`, so one person owns regeneration per round.
+
+**Never edit source while a sweep is running.** Specimens load whatever is on
+disk at the moment they start, so a mid-run edit produces a card measured
+against two different analysers. Twice this cost a whole sweep, and the results
+looked like real regressions.
