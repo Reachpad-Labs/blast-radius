@@ -21,7 +21,10 @@ for (const f of await readdir('evidence/cards')) {
   if (f.endsWith('.json')) cards[f.slice(0, -5)] = JSON.parse(await readFile(path.join('evidence/cards', f), 'utf8'));
 }
 
-const SEV = { critical: 0, warn: 1, clean: 2, noboot: 3 };
+// Both vocabularies: cards saved before the rename still say warn/clean. A level
+// missing from this map makes the subtraction NaN, which is falsy, which makes
+// the whole comparator fall through to alphabetical — silently.
+const SEV = { critical: 0, undeclared: 1, warn: 1, expected: 2, clean: 2, noboot: 3 };
 const servers = [];
 for (const s of SPECIMENS) {
   const b = boot.results.find(r => r.pkg === s.pkg);
