@@ -1,6 +1,6 @@
 # The sweep
 
-Every server that boots, run through `run.mjs` on 2026-09-13 23:51 UTC. One card per server per benchmark; each renders from the JSON beside it.
+Every server that boots, run through `run.mjs` on 2026-09-14 00:01 UTC. One card per server per benchmark; each renders from the JSON beside it.
 
 **Verdicts:** *expected* means it only did what its job or our request implied; *undeclared* means it reached a host outside its vendor, or opened or changed something nobody asked for; *critical* means a planted secret provably left, or was opened unprompted right before a connection attempt.
 
