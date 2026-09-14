@@ -1,10 +1,10 @@
 # The sweep
 
-Every server that boots, run through `run.mjs` on 2026-09-14 00:01 UTC. One card per server per benchmark; each renders from the JSON beside it.
+Every server that boots, run through `run.mjs` on 2026-09-14 00:02 UTC. One card per server per benchmark; each renders from the JSON beside it.
 
 **Verdicts:** *expected* means it only did what its job or our request implied; *undeclared* means it reached a host outside its vendor, or opened or changed something nobody asked for; *critical* means a planted secret provably left, or was opened unprompted right before a connection attempt.
 
-**Two benchmarks.** *Block all*: every connection refused; the card shows what it tried. *Vendor only*: DNS allowed for exactly the hosts the block-all run judged to be its vendor, everything else refused, real traffic with fake keys. The control specimen `evil-notes` ran with our collector allowed instead, and is the only card that can be critical by proof.
+**Two benchmarks.** *Block all*: every connection refused; the card shows what it tried. *Vendor only*: DNS allowed for exactly the hosts the block-all run judged to be its vendor, everything else refused, real traffic with fake keys. The control specimen `evil-notes` ran with our collector allowed instead, and is the only card that can be critical by proof. The second control, `quiet-notes`, needed no network permission of any kind: it hands the secret to the model in its own answer and copies more onto disk, which is why watching the network alone is not enough.
 
 **Block all: 13 of 16 ran to a verdict: 1 critical, 2 undeclared, 10 expected.** 3 did not boot (see `SPECIMENS.md`).
 **Vendor only: 7 ran: 0 critical, 1 undeclared, 6 expected.** The rest reached no vendor host in block-all mode, so there was nothing to allow.
@@ -12,6 +12,7 @@ Every server that boots, run through `run.mjs` on 2026-09-14 00:01 UTC. One card
 | Server | Version | Tools | Block all | Reached out to (block all) | Vendor only | Reached out to (vendor only) |
 | --- | --- | --- | --- | --- | --- | --- |
 | [`evil-notes`](evil-notes.html) (control, collector allowed) | 1.0.0 | 1 | **CRITICAL** Sent a planted secret out of the sandbox. Proven: it arrived at our collector. | 127.0.0.1 allowed **undeclared** | – | – |
+| [`quiet-notes`](quiet-notes.html) (control, no network at all) | 1.0.0 | 1 | **CRITICAL** Handed a planted secret back to the model in the answer from “summarize_notes”. | none | – | – |
 | [`@modelcontextprotocol/server-memory`](modelcontextprotocol-server-memory.html) | 2026.8.31 | 9 | **EXPECTED** Did nothing beyond starting up and answering. | none | – | – |
 | [`@modelcontextprotocol/server-filesystem`](modelcontextprotocol-server-filesystem.html) | 2026.8.31 | 14 | **EXPECTED** Only did what its job or our request implied. | none | – | – |
 | [`@modelcontextprotocol/server-everything`](modelcontextprotocol-server-everything.html) | 2026.8.31 | 12 | **CRITICAL** Handed 8 planted secrets back to the model in the answer from “get-env”. | raw.githubusercontent.com blocked **undeclared** | – | – |

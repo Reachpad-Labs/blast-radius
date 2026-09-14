@@ -75,7 +75,12 @@ const hostsOf = f => { const m = new Map(); for (const e of f.egress) { const k 
 const fmtHosts = f => hostsOf(f).map(h => `${h.host} ${h.blocked ? 'blocked' : 'allowed'}${h.expected === false ? ' **undeclared**' : ''}`).join('<br>') || 'none';
 const V = f => `**${f.verdict.level.toUpperCase()}** ${f.verdict.line}`;
 const all = SPECIMENS.filter(s => !s.control).map(s => { const k = slugOf(s.pkg); return { s, k, scan: saved[k], vendor: saved[k + '--vendor'], boot: booted.get(s.pkg) }; });
-const ctrl = saved['evil-notes'];
+// Both controls, in the order that tells the story: the one that needs the
+// network, then the one that does not.
+const controls = [
+  { slug: 'evil-notes', label: '(control, collector allowed)' },
+  { slug: 'quiet-notes', label: '(control, no network at all)' }
+].map(c => ({ ...c, card: saved[c.slug] })).filter(c => c.card);
 const count = (mode, lv) => all.filter(x => x[mode] && x[mode].findings.verdict.level === lv).length;
 const ranScan = all.filter(x => x.scan).length, ranVendor = all.filter(x => x.vendor).length;
 const md = [
@@ -85,14 +90,14 @@ const md = [
   '',
   '**Verdicts:** *expected* means it only did what its job or our request implied; *undeclared* means it reached a host outside its vendor, or opened or changed something nobody asked for; *critical* means a planted secret provably left, or was opened unprompted right before a connection attempt.',
   '',
-  '**Two benchmarks.** *Block all*: every connection refused; the card shows what it tried. *Vendor only*: DNS allowed for exactly the hosts the block-all run judged to be its vendor, everything else refused, real traffic with fake keys. The control specimen `evil-notes` ran with our collector allowed instead, and is the only card that can be critical by proof.',
+  '**Two benchmarks.** *Block all*: every connection refused; the card shows what it tried. *Vendor only*: DNS allowed for exactly the hosts the block-all run judged to be its vendor, everything else refused, real traffic with fake keys. The control specimen `evil-notes` ran with our collector allowed instead, and is the only card that can be critical by proof. The second control, `quiet-notes`, needed no network permission of any kind: it hands the secret to the model in its own answer and copies more onto disk, which is why watching the network alone is not enough.',
   '',
   `**Block all: ${ranScan} of ${all.length} ran to a verdict: ${count('scan', 'critical')} critical, ${count('scan', 'undeclared')} undeclared, ${count('scan', 'expected')} expected.** ${all.length - ranScan} did not boot (see \`SPECIMENS.md\`).`,
   ranVendor ? `**Vendor only: ${ranVendor} ran: ${count('vendor', 'critical')} critical, ${count('vendor', 'undeclared')} undeclared, ${count('vendor', 'expected')} expected.** The rest reached no vendor host in block-all mode, so there was nothing to allow.` : '',
   '',
   '| Server | Version | Tools | Block all | Reached out to (block all) | Vendor only | Reached out to (vendor only) |',
   '| --- | --- | --- | --- | --- | --- | --- |',
-  ...(ctrl ? [`| [\`evil-notes\`](evil-notes.html) (control, collector allowed) | ${ctrl.spec.version} | ${ctrl.tools.length} | ${V(ctrl.findings)} | ${fmtHosts(ctrl.findings)} | – | – |`] : []),
+  ...controls.map(c => `| [\`${c.slug}\`](${c.slug}.html) ${c.label} | ${c.card.spec.version} | ${c.card.tools.length} | ${V(c.card.findings)} | ${fmtHosts(c.card.findings)} | – | – |`),
   ...all.map(x => x.scan
     ? `| [\`${x.s.pkg}\`](${x.k}.html) | ${x.scan.spec.version} | ${x.scan.tools.length} | ${V(x.scan.findings)} | ${fmtHosts(x.scan.findings)} | ${x.vendor ? '[' + V(x.vendor.findings) + '](' + x.k + '--vendor.html)' : '–'} | ${x.vendor ? fmtHosts(x.vendor.findings) : '–'} |`
     : `| \`${x.s.pkg}\` | ${x.boot?.version || ''} | - | did not boot | ${(x.boot?.reason || '').replace(/\|/g, '/').slice(0, 120)} | – | – |`),
